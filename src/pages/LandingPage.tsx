@@ -20,8 +20,7 @@ const LandingPage = () => {
 
   const navLinks = [
     { id: 'about', label: 'Tentang' },
-    { id: 'services', label: 'Layanan' },
-    { id: 'information', label: 'Informasi' }, // New: Informasi link
+    { id: 'information', label: 'Informasi' }, // 'Layanan' removed, 'Informasi' now points to the section
     { id: 'librarians', label: 'Pustakawan' },
   ];
 
@@ -152,8 +151,8 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Layanan Section */}
-      <section id="services" className="relative py-16 md:py-24 px-4 bg-cover bg-center bg-fixed text-white text-center" style={{ backgroundImage: "url('/foto (2).jpg')" }}>
+      {/* Informasi Section (previously Layanan) */}
+      <section id="information" className="relative py-16 md:py-24 px-4 bg-cover bg-center bg-fixed text-white text-center" style={{ backgroundImage: "url('/foto (2).jpg')" }}>
         <div className="absolute inset-0 bg-black/70"></div>
         <div className="relative z-10 container mx-auto">
           <h3 className="text-2xl md:text-3xl font-bold">WAKTU PELAYANAN PERPUSTAKAAN</h3>
