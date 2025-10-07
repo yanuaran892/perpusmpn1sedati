@@ -85,15 +85,15 @@ const LandingPage = () => {
         <div className="absolute inset-0 bg-black/50"></div>
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-white text-center p-4">
           <img src="/smpn1sedati_logo.png" alt="Logo SMPN 1 Sedati" className="h-24 w-24 md:h-32 md:w-32 mb-4 drop-shadow-lg" />
-          <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-wider drop-shadow-lg">PERPUSTAKAAN</h1>
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold drop-shadow-lg mb-6">SMP NEGERI 1 SEDATI</h2>
-          <p className="text-lg md:text-xl italic max-w-3xl drop-shadow-lg mb-8"> {/* Added mb-8 for spacing */}
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-wider drop-shadow-lg leading-tight">PERPUSTAKAAN</h1>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold drop-shadow-lg mb-6 leading-tight">SMP NEGERI 1 SEDATI</h2>
+          <p className="text-base md:text-lg italic max-w-xs sm:max-w-sm md:max-w-3xl drop-shadow-lg mb-8">
             "Kalau engkau hanya membaca buku yang dibaca semua orang,
             engkau hanya bisa berpikir sama seperti semua orang."
             <br />
             (Haruki Murakami).
           </p>
-          <Link to="/login"> {/* Added Link component */}
+          <Link to="/login">
             <Button className="bg-blue-500 hover:bg-blue-600 text-white rounded-full px-8 py-3 text-xl font-semibold shadow-lg transition-all duration-300 transform hover:scale-105">
               Mari Membaca
             </Button>
