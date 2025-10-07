@@ -4,7 +4,7 @@ import { useStudentAuth } from '@/context/StudentAuthContext';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2, User, Lock } from 'lucide-react';
+import { Loader2, User, Lock, ArrowLeft } from 'lucide-react'; // Import ArrowLeft icon
 import { InputWithIcon } from '@/components/InputWithIcon';
 
 const Login = () => {
@@ -31,7 +31,15 @@ const Login = () => {
       </h2>
 
       <Card className="w-full max-w-md shadow-2xl rounded-xl animate-scale-in" style={{ animationDelay: '0.4s' }}>
-        <CardHeader className="text-center pt-8">
+        <CardHeader className="text-center pt-8 relative"> {/* Added relative for positioning the button */}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => navigate('/landing')} // Navigate back to landing page
+            className="absolute top-4 left-4 text-gray-500 hover:bg-gray-100"
+          >
+            <ArrowLeft className="h-5 w-5" />
+          </Button>
           <img
             src="/smpn1sedati_logo.png"
             alt="Logo SMPN 1 SEDATI"
