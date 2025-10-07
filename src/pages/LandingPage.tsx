@@ -15,10 +15,9 @@ const LandingPage = () => {
   const handleScrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      // The scroll-padding-top property on the html element will handle the offset
       element.scrollIntoView({ behavior: 'smooth' });
     }
-    setIsSheetOpen(false); // Close sheet after clicking
+    setIsSheetOpen(false);
   };
 
   const navLinks = [
@@ -28,11 +27,10 @@ const LandingPage = () => {
   ];
 
   return (
-    // The scroll-padding-top is now handled globally in globals.css
-    <div className="bg-white text-gray-800 font-sans pt-16"> {/* Added pt-16 to push content down */}
+    <div className="bg-white text-gray-800 font-sans pt-16"> {/* Main content pushed down by header height */}
       {/* Header */}
-      <header className="fixed top-4 left-0 right-0 z-50 w-full px-4">
-        <div className="container mx-auto max-w-5xl bg-black/50 backdrop-blur-sm rounded-full shadow-lg py-2 px-4 sm:px-6 flex justify-between items-center">
+      <header className="fixed top-0 left-0 right-0 z-50 w-full px-4 h-16 flex items-center"> {/* Changed top-4 to top-0, added h-16, flex items-center */}
+        <div className="container mx-auto max-w-5xl bg-black/50 backdrop-blur-sm rounded-full shadow-lg py-2 px-4 sm:px-6 flex justify-between items-center w-full"> {/* Added w-full */}
           <div className="flex items-center gap-2 text-white font-bold">
             <img src="/smpn1sedati_logo.png" alt="Logo" className="h-8 w-8" />
             <span className="hidden sm:inline">SMPN 1 SEDATI</span>
@@ -84,7 +82,7 @@ const LandingPage = () => {
       </header>
 
       {/* Hero Section */}
-      <section id="home" className="relative h-[calc(100vh-64px)] w-full"> {/* Adjusted height to account for header */}
+      <section id="home" className="relative h-[calc(100vh-64px)] w-full"> {/* Height is 100vh minus header height (h-16 = 64px) */}
         <Carousel
           opts={{ loop: true }}
           plugins={[Autoplay({ delay: 4000, stopOnInteraction: false })]}
