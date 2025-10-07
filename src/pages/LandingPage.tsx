@@ -158,7 +158,7 @@ const LandingPage = () => {
           <CarouselContent className="-ml-4">
             {activities.map((activity, index) => (
               <CarouselItem key={index} className="pl-4 md:basis-1/2 lg:basis-1/3 animate-scale-in" style={{ animationDelay: `${2.0 + index * 0.1}s` }}>
-                <Card className="h-full flex flex-col justify-between shadow-xl hover:shadow-2xl transition-shadow duration-300 border-t-4 border-primary">
+                <Card className="h-full flex flex-col justify-between shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-primary">
                   <CardHeader className="flex flex-row items-center justify-between pb-4">
                     <CardTitle className="text-xl font-semibold text-primary">{activity.title}</CardTitle>
                     <Sparkles className="h-7 w-7 text-yellow-500" />
@@ -180,7 +180,7 @@ const LandingPage = () => {
         <h3 className="text-4xl font-bold text-center mb-14 text-primary animate-fade-in-up" style={{ animationDelay: '2.6s' }}>Pustakawan Kami</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {librarians.map((librarian, index) => (
-            <Card key={index} className="text-center shadow-xl animate-scale-in hover:shadow-2xl transition-all duration-300 hover:scale-105 border-t-4 border-accent">
+            <Card key={index} className="text-center shadow-xl animate-scale-in hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 hover:scale-105 border-t-4 border-accent">
               <CardContent className="pt-8">
                 <div className="w-36 h-36 rounded-full mx-auto mb-6 object-cover border-4 border-blue-300 shadow-md flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300">
                   <UserRound className="h-20 w-20 text-gray-600 opacity-70" />
