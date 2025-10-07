@@ -141,8 +141,8 @@ const LandingPage = () => {
           {/* Misi */}
           <div className="animate-slide-in-right" style={{ animationDelay: '1.6s' }}>
             <div className="flex items-center mb-4">
-              <Target className="h-10 w-10 text-accent mr-4" />
-              <h4 className="text-3xl font-bold text-accent-foreground">Misi</h4>
+              <Target className="h-10 w-10 text-blue-600 mr-4" />
+              <h4 className="text-3xl font-bold text-blue-700">Misi</h4>
             </div>
             <ul className="list-disc list-inside space-y-3 text-gray-700 text-lg leading-relaxed">
               <li>Menyediakan koleksi bahan pustaka yang relevan dan mutakhir.</li>
