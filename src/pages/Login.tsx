@@ -46,7 +46,7 @@ const Login = () => {
             className="h-24 w-24 object-contain mx-auto mb-4 animate-pulse"
           />
           <CardDescription className="text-gray-600 text-base">
-            Masukkan NIS dan password untuk mengakses sistem
+            Masukkan NIS dan password untuk mengakses buku
           </CardDescription>
         </CardHeader>
         <CardContent>
