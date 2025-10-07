@@ -2,13 +2,11 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-// Removed Carousel, CarouselContent, CarouselItem imports
 import { Calendar, MessageSquare, Phone, Mail, Instagram, Youtube, Twitter, Menu } from 'lucide-react';
-// Removed Autoplay import
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const LandingPage = () => {
-  const heroImages = ["/foto (1).png", "/foto (2).png", "/foto (3).png"];
+  const heroImages = ["/hero-landing.png", "/foto (2).png", "/foto (3).png"]; // Updated to use new hero image
   const cardImages = ["/foto (1).jpg", "/foto (2).jpg", "/foto (3).jpg"];
   const [isSheetOpen, setIsSheetOpen] = useState(false);
 
@@ -30,7 +28,7 @@ const LandingPage = () => {
     <div className="bg-white text-gray-800 font-sans pt-16">
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 w-full h-16 flex items-center bg-gray-800 shadow-lg">
-        <div className="flex justify-between items-center w-full px-4 max-w-5xl mx-auto"> {/* Added px-4 here, removed from header, kept max-w-5xl mx-auto */}
+        <div className="flex justify-between items-center w-full px-4 max-w-5xl mx-auto">
           <div className="flex items-center gap-2 text-white font-bold">
             <img src="/smpn1sedati_logo.png" alt="Logo" className="h-8 w-8" />
             <span className="hidden sm:inline">SMPN 1 SEDATI</span>
@@ -83,13 +81,18 @@ const LandingPage = () => {
 
       {/* Hero Section */}
       <section id="home" className="relative h-[calc(100vh-64px)] w-full">
-        {/* Replaced Carousel with a single image */}
         <img src={heroImages[0]} alt="Perpustakaan SMPN 1 Sedati" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-black/50"></div>
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-white text-center p-4">
-          <img src="/smpn1sedati_logo.png" alt="Logo SMPN 1 Sedati" className="h-24 w-24 md:h-32 md:w-32 mb-4" />
-          <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-wider">PERPUSTAKAAN</h1>
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold">SMPN 1 SEDATI</h2>
+          <img src="/smpn1sedati_logo.png" alt="Logo SMPN 1 Sedati" className="h-24 w-24 md:h-32 md:w-32 mb-4 drop-shadow-lg" />
+          <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-wider drop-shadow-lg">PERPUSTAKAAN</h1>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold drop-shadow-lg mb-6">SMP NEGERI 1 SEDATI</h2>
+          <p className="text-lg md:text-xl italic max-w-3xl drop-shadow-lg">
+            "Kalau engkau hanya membaca buku yang dibaca semua orang,
+            engkau hanya bisa berpikir sama seperti semua orang."
+            <br />
+            (Haruki Murakami).
+          </p>
         </div>
       </section>
 
