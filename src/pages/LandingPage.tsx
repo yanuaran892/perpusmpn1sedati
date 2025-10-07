@@ -6,7 +6,7 @@ import { Calendar, MessageSquare, Phone, Mail, Instagram, Youtube, Twitter, Menu
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const LandingPage = () => {
-  const heroImages = ["/foto (1).jpg", "/foto (2).png", "/foto (3).png"]; // Updated to use new hero image
+  const heroImages = ["/hero_landing.png", "/foto (2).png", "/foto (3).png"]; // Updated to use new hero image
   const cardImages = ["/foto (1).jpg", "/foto (2).jpg", "/foto (3).jpg"];
   const [isSheetOpen, setIsSheetOpen] = useState(false);
 
@@ -21,6 +21,7 @@ const LandingPage = () => {
   const navLinks = [
     { id: 'about', label: 'Tentang' },
     { id: 'services', label: 'Layanan' },
+    { id: 'information', label: 'Informasi' }, // New: Informasi link
     { id: 'librarians', label: 'Pustakawan' },
   ];
 
