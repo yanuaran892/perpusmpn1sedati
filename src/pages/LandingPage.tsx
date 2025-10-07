@@ -129,7 +129,7 @@ const LandingPage = () => {
         <h3 className="text-4xl font-bold text-center mb-14 text-primary animate-fade-in-up" style={{ animationDelay: '1.2s' }}>Visi dan Misi Perpustakaan</h3>
         <div className="grid md:grid-cols-2 gap-10 max-w-5xl mx-auto">
           {/* Visi */}
-          <div className="p-8 bg-white rounded-xl shadow-xl border-t-4 border-blue-500 animate-slide-in-left flex flex-col items-center text-center" style={{ animationDelay: '1.4s' }}>
+          <div className="p-8 bg-white rounded-xl border-t-8 border-blue-500 animate-slide-in-left flex flex-col items-center text-center" style={{ animationDelay: '1.4s' }}>
             <div className="flex items-center justify-center mb-4">
               <Eye className="h-10 w-10 text-blue-600 mr-4" />
               <h4 className="text-3xl font-bold text-blue-700">Visi</h4>
@@ -139,7 +139,7 @@ const LandingPage = () => {
             </p>
           </div>
           {/* Misi */}
-          <div className="p-8 bg-white rounded-xl shadow-xl border-t-4 border-accent animate-slide-in-right flex flex-col items-center text-center" style={{ animationDelay: '1.6s' }}>
+          <div className="p-8 bg-white rounded-xl border-t-8 border-accent animate-slide-in-right flex flex-col items-center text-center" style={{ animationDelay: '1.6s' }}>
             <div className="flex items-center justify-center mb-4">
               <Target className="h-10 w-10 text-accent mr-4" />
               <h4 className="text-3xl font-bold text-accent-foreground">Misi</h4>
