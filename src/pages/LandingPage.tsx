@@ -15,28 +15,21 @@ const LandingPage = () => {
   const handleScrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      // Add a small offset to account for the fixed header
-      const headerOffset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+      // The scroll-padding-top property on the main div will handle the offset
+      element.scrollIntoView({ behavior: 'smooth' });
     }
     setIsSheetOpen(false); // Close sheet after clicking
   };
 
   const navLinks = [
-    { id: 'home', label: 'Beranda' },
     { id: 'about', label: 'Tentang' },
     { id: 'services', label: 'Layanan' },
     { id: 'librarians', label: 'Pustakawan' },
   ];
 
   return (
-    <div className="bg-white text-gray-800 font-sans">
+    // Add scroll-padding-top here to offset the fixed header
+    <div className="bg-white text-gray-800 font-sans scroll-smooth" style={{ scrollPaddingTop: '6rem' }}>
       {/* Header */}
       <header className="fixed top-4 left-0 right-0 z-50 w-full px-4">
         <div className="container mx-auto max-w-5xl bg-black/50 backdrop-blur-sm rounded-full shadow-lg py-2 px-4 sm:px-6 flex justify-between items-center">
@@ -47,6 +40,7 @@ const LandingPage = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-6 text-white">
+            <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="hover:text-blue-300 transition-colors">Beranda</button>
             {navLinks.map(link => (
               <button key={link.id} onClick={() => handleScrollToSection(link.id)} className="hover:text-blue-300 transition-colors">{link.label}</button>
             ))}
@@ -72,6 +66,7 @@ const LandingPage = () => {
                     <span className="font-bold">SMPN 1 SEDATI</span>
                   </div>
                   <nav className="flex flex-col gap-4 text-lg">
+                    <button onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); setIsSheetOpen(false); }} className="text-left py-2 hover:text-blue-300 transition-colors">Beranda</button>
                     {navLinks.map(link => (
                       <button key={link.id} onClick={() => handleScrollToSection(link.id)} className="text-left py-2 hover:text-blue-300 transition-colors">{link.label}</button>
                     ))}
