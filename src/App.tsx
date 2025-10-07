@@ -6,10 +6,9 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import LandingPage from "./pages/LandingPage";
 import Login from "./pages/Login";
-// import QRCodeScanner from "./pages/QRCodeScanner"; // Removed
 import Dashboard from "./pages/Dashboard";
 import StudentProfile from "./pages/StudentProfile";
-import StudentVisitEntry from "@/pages/StudentVisitEntry"; // Updated import
+import StudentVisitEntry from "@/pages/StudentVisitEntry";
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminLayout from "./components/AdminLayout";
 import AdminDashboardOverview from "./pages/admin/AdminDashboardOverview";
@@ -17,9 +16,8 @@ import AdminBookManagement from "./pages/admin/AdminBookManagement";
 import AdminCategoryManagement from "./pages/admin/AdminCategoryManagement";
 import AdminStudentManagement from "./pages/admin/AdminStudentManagement";
 import AdminCirculationManagement from "./pages/admin/AdminCirculationManagement";
-import AdminVisitorManagement from "./pages/admin/AdminVisitorManagement"; // Updated import
-import AdminFineManagement from "./pages/admin/AdminFineManagement"; // New: Fine Management
-// import AdminQRCodeAbsensi from "./pages/admin/AdminQRCodeAbsensi"; // Removed
+import AdminVisitorManagement from "./pages/admin/AdminVisitorManagement";
+import AdminFineManagement from "./pages/admin/AdminFineManagement";
 import AdminReportPage from "./pages/admin/AdminReportPage";
 import AdminExportPage from "./pages/admin/AdminExportPage";
 import AdminLogPage from "./pages/admin/AdminLogPage";
@@ -32,19 +30,17 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      {/* Removed shadcn/ui Toaster, now only using Sonner */}
       <Sonner />
-      <BrowserRouter>
+      <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <StudentAuthProvider>
           <AdminAuthProvider>
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/landing" element={<LandingPage />} />
               <Route path="/login" element={<Login />} />
-              {/* <Route path="/qr-code-scanner" element={<QRCodeScanner />} /> */} {/* Removed */}
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/profile" element={<StudentProfile />} />
-              <Route path="/student-visit-entry" element={<StudentVisitEntry />} /> {/* Updated route */}
+              <Route path="/student-visit-entry" element={<StudentVisitEntry />} />
 
               {/* Admin Routes */}
               <Route path="/admin/login" element={<AdminLogin />} />
@@ -56,8 +52,7 @@ const App = () => (
                 <Route path="students" element={<AdminStudentManagement />} />
                 <Route path="circulation" element={<AdminCirculationManagement />} />
                 <Route path="visitor-management" element={<AdminVisitorManagement />} />
-                <Route path="fines" element={<AdminFineManagement />} /> {/* New: Fine Management Route */}
-                {/* <Route path="qr-absensi" element={<AdminQRCodeAbsensi />} */} {/* Removed */}
+                <Route path="fines" element={<AdminFineManagement />} />
                 <Route path="reports" element={<AdminReportPage />} />
                 <Route path="export" element={<AdminExportPage />} />
                 <Route path="log" element={<AdminLogPage />} />
