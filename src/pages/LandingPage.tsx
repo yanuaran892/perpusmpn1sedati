@@ -152,8 +152,7 @@ const LandingPage = () => {
       </section>
 
       {/* Layanan Section */}
-      <section id="services" className="relative py-16 md:py-24 px-4 bg-cover bg-center bg-fixed text-white text-center" style={{ backgroundImage: "url('/foto (2).jpg')" }}>
-        <div className="absolute inset-0 bg-black/70"></div>
+      <section id="services" className="relative py-16 md:py-24 px-4 bg-gray-800 text-white text-center">
         <div className="relative z-10 container mx-auto">
           <h3 className="text-2xl md:text-3xl font-bold">WAKTU PELAYANAN PERPUSTAKAAN</h3>
           <h4 className="text-xl md:text-2xl font-semibold mb-4">SMPN 1 SEDATI</h4>
