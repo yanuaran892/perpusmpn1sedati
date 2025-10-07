@@ -108,35 +108,35 @@ const BookDetailDialog: React.FC<BookDetailDialogProps> = ({
             <h4 className="text-lg font-semibold text-primary mb-2">Sinopsis:</h4>
             <p className="text-gray-800 leading-relaxed">{book.sinopsis || 'Tidak ada sinopsis tersedia.'}</p>
           </div>
+          {/* Moved date picker section inside ScrollArea */}
+          <div className="mt-6">
+            <h4 className="text-lg font-semibold text-primary mb-2">Pilih Tanggal Pengembalian:</h4>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant={"outline"}
+                  className={cn(
+                    "w-[240px] justify-start text-left font-normal",
+                    !returnDate && "text-muted-foreground"
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {returnDate ? format(returnDate, "PPP") : <span>Pilih tanggal</span>}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" side="bottom" align="start">
+                <Calendar
+                  mode="single"
+                  selected={returnDate}
+                  onSelect={setReturnDate}
+                  initialFocus
+                  disabled={(date) => date < new Date() || date > addDays(new Date(), 30)} // Max 30 days loan
+                />
+              </PopoverContent>
+            </Popover>
+            <p className="text-sm text-gray-500 mt-2">Buku dapat dipinjam maksimal 30 hari.</p>
+          </div>
         </ScrollArea>
-        {/* Moved date picker section outside ScrollArea */}
-        <div className="mt-6 px-4"> {/* Added px-4 for consistent padding */}
-          <h4 className="text-lg font-semibold text-primary mb-2">Pilih Tanggal Pengembalian:</h4>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                variant={"outline"}
-                className={cn(
-                  "w-[240px] justify-start text-left font-normal",
-                  !returnDate && "text-muted-foreground"
-                )}
-              >
-                <CalendarIcon className="mr-2 h-4 w-4" />
-                {returnDate ? format(returnDate, "PPP") : <span>Pilih tanggal</span>}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" side="bottom" align="start">
-              <Calendar
-                mode="single"
-                selected={returnDate}
-                onSelect={setReturnDate}
-                initialFocus
-                disabled={(date) => date < new Date() || date > addDays(new Date(), 30)} // Max 30 days loan
-              />
-            </PopoverContent>
-          </Popover>
-          <p className="text-sm text-gray-500 mt-2">Buku dapat dipinjam maksimal 30 hari.</p>
-        </div>
         <DialogFooter className="mt-6">
           <Button variant="outline" onClick={onClose}>Tutup</Button>
           <Button
