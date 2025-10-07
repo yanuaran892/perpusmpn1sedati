@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,6 +8,10 @@
   html {
     @apply scroll-smooth;
     scroll-padding-top: 7rem; /* Provides offset for fixed header */
+  }
+
+  body {
+    font-family: 'Poppins', sans-serif; /* Apply Poppins font */
   }
 
   :root {
