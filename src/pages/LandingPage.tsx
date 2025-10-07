@@ -128,30 +128,30 @@ const LandingPage = () => {
       <section id="vision-mission" className="bg-blue-50 py-20 px-6 container mx-auto mt-16 rounded-xl shadow-lg">
         <h3 className="text-4xl font-bold text-center mb-14 text-primary animate-fade-in-up" style={{ animationDelay: '1.2s' }}>Visi dan Misi Perpustakaan</h3>
         <div className="grid md:grid-cols-2 gap-10 max-w-5xl mx-auto">
-          <Card className="shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-blue-500 animate-slide-in-left" style={{ animationDelay: '1.4s' }}>
-            <CardHeader className="flex flex-row items-center justify-center pb-4">
+          {/* Visi */}
+          <div className="p-8 bg-white rounded-xl shadow-xl border-t-4 border-blue-500 animate-slide-in-left flex flex-col items-center text-center" style={{ animationDelay: '1.4s' }}>
+            <div className="flex items-center justify-center mb-4">
               <Eye className="h-10 w-10 text-blue-600 mr-4" />
-              <CardTitle className="text-3xl font-bold text-blue-700">Visi</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-700 text-lg leading-relaxed text-center px-6">
+              <h4 className="text-3xl font-bold text-blue-700">Visi</h4>
+            </div>
+            <p className="text-gray-700 text-lg leading-relaxed px-6">
               Menjadi pusat sumber belajar yang unggul, inovatif, dan inspiratif untuk mendukung terciptanya generasi yang cerdas, berbudaya literasi tinggi, dan berakhlak mulia.
-            </CardContent>
-          </Card>
-          <Card className="shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-accent animate-slide-in-right" style={{ animationDelay: '1.6s' }}>
-            <CardHeader className="flex flex-row items-center justify-center pb-4">
+            </p>
+          </div>
+          {/* Misi */}
+          <div className="p-8 bg-white rounded-xl shadow-xl border-t-4 border-accent animate-slide-in-right flex flex-col items-center text-center" style={{ animationDelay: '1.6s' }}>
+            <div className="flex items-center justify-center mb-4">
               <Target className="h-10 w-10 text-accent mr-4" />
-              <CardTitle className="text-3xl font-bold text-accent-foreground">Misi</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-700 text-lg leading-relaxed px-6">
-              <ul className="list-disc list-inside space-y-3 text-left mx-auto w-fit">
-                <li>Menyediakan koleksi bahan pustaka yang relevan dan mutakhir.</li>
-                <li>Menciptakan lingkungan perpustakaan yang nyaman, kondusif, dan menarik.</li>
-                <li>Mengembangkan program-program literasi yang kreatif dan partisipatif.</li>
-                <li>Meningkatkan kualitas layanan perpustakaan berbasis teknologi informasi.</li>
-                <li>Membentuk karakter siswa yang gemar membaca, meneliti, dan berinovasi.</li>
-              </ul>
-            </CardContent>
-          </Card>
+              <h4 className="text-3xl font-bold text-accent-foreground">Misi</h4>
+            </div>
+            <ul className="list-disc list-inside space-y-3 text-left mx-auto w-fit text-gray-700 text-lg leading-relaxed px-6">
+              <li>Menyediakan koleksi bahan pustaka yang relevan dan mutakhir.</li>
+              <li>Menciptakan lingkungan perpustakaan yang nyaman, kondusif, dan menarik.</li>
+              <li>Mengembangkan program-program literasi yang kreatif dan partisipatif.</li>
+              <li>Meningkatkan kualitas layanan perpustakaan berbasis teknologi informasi.</li>
+              <li>Membentuk karakter siswa yang gemar membaca, meneliti, dan berinovasi.</li>
+            </ul>
+          </div>
         </div>
       </section>
 
