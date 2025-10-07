@@ -87,12 +87,17 @@ const LandingPage = () => {
           <img src="/smpn1sedati_logo.png" alt="Logo SMPN 1 Sedati" className="h-24 w-24 md:h-32 md:w-32 mb-4 drop-shadow-lg" />
           <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-wider drop-shadow-lg">PERPUSTAKAAN</h1>
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold drop-shadow-lg mb-6">SMP NEGERI 1 SEDATI</h2>
-          <p className="text-lg md:text-xl italic max-w-3xl drop-shadow-lg">
+          <p className="text-lg md:text-xl italic max-w-3xl drop-shadow-lg mb-8"> {/* Added mb-8 for spacing */}
             "Kalau engkau hanya membaca buku yang dibaca semua orang,
             engkau hanya bisa berpikir sama seperti semua orang."
             <br />
             (Haruki Murakami).
           </p>
+          <Link to="/login"> {/* Added Link component */}
+            <Button className="bg-blue-500 hover:bg-blue-600 text-white rounded-full px-8 py-3 text-xl font-semibold shadow-lg transition-all duration-300 transform hover:scale-105">
+              Mari Membaca
+            </Button>
+          </Link>
         </div>
       </section>
 
