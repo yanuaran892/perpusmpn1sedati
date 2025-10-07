@@ -6,7 +6,7 @@ import { Calendar, MessageSquare, Phone, Mail, Instagram, Youtube, Twitter, Menu
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const LandingPage = () => {
-  const heroImages = ["//foto (1).jpg", "/foto (2).png", "/foto (3).png"]; // Updated to use new hero image
+  const heroImages = ["/foto (1).jpg", "/foto (2).png", "/foto (3).png"]; // Updated to use new hero image
   const cardImages = ["/foto (1).jpg", "/foto (2).jpg", "/foto (3).jpg"];
   const [isSheetOpen, setIsSheetOpen] = useState(false);
 
