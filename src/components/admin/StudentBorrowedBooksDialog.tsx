@@ -70,9 +70,11 @@ const StudentBorrowedBooksDialog: React.FC<StudentBorrowedBooksDialogProps> = ({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[700px] max-h-[90vh] flex flex-col">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-primary">Buku Dipinjam oleh {studentName}</DialogTitle>
+          <DialogTitle className="text-2xl font-bold text-primary">
+            Buku Dipinjam oleh {studentName || 'Siswa Tidak Dikenal'}
+          </DialogTitle>
           <DialogDescription>
-            Daftar buku yang saat ini sedang dipinjam oleh siswa {studentName} (NIS: {studentNis}).
+            Daftar buku yang saat ini sedang dipinjam oleh siswa {studentName || 'Tidak Dikenal'} (NIS: {studentNis || 'Tidak Dikenal'}).
           </DialogDescription>
         </DialogHeader>
         <ScrollArea className="flex-grow pr-4">
