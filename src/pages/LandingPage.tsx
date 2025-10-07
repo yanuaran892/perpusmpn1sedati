@@ -84,7 +84,7 @@ const LandingPage = () => {
       </header>
 
       {/* Hero Section */}
-      <section id="home" className="relative h-screen w-full">
+      <section id="home" className="relative h-[calc(100vh-4rem)] w-full"> {/* Adjusted height */}
         <Carousel
           opts={{ loop: true }}
           plugins={[Autoplay({ delay: 4000, stopOnInteraction: false })]}
