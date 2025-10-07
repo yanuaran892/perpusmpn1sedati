@@ -1,9 +1,8 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import { BookOpen, Sparkles, UserRound, MapPin, Phone, Mail, LibraryBig, Eye, Target } from 'lucide-react';
-import Autoplay from "embla-carousel-autoplay";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { BookOpen, Sparkles, UserRound, MapPin, Phone, Mail, LibraryBig, Eye, Target, Search, Book, ScanLine, User } from 'lucide-react';
 
 const LandingPage = () => {
   const activities = [
@@ -19,12 +18,6 @@ const LandingPage = () => {
     { name: "Bapak Joko Susilo", role: "Staf Perpustakaan", image: "/placeholder.svg" },
   ];
 
-  const heroImages = [
-    "/foto (1).png",
-    "/foto (2).png", 
-    "/foto (3).png", 
-  ];
-
   const handleScrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -33,9 +26,9 @@ const LandingPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 bg-[url('/subtle-dots.svg')] bg-repeat text-gray-800">
+    <div className="min-h-screen bg-gray-50 text-gray-800">
       {/* Header */}
-      <header className="bg-white shadow-lg py-4 px-6 flex flex-col md:flex-row justify-between items-center animate-fade-in-up sticky top-0 z-50 border-b border-gray-200">
+      <header className="bg-white shadow-md py-4 px-6 flex flex-col md:flex-row justify-between items-center animate-fade-in-up sticky top-0 z-50 border-b border-gray-200">
         <div className="flex items-center mb-4 md:mb-0">
           <img
             src="/smpn1sedati_logo.png"
@@ -45,11 +38,11 @@ const LandingPage = () => {
           <h1 className="text-2xl font-bold text-primary">SMPN 1 SEDATI</h1>
         </div>
         <nav className="flex flex-wrap justify-center gap-4">
-          <Button variant="ghost" onClick={() => handleScrollToSection('about-us')} className="text-gray-700 hover:text-primary font-medium">Tentang</Button>
+          <Button variant="ghost" onClick={() => handleScrollToSection('about-us')} className="text-gray-700 hover:text-primary font-medium">Tentang Kami</Button>
           <Button variant="ghost" onClick={() => handleScrollToSection('vision-mission')} className="text-gray-700 hover:text-primary font-medium">Visi Misi</Button>
           <Button variant="ghost" onClick={() => handleScrollToSection('activities')} className="text-gray-700 hover:text-primary font-medium">Kegiatan</Button>
           <Button variant="ghost" onClick={() => handleScrollToSection('librarians')} className="text-gray-700 hover:text-primary font-medium">Pustakawan</Button>
-          <Button variant="ghost" onClick={() => handleScrollToSection('school-info')} className="text-gray-700 hover:text-primary font-medium">Informasi</Button>
+          <Button variant="ghost" onClick={() => handleScrollToSection('school-info')} className="text-gray-700 hover:text-primary font-medium">Kontak</Button>
           <Link to="/login">
             <Button className="bg-primary hover:bg-primary/90 text-white shadow-md hover:shadow-lg transition-all duration-300 px-6 py-2">Login Siswa</Button>
           </Link>
@@ -57,46 +50,55 @@ const LandingPage = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative h-[650px] overflow-hidden flex items-center justify-center">
-        <Carousel
-          opts={{
-            loop: true,
-          }}
-          plugins={[
-            Autoplay({
-              delay: 4000,
-              stopOnInteraction: false,
-            }),
-          ]}
-          className="absolute inset-0 w-full h-full"
-        >
-          <CarouselContent className="h-full">
-            {heroImages.map((image, index) => (
-              <CarouselItem key={index} className="h-full flex items-center justify-center">
-                <img
-                  src={image}
-                  alt={`Hero Image ${index + 1}`}
-                  className="w-full h-full object-cover" 
-                />
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
-
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-black/40 z-0"></div>
-
-        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center p-4">
-          <div className="w-full max-w-3xl space-y-8 animate-fade-in-up text-white">
-            <h2 className="text-6xl font-extrabold drop-shadow-xl leading-tight" style={{ animationDelay: '0.2s' }}>
-              Selamat Datang di <span className="text-yellow-300">Perpustakaan Digital</span> Kami
-            </h2>
-            <p className="text-2xl max-w-2xl mx-auto font-light" style={{ animationDelay: '0.4s' }}>
-              Jelajahi dunia pengetahuan dan inspirasi di SMPN 1 SEDATI.
-            </p>
-            <Link to="/login">
-              <Button size="lg" className="bg-accent hover:bg-accent/90 text-white font-semibold shadow-xl animate-fade-in-up hover:scale-105 transition-transform duration-300 px-8 py-4 text-lg" style={{ animationDelay: '0.6s' }}>
-                <BookOpen className="mr-3 h-6 w-6" /> Mulai Membaca Sekarang
+      <section
+        className="relative bg-cover bg-center py-32 px-4"
+        style={{ backgroundImage: "url('/foto (2).jpg')" }}
+      >
+        <div className="absolute inset-0 bg-black/60 z-0"></div>
+        <div className="relative z-10 container mx-auto text-center text-white animate-fade-in-up">
+          <h2 className="text-5xl md:text-6xl font-extrabold mb-6 drop-shadow-lg">
+            Selamat Datang di Perpustakaan Digital SMPN 1 Sedati
+          </h2>
+          <div className="max-w-2xl mx-auto mb-12">
+            <div className="relative flex items-center">
+              <Input
+                type="search"
+                placeholder="Cari buku favoritmu di sini..."
+                className="w-full p-4 pr-28 rounded-full text-lg text-gray-800"
+              />
+              <Button className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full px-6 py-2 text-base">
+                <Search className="h-5 w-5 mr-2" />
+                Cari
               </Button>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            <Link to="/dashboard">
+              <Card className="text-center shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 bg-white/90 backdrop-blur-sm text-gray-800">
+                <CardContent className="p-6">
+                  <Book className="h-12 w-12 mx-auto mb-4 text-primary" />
+                  <CardTitle className="text-xl font-bold">Katalog Buku</CardTitle>
+                  <CardDescription>Jelajahi semua koleksi buku kami.</CardDescription>
+                </CardContent>
+              </Card>
+            </Link>
+            <Link to="/student-visit-entry">
+              <Card className="text-center shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 bg-white/90 backdrop-blur-sm text-gray-800">
+                <CardContent className="p-6">
+                  <ScanLine className="h-12 w-12 mx-auto mb-4 text-primary" />
+                  <CardTitle className="text-xl font-bold">Kunjungan</CardTitle>
+                  <CardDescription>Catat kunjungan Anda ke perpustakaan.</CardDescription>
+                </CardContent>
+              </Card>
+            </Link>
+            <Link to="/profile">
+              <Card className="text-center shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 bg-white/90 backdrop-blur-sm text-gray-800">
+                <CardContent className="p-6">
+                  <User className="h-12 w-12 mx-auto mb-4 text-primary" />
+                  <CardTitle className="text-xl font-bold">Profil Siswa</CardTitle>
+                  <CardDescription>Lihat riwayat peminjaman dan denda.</CardDescription>
+                </CardContent>
+              </Card>
             </Link>
           </div>
         </div>
@@ -158,10 +160,9 @@ const LandingPage = () => {
       {/* Activities Section */}
       <section id="activities" className="py-20 px-6 container mx-auto mt-16">
         <h3 className="text-4xl font-bold text-center mb-14 text-primary animate-fade-in-up" style={{ animationDelay: '1.8s' }}>Kegiatan Perpustakaan</h3>
-        <Carousel className="w-full max-w-5xl mx-auto">
-          <CarouselContent className="-ml-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {activities.map((activity, index) => (
-              <CarouselItem key={index} className="pl-4 md:basis-1/2 lg:basis-1/3 animate-scale-in" style={{ animationDelay: `${2.0 + index * 0.1}s` }}>
+              <div key={index} className="animate-scale-in" style={{ animationDelay: `${2.0 + index * 0.1}s` }}>
                 <Card className="h-full flex flex-col justify-between shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-primary">
                   <CardHeader className="flex flex-row items-center justify-between pb-4">
                     <CardTitle className="text-xl font-semibold text-primary">{activity.title}</CardTitle>
@@ -171,12 +172,9 @@ const LandingPage = () => {
                     {activity.description}
                   </CardContent>
                 </Card>
-              </CarouselItem>
+              </div>
             ))}
-          </CarouselContent>
-          <CarouselPrevious className="left-[-50px] hidden md:flex" />
-          <CarouselNext className="right-[-50px] hidden md:flex" />
-        </Carousel>
+        </div>
       </section>
 
       {/* Librarians Section */}
