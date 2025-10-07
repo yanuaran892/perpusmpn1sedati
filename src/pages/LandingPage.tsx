@@ -1,38 +1,90 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
-import { Calendar, MessageSquare, Phone, Mail, Instagram, Youtube, Twitter } from 'lucide-react';
+import { Calendar, MessageSquare, Phone, Mail, Instagram, Youtube, Twitter, Menu } from 'lucide-react';
 import Autoplay from "embla-carousel-autoplay";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const LandingPage = () => {
   const heroImages = ["/foto (1).png", "/foto (2).png", "/foto (3).png"];
   const cardImages = ["/foto (1).jpg", "/foto (2).jpg", "/foto (3).jpg"];
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
 
   const handleScrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      // Add a small offset to account for the fixed header
+      const headerOffset = 80;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
     }
+    setIsSheetOpen(false); // Close sheet after clicking
   };
+
+  const navLinks = [
+    { id: 'home', label: 'Beranda' },
+    { id: 'about', label: 'Tentang' },
+    { id: 'services', label: 'Layanan' },
+    { id: 'librarians', label: 'Pustakawan' },
+  ];
 
   return (
     <div className="bg-white text-gray-800 font-sans">
       {/* Header */}
       <header className="fixed top-4 left-0 right-0 z-50 w-full px-4">
-        <div className="container mx-auto max-w-5xl bg-black/50 backdrop-blur-sm rounded-full shadow-lg py-2 px-6 flex justify-between items-center">
-          <nav className="hidden sm:flex items-center gap-6 text-white">
-            <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="hover:text-blue-300 transition-colors">Beranda</button>
-            <button onClick={() => handleScrollToSection('about')} className="hover:text-blue-300 transition-colors">Tentang</button>
-            <button onClick={() => handleScrollToSection('services')} className="hover:text-blue-300 transition-colors">Layanan</button>
-            <button onClick={() => handleScrollToSection('librarians')} className="hover:text-blue-300 transition-colors">Pustakawan</button>
-          </nav>
-          <div className="sm:hidden text-white font-bold">
-            SMPN 1 SEDATI
+        <div className="container mx-auto max-w-5xl bg-black/50 backdrop-blur-sm rounded-full shadow-lg py-2 px-4 sm:px-6 flex justify-between items-center">
+          <div className="flex items-center gap-2 text-white font-bold">
+            <img src="/smpn1sedati_logo.png" alt="Logo" className="h-8 w-8" />
+            <span className="hidden sm:inline">SMPN 1 SEDATI</span>
           </div>
-          <Link to="/login">
-            <Button className="bg-blue-500 hover:bg-blue-600 text-white rounded-full px-6">Masuk</Button>
-          </Link>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center gap-6 text-white">
+            {navLinks.map(link => (
+              <button key={link.id} onClick={() => handleScrollToSection(link.id)} className="hover:text-blue-300 transition-colors">{link.label}</button>
+            ))}
+          </nav>
+          <div className="hidden md:block">
+            <Link to="/login">
+              <Button className="bg-blue-500 hover:bg-blue-600 text-white rounded-full px-6">Masuk</Button>
+            </Link>
+          </div>
+
+          {/* Mobile Navigation */}
+          <div className="md:hidden">
+            <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="text-white hover:bg-white/20">
+                  <Menu className="h-6 w-6" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="bg-gray-900 text-white border-l-gray-700 w-[250px] p-0">
+                <div className="p-6 flex flex-col h-full">
+                  <div className="flex items-center gap-2 mb-8">
+                    <img src="/smpn1sedati_logo.png" alt="Logo" className="h-8 w-8" />
+                    <span className="font-bold">SMPN 1 SEDATI</span>
+                  </div>
+                  <nav className="flex flex-col gap-4 text-lg">
+                    {navLinks.map(link => (
+                      <button key={link.id} onClick={() => handleScrollToSection(link.id)} className="text-left py-2 hover:text-blue-300 transition-colors">{link.label}</button>
+                    ))}
+                  </nav>
+                  <div className="mt-auto">
+                    <Link to="/login">
+                      <Button className="w-full bg-blue-500 hover:bg-blue-600 text-white rounded-full px-6">Masuk</Button>
+                    </Link>
+                  </div>
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
         </div>
       </header>
 
