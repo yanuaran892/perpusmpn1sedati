@@ -22,8 +22,9 @@ import { Button } from '@/components/ui/button';
 import { useAdminAuth } from '@/context/AdminAuthContext';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet'; // Import SheetHeader, SheetTitle, SheetDescription
 import AdminMobileSidebar from '@/components/admin/AdminMobileSidebar';
+import { VisuallyHidden } from '@/components/ui/visually-hidden'; // Import VisuallyHidden
 
 const navItems = [
   { path: '/admin/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
@@ -118,6 +119,12 @@ const AdminLayout = () => {
                 </Button>
               </SheetTrigger>
               <SheetContent side="left" className="p-0 w-64">
+                <SheetHeader>
+                  <VisuallyHidden>
+                    <SheetTitle>Navigasi Admin</SheetTitle>
+                    <SheetDescription>Tautan navigasi untuk panel admin.</SheetDescription>
+                  </VisuallyHidden>
+                </SheetHeader>
                 <AdminMobileSidebar onLogout={handleLogout} onLinkClick={() => setIsSheetOpen(false)} />
               </SheetContent>
             </Sheet>
