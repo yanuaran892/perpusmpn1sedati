@@ -29,8 +29,8 @@ const LandingPage = () => {
   return (
     <div className="bg-white text-gray-800 font-sans pt-16">
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 w-full h-16 flex items-center bg-gray-800 shadow-lg"> {/* Changed background to solid gray-800, removed rounded-full */}
-        <div className="container mx-auto max-w-5xl flex justify-between items-center"> {/* Removed background, blur, rounded, and padding classes */}
+      <header className="fixed top-0 left-0 right-0 z-50 w-full h-16 flex items-center bg-gray-800 shadow-lg">
+        <div className="flex justify-between items-center w-full px-4 max-w-5xl mx-auto"> {/* Added px-4 here, removed from header, kept max-w-5xl mx-auto */}
           <div className="flex items-center gap-2 text-white font-bold">
             <img src="/smpn1sedati_logo.png" alt="Logo" className="h-8 w-8" />
             <span className="hidden sm:inline">SMPN 1 SEDATI</span>
