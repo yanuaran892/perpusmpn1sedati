@@ -15,7 +15,7 @@ const LandingPage = () => {
   const handleScrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      // The scroll-padding-top property on the main div will handle the offset
+      // The scroll-padding-top property on the html element will handle the offset
       element.scrollIntoView({ behavior: 'smooth' });
     }
     setIsSheetOpen(false); // Close sheet after clicking
@@ -28,8 +28,8 @@ const LandingPage = () => {
   ];
 
   return (
-    // Add scroll-padding-top here to offset the fixed header
-    <div className="bg-white text-gray-800 font-sans scroll-smooth" style={{ scrollPaddingTop: '6rem' }}>
+    // The scroll-padding-top is now handled globally in globals.css
+    <div className="bg-white text-gray-800 font-sans">
       {/* Header */}
       <header className="fixed top-4 left-0 right-0 z-50 w-full px-4">
         <div className="container mx-auto max-w-5xl bg-black/50 backdrop-blur-sm rounded-full shadow-lg py-2 px-4 sm:px-6 flex justify-between items-center">
