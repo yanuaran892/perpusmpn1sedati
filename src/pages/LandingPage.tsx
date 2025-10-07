@@ -29,7 +29,7 @@ const LandingPage = () => {
 
   return (
     // The scroll-padding-top is now handled globally in globals.css
-    <div className="bg-white text-gray-800 font-sans">
+    <div className="bg-white text-gray-800 font-sans pt-16"> {/* Added pt-16 to push content down */}
       {/* Header */}
       <header className="fixed top-4 left-0 right-0 z-50 w-full px-4">
         <div className="container mx-auto max-w-5xl bg-black/50 backdrop-blur-sm rounded-full shadow-lg py-2 px-4 sm:px-6 flex justify-between items-center">
@@ -84,7 +84,7 @@ const LandingPage = () => {
       </header>
 
       {/* Hero Section */}
-      <section id="home" className="relative h-[calc(100vh-4rem)] w-full"> {/* Adjusted height */}
+      <section id="home" className="relative h-[calc(100vh-64px)] w-full"> {/* Adjusted height to account for header */}
         <Carousel
           opts={{ loop: true }}
           plugins={[Autoplay({ delay: 4000, stopOnInteraction: false })]}
