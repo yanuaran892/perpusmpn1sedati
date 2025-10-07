@@ -42,7 +42,7 @@ const LandingPage = () => {
           <CarouselContent className="h-full">
             {heroImages.map((image, index) => (
               <CarouselItem key={index} className="h-full">
-                <div className="w-full h-full bg-cover bg-center" style={{ backgroundImage: `url(${image})` }} />
+                <img src={image} alt={`Perpustakaan SMPN 1 Sedati ${index + 1}`} className="w-full h-full object-cover" />
               </CarouselItem>
             ))}
           </CarouselContent>
