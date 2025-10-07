@@ -20,8 +20,8 @@ const LandingPage = () => {
 
   const navLinks = [
     { id: 'about', label: 'Tentang' },
-    { id: 'information', label: 'Informasi' }, // 'Layanan' removed, 'Informasi' now points to the section
-    { id: 'librarians', label: 'Pustakawan' },
+    { id: 'librarians', label: 'Pustakawan' }, // Moved 'Pustakawan' before 'Informasi'
+    { id: 'information', label: 'Informasi' }, 
   ];
 
   return (
