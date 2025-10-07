@@ -1,0 +1,1 @@
+DROP FUNCTION IF EXISTS public.request_fine_payment(p_id_nis text, p_jumlah_bayar numeric, p_bukti_pembayaran_url text);

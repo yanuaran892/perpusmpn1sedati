@@ -1,0 +1,1 @@
+SELECT id_nis, nama, kelas, email, total_denda, status_siswa FROM public.siswa WHERE id_nis = '14106';

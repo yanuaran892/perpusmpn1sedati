@@ -1,0 +1,1 @@
+DROP FUNCTION IF EXISTS public.borrow_book(text, integer, date, date);

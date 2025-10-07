@@ -1,0 +1,1 @@
+SELECT id_buku, judul_buku, gambar_buku FROM public.buku LIMIT 10;

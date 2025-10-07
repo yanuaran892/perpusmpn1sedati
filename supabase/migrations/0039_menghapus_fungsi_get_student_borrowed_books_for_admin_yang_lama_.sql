@@ -1,0 +1,1 @@
+DROP FUNCTION public.get_student_borrowed_books_for_admin(p_id_nis text);
