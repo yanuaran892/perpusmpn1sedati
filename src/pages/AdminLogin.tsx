@@ -26,7 +26,7 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-400 to-purple-500 p-4"> {/* Gradien yang lebih dinamis */}
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-primary to-indigo-600 p-4"> {/* Gradien yang lebih dinamis */}
       <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-2 drop-shadow-lg animate-fade-in-up">
         ADMIN PANEL
       </h1>
@@ -57,7 +57,7 @@ const AdminLogin = () => {
                 onChange={(e) => setUsername(e.target.value)}
                 required
                 icon={User}
-                className="mt-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="mt-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary"
               />
             </div>
             <div>
@@ -71,12 +71,12 @@ const AdminLogin = () => {
                 required
                 icon={Lock}
                 showPasswordToggle
-                className="mt-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="mt-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary"
               />
             </div>
             <Button
               type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg font-semibold rounded-md transition-colors duration-300"
+              className="w-full bg-primary hover:bg-primary/90 text-white py-3 text-lg font-semibold rounded-md transition-colors duration-300"
               disabled={isLoading}
             >
               {isLoading ? (

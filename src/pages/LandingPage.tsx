@@ -109,7 +109,7 @@ const LandingPage = () => {
         </p>
         <div className="grid md:grid-cols-3 gap-8">
           {cardImages.map((image, index) => (
-            <Card key={index} className="shadow-lg rounded-2xl overflow-hidden text-left">
+            <Card key={index} className="shadow-lg rounded-2xl overflow-hidden text-left hover:shadow-xl transition-shadow duration-300">
               <img src={image} alt={`Kegiatan ${index + 1}`} className="w-full h-48 object-cover" />
               <CardContent className="p-6">
                 <h4 className="font-bold text-xl mb-4">Judul Kegiatan Yang Dilaksanakan</h4>
@@ -187,10 +187,10 @@ const LandingPage = () => {
             <p className="font-bold mb-2">Alamat Perpustakaan SMPN 1 Sedati</p>
             <p className="text-gray-400">Jl. Raya Sedati No. XX, Sedati, Sidoarjo, Jawa Timur</p>
             <div className="flex gap-4 mt-4">
-              <Instagram size={20} className="hover:text-blue-400 cursor-pointer" />
-              <Youtube size={20} className="hover:text-blue-400 cursor-pointer" />
-              <Mail size={20} className="hover:text-blue-400 cursor-pointer" />
-              <Twitter size={20} className="hover:text-blue-400 cursor-pointer" />
+              <Instagram size={20} className="hover:text-blue-400 cursor-pointer transition-colors" />
+              <Youtube size={20} className="hover:text-blue-400 cursor-pointer transition-colors" />
+              <Mail size={20} className="hover:text-blue-400 cursor-pointer transition-colors" />
+              <Twitter size={20} className="hover:text-blue-400 cursor-pointer transition-colors" />
             </div>
           </div>
           <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-8">

@@ -31,11 +31,11 @@ const Login = () => {
       </h2>
 
       <Card className="w-full max-w-md shadow-2xl rounded-xl animate-scale-in" style={{ animationDelay: '0.4s' }}>
-        <CardHeader className="text-center pt-8 relative"> {/* Added relative for positioning the button */}
+        <CardHeader className="text-center pt-8 relative">
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => navigate('/landing')} // Navigate back to landing page
+            onClick={() => navigate('/landing')}
             className="absolute top-4 left-4 text-gray-500 hover:bg-gray-100"
           >
             <ArrowLeft className="h-5 w-5" />
