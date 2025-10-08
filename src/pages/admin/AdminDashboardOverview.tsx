@@ -68,7 +68,7 @@ const AdminDashboardOverview = () => {
   const [borrowedBooks, setBorrowedBooks] = useState(0);
   const [activeStudentsInLibrary, setActiveStudentsInLibrary] = useState(0);
   const [recentActivities, setRecentActivities] = useState<Activity[]>([]);
-  const [popularBooks, setPopularBooks] = useState<PopularBook[]>([]);
+  const [popularBooks, setPopularBooks] = useState<PopularBook[]>([]); // Fixed: Removed extra parenthesis
   const [totalFineIncome, setTotalFineIncome] = useState(0); // New state for total fine income
   const [loading, setLoading] = useState(true);
 
@@ -152,20 +152,19 @@ const AdminDashboardOverview = () => {
           setRecentActivities([]);
       }
 
-      // Total Fine Income (sum of approved payments)
-      const { data: finePayments, error: fineError } = await supabase
-        .from('pembayaran_denda')
-        .select('jumlah_bayar')
-        .eq('status_pembayaran', 'approved');
+      // Total Fine Income (now using Edge Function)
+      const { data: fineIncomeData, error: fineIncomeError } = await supabase.functions.invoke('get-total-approved-fines');
 
-      if (!fineError && finePayments) {
-        const totalAmount = finePayments.reduce((sum, payment) => sum + payment.jumlah_bayar, 0);
-        setTotalFineIncome(totalAmount);
-        console.log('Fetched approved fine payments:', finePayments); // Log data
-        console.log('Calculated total fine income:', totalAmount); // Log total
+      if (fineIncomeError) {
+        console.error('Error invoking get-total-approved-fines Edge Function:', fineIncomeError);
+        showError(fineIncomeError.message || 'Gagal mengambil total pendapatan denda.');
+        setTotalFineIncome(0);
+      } else if (fineIncomeData && typeof fineIncomeData.totalFineIncome === 'number') {
+        setTotalFineIncome(fineIncomeData.totalFineIncome);
+        console.log('Fetched total fine income from Edge Function:', fineIncomeData.totalFineIncome);
       } else {
-        console.error('Error fetching total fine income:', fineError);
-        showError(fineError?.message || 'Gagal mengambil data pendapatan denda.');
+        console.error('Unexpected response from get-total-approved-fines Edge Function:', fineIncomeData);
+        showError('Respon tidak terduga dari fungsi Edge untuk pendapatan denda.');
         setTotalFineIncome(0);
       }
 
