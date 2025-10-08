@@ -5,9 +5,10 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { CalendarIcon } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { format, addDays } from 'date-fns';
+import { format, addDays, setHours, setMinutes } from 'date-fns';
 import { cn } from '@/lib/utils';
-import { getImageUrl } from '@/utils/imageStorage'; // Re-use getImageUrl for preview
+import { getImageUrl } from '@/utils/imageStorage';
+import TimePicker from '@/components/TimePicker'; // Import TimePicker
 
 interface BookDetailDialogProps {
   book: {
@@ -43,11 +44,16 @@ const BookDetailDialog: React.FC<BookDetailDialogProps> = ({
 }) => {
   const [imageError, setImageError] = useState(false);
   const [returnDate, setReturnDate] = useState<Date | undefined>(undefined);
+  const [selectedHour, setSelectedHour] = useState(new Date().getHours());
+  const [selectedMinute, setSelectedMinute] = useState(new Date().getMinutes());
 
   useEffect(() => {
     if (isOpen) {
       // Set default return date to 3 days from now when dialog opens
-      setReturnDate(addDays(new Date(), 3));
+      const now = new Date();
+      setReturnDate(addDays(now, 3));
+      setSelectedHour(now.getHours());
+      setSelectedMinute(now.getMinutes());
       setImageError(false); // Reset image error when dialog opens
     }
   }, [isOpen]);
@@ -56,10 +62,7 @@ const BookDetailDialog: React.FC<BookDetailDialogProps> = ({
 
   const availableCopies = parseInt(book.jumlah_buku || '0') || 0;
   
-  // Use the new getImageUrl function
   const processedImageUrl = getImageUrl(book.gambar_buku);
-
-  // Use placeholder if there's an image error, otherwise use the processed URL
   const imageUrl = imageError ? '/placeholder.svg' : processedImageUrl;
 
   console.log(`BookDetailDialog: Book ID ${book.id_buku}, Original Image Source: ${book.gambar_buku}`);
@@ -68,7 +71,10 @@ const BookDetailDialog: React.FC<BookDetailDialogProps> = ({
 
   const handleConfirm = () => {
     if (book && returnDate) {
-      onConfirmBorrow(book.id_buku, book.judul_buku, returnDate);
+      // Combine selected date with selected time
+      let finalReturnDate = setHours(returnDate, selectedHour);
+      finalReturnDate = setMinutes(finalReturnDate, selectedMinute);
+      onConfirmBorrow(book.id_buku, book.judul_buku, finalReturnDate);
     }
   };
 
@@ -108,9 +114,8 @@ const BookDetailDialog: React.FC<BookDetailDialogProps> = ({
             <h4 className="text-lg font-semibold text-primary mb-2">Sinopsis:</h4>
             <p className="text-gray-800 leading-relaxed">{book.sinopsis || 'Tidak ada sinopsis tersedia.'}</p>
           </div>
-          {/* Moved date picker section inside ScrollArea */}
           <div className="mt-6">
-            <h4 className="text-lg font-semibold text-primary mb-2">Pilih Tanggal Pengembalian:</h4>
+            <h4 className="text-lg font-semibold text-primary mb-2">Pilih Tanggal & Waktu Pengembalian:</h4>
             <Popover>
               <PopoverTrigger asChild>
                 <Button
@@ -121,7 +126,7 @@ const BookDetailDialog: React.FC<BookDetailDialogProps> = ({
                   )}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {returnDate ? format(returnDate, "PPP") : <span>Pilih tanggal</span>}
+                  {returnDate ? format(setHours(setMinutes(returnDate, selectedMinute), selectedHour), "PPP HH:mm") : <span>Pilih tanggal & waktu</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" side="bottom" align="start">
@@ -132,9 +137,15 @@ const BookDetailDialog: React.FC<BookDetailDialogProps> = ({
                   initialFocus
                   disabled={(date) => date < new Date() || date > addDays(new Date(), 3)} // Max 3 days loan
                 />
+                <TimePicker
+                  selectedHour={selectedHour}
+                  onSelectHour={setSelectedHour}
+                  selectedMinute={selectedMinute}
+                  onSelectMinute={setSelectedMinute}
+                />
               </PopoverContent>
             </Popover>
-            <p className="text-sm text-gray-500 mt-2">Buku dapat dipinjam maksimal 3 hari.</p>
+            <p className="text-sm text-gray-500 mt-2">Buku dapat dipinjam maksimal 3 hari. Waktu pengembalian yang dipilih akan dicatat, namun perlu diingat bahwa database saat ini hanya menyimpan tanggal pengembalian yang diharapkan.</p>
           </div>
         </ScrollArea>
         <DialogFooter className="mt-6">
