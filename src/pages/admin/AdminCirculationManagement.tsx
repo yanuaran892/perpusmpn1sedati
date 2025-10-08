@@ -222,16 +222,7 @@ const AdminCirculationManagement = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Judul Buku</TableHead>
-                    <TableHead>Peminjam</TableHead>
-                    <TableHead>NIS</TableHead>
-                    <TableHead>Kelas</TableHead>
-                    <TableHead>Tgl & Waktu Pinjam</TableHead>
-                    <TableHead>Tgl & Waktu Kembali (Estimasi)</TableHead> {/* Updated header */}
-                    <TableHead>Tgl & Waktu Dikembalikan</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead className="text-right">Denda</TableHead>
-                    <TableHead className="text-right">Aksi</TableHead>
+                    <TableHead>Judul Buku</TableHead><TableHead>Peminjam</TableHead><TableHead>NIS</TableHead><TableHead>Kelas</TableHead><TableHead>Tgl & Waktu Pinjam</TableHead><TableHead>Tgl & Waktu Kembali (Estimasi)</TableHead><TableHead>Tgl & Waktu Dikembalikan</TableHead><TableHead>Status</TableHead><TableHead className="text-right">Denda</TableHead><TableHead className="text-right">Aksi</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
