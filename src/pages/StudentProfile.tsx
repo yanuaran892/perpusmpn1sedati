@@ -34,13 +34,11 @@ const StudentProfile = () => {
   useEffect(() => {
     if (!authLoading && !student) {
       navigate('/login');
-    } else if (student?.id_nis) {
-      // Fetch the latest student profile data from the database when the component mounts or student data changes
-      fetchStudentProfile(student.id_nis); 
-      refreshFineHistory();
-      refreshCirculationHistory();
-    }
-  }, [student?.id_nis, authLoading, navigate, refreshFineHistory, refreshCirculationHistory, fetchStudentProfile]); // Added fetchStudentProfile to dependencies
+    } 
+    // Menghapus panggilan fetchStudentProfile yang berulang di sini.
+    // Data siswa seharusnya sudah dimuat oleh StudentAuthContext saat login atau dari localStorage.
+    // Pembaruan eksplisit ditangani oleh handleRefreshStudentProfile.
+  }, [student, authLoading, navigate]); // Dependensi disederhanakan
 
   const handleLogout = () => {
     logout();
