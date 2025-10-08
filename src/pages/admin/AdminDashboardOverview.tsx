@@ -69,6 +69,7 @@ const AdminDashboardOverview = () => {
   const [activeStudentsInLibrary, setActiveStudentsInLibrary] = useState(0);
   const [recentActivities, setRecentActivities] = useState<Activity[]>([]);
   const [popularBooks, setPopularBooks] = useState<PopularBook[]>([]);
+  const [totalFineIncome, setTotalFineIncome] = useState(0); // New state for total fine income
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -151,6 +152,21 @@ const AdminDashboardOverview = () => {
           setRecentActivities([]);
       }
 
+      // Total Fine Income (sum of approved payments)
+      const { data: finePayments, error: fineError } = await supabase
+        .from('pembayaran_denda')
+        .select('jumlah_bayar')
+        .eq('status_pembayaran', 'approved');
+
+      if (!fineError && finePayments) {
+        const totalAmount = finePayments.reduce((sum, payment) => sum + payment.jumlah_bayar, 0);
+        setTotalFineIncome(totalAmount);
+      } else {
+        console.error('Error fetching total fine income:', fineError);
+        showError(fineError?.message || 'Gagal mengambil data pendapatan denda.');
+        setTotalFineIncome(0);
+      }
+
       // Popular Books (empty for now, will be populated based on actual borrowing counts later)
       setPopularBooks([]);
 
@@ -226,26 +242,37 @@ const AdminDashboardOverview = () => {
             <p className="text-xs text-muted-foreground mt-1">Pengunjung aktif hari ini</p>
           </CardContent>
         </Card>
+        {/* New Card for Total Fine Income */}
+        <Card className="shadow-lg border-l-4 border-orange-500 animate-scale-in" style={{ animationDelay: '0.6s' }}>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-gray-700">Total Pendapatan Denda</CardTitle>
+            <DollarSign className="h-5 w-5 text-orange-500" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-3xl font-bold text-foreground">Rp {totalFineIncome.toLocaleString('id-ID')}</div>
+            <p className="text-xs text-muted-foreground mt-1">Total denda yang telah disetujui</p>
+          </CardContent>
+        </Card>
       </div>
 
       {/* New section for Charts */}
       <div className="mt-8">
-        <h2 className="text-3xl font-bold text-foreground mb-6 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>Analisis Data Perpustakaan</h2>
+        <h2 className="text-3xl font-bold text-foreground mb-6 animate-fade-in-up" style={{ animationDelay: '0.7s' }}>Analisis Data Perpustakaan</h2>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="animate-fade-in-up" style={{ animationDelay: '0.7s' }}>
+          <div className="animate-fade-in-up" style={{ animationDelay: '0.8s' }}>
             <MonthlyBorrowChart />
           </div>
-          <div className="animate-fade-in-up" style={{ animationDelay: '0.8s' }}>
+          <div className="animate-fade-in-up" style={{ animationDelay: '0.9s' }}>
             <CategoryDistributionChart />
           </div>
-          <div className="lg:col-span-2 animate-fade-in-up" style={{ animationDelay: '0.9s' }}>
+          <div className="lg:col-span-2 animate-fade-in-up" style={{ animationDelay: '1.0s' }}>
             <DailyVisitorChart />
           </div>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
-        <Card className="shadow-lg animate-fade-in-up" style={{ animationDelay: '1.0s' }}>
+        <Card className="shadow-lg animate-fade-in-up" style={{ animationDelay: '1.1s' }}>
           <CardHeader>
             <CardTitle className="text-xl font-semibold text-primary">Aktivitas Terbaru</CardTitle>
             <CardDescription>Peminjaman dan pengembalian buku terbaru.</CardDescription>
@@ -256,7 +283,7 @@ const AdminDashboardOverview = () => {
                 <p className="text-center text-gray-600 py-4">Tidak ada aktivitas terbaru.</p>
               ) : (
                 recentActivities.map((activity, index) => (
-                  <div key={index} className="flex items-center p-3 bg-gray-50 rounded-md border border-gray-200 animate-slide-in-left" style={{ animationDelay: `${1.1 + index * 0.05}s` }}>
+                  <div key={index} className="flex items-center p-3 bg-gray-50 rounded-md border border-gray-200 animate-slide-in-left" style={{ animationDelay: `${1.2 + index * 0.05}s` }}>
                     <div className={cn(
                       "h-3 w-3 rounded-full mr-3 flex-shrink-0",
                       activity.type === 'borrow' && 'bg-accent',
@@ -275,7 +302,7 @@ const AdminDashboardOverview = () => {
             </div>
           </CardContent>
         </Card>
-        <Card className="shadow-lg animate-fade-in-up" style={{ animationDelay: '1.2s' }}>
+        <Card className="shadow-lg animate-fade-in-up" style={{ animationDelay: '1.3s' }}>
           <CardHeader>
             <CardTitle className="text-xl font-semibold text-primary">Buku Populer</CardTitle>
             <CardDescription>Buku yang paling sering dipinjam bulan ini.</CardDescription>
@@ -286,7 +313,7 @@ const AdminDashboardOverview = () => {
             ) : (
               <div className="space-y-4">
                 {popularBooks.map((book, index) => (
-                  <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-md border border-gray-200 animate-slide-in-right" style={{ animationDelay: `${1.3 + index * 0.05}s` }}>
+                  <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-md border border-gray-200 animate-slide-in-right" style={{ animationDelay: `${1.4 + index * 0.05}s` }}>
                     <div>
                       <p className="text-sm font-medium text-foreground">{book.judul_buku}</p>
                       <p className="text-xs text-muted-foreground mt-1">Dipinjam {book.borrow_count} kali</p>
