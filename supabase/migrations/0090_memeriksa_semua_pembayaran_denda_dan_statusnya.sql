@@ -1,0 +1,1 @@
+SELECT id_pembayaran, id_nis, jumlah_bayar, status_pembayaran, created_at, updated_at FROM public.pembayaran_denda ORDER BY created_at DESC;
