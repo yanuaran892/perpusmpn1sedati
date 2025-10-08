@@ -46,8 +46,8 @@ const BookDetailDialog: React.FC<BookDetailDialogProps> = ({
 
   useEffect(() => {
     if (isOpen) {
-      // Set default return date to 7 days from now when dialog opens
-      setReturnDate(addDays(new Date(), 7));
+      // Set default return date to 3 days from now when dialog opens
+      setReturnDate(addDays(new Date(), 3));
       setImageError(false); // Reset image error when dialog opens
     }
   }, [isOpen]);
@@ -130,11 +130,11 @@ const BookDetailDialog: React.FC<BookDetailDialogProps> = ({
                   selected={returnDate}
                   onSelect={setReturnDate}
                   initialFocus
-                  disabled={(date) => date < new Date() || date > addDays(new Date(), 30)} // Max 30 days loan
+                  disabled={(date) => date < new Date() || date > addDays(new Date(), 3)} // Max 3 days loan
                 />
               </PopoverContent>
             </Popover>
-            <p className="text-sm text-gray-500 mt-2">Buku dapat dipinjam maksimal 30 hari.</p>
+            <p className="text-sm text-gray-500 mt-2">Buku dapat dipinjam maksimal 3 hari.</p>
           </div>
         </ScrollArea>
         <DialogFooter className="mt-6">
