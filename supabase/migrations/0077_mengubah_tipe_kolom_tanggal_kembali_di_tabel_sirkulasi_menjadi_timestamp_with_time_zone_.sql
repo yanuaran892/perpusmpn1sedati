@@ -1,0 +1,2 @@
+ALTER TABLE public.sirkulasi
+ALTER COLUMN tanggal_kembali TYPE TIMESTAMP WITH TIME ZONE;

@@ -211,7 +211,7 @@ const Dashboard = () => {
         p_id_nis: student.id_nis,
         p_id_buku: bookId,
         p_tanggal_pinjam: new Date(),
-        p_tanggal_kembali: format(selectedReturnDate, 'yyyy-MM-dd'),
+        p_tanggal_kembali: selectedReturnDate, // Pass the Date object directly
       });
 
       if (error) {

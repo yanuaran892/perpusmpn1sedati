@@ -16,7 +16,7 @@ interface CirculationItem {
   id_nis: string;
   id_buku: number;
   tanggal_pinjam: string; // Changed to string to handle timestamp with time zone
-  tanggal_kembali: string; // Still date for expected return
+  tanggal_kembali: string; // Changed to string to handle timestamp with time zone
   tanggal_dikembalikan: string | null; // Changed to string to handle timestamp with time zone
   status: string;
   denda: number;
@@ -227,7 +227,7 @@ const AdminCirculationManagement = () => {
                     <TableHead>NIS</TableHead>
                     <TableHead>Kelas</TableHead>
                     <TableHead>Tgl & Waktu Pinjam</TableHead>
-                    <TableHead>Tgl Kembali (Estimasi)</TableHead>
+                    <TableHead>Tgl & Waktu Kembali (Estimasi)</TableHead> {/* Updated header */}
                     <TableHead>Tgl & Waktu Dikembalikan</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead className="text-right">Denda</TableHead>
@@ -242,7 +242,7 @@ const AdminCirculationManagement = () => {
                       <TableCell>{item.id_nis}</TableCell>
                       <TableCell>{item.siswa_kelas || 'N/A'}</TableCell>
                       <TableCell>{format(new Date(item.tanggal_pinjam), 'dd MMM yyyy HH:mm', { locale: id })}</TableCell>
-                      <TableCell>{format(new Date(item.tanggal_kembali), 'dd MMM yyyy', { locale: id })}</TableCell>
+                      <TableCell>{format(new Date(item.tanggal_kembali), 'dd MMM yyyy HH:mm', { locale: id })}</TableCell> {/* Updated format */}
                       <TableCell>{item.tanggal_dikembalikan ? format(new Date(item.tanggal_dikembalikan), 'dd MMM yyyy HH:mm', { locale: id }) : '-'}</TableCell>
                       <TableCell>
                         <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
