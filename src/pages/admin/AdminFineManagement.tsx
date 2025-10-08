@@ -93,6 +93,8 @@ const AdminFineManagement = () => {
         p_admin_username: admin.username,
       });
 
+      console.log('RPC approve_fine_payment response - data:', data, 'error:', error); // Log response
+
       if (error || !data) {
         showError(error?.message || 'Gagal menyetujui pembayaran denda.');
         return;
@@ -124,6 +126,8 @@ const AdminFineManagement = () => {
         p_admin_id: admin.id,
         p_admin_username: admin.username,
       });
+
+      console.log('RPC reject_fine_payment response - data:', data, 'error:', error); // Log response
 
       if (error || !data) {
         showError(error?.message || 'Gagal menolak pembayaran denda.');

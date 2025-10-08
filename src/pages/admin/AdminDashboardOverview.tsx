@@ -161,6 +161,8 @@ const AdminDashboardOverview = () => {
       if (!fineError && finePayments) {
         const totalAmount = finePayments.reduce((sum, payment) => sum + payment.jumlah_bayar, 0);
         setTotalFineIncome(totalAmount);
+        console.log('Fetched approved fine payments:', finePayments); // Log data
+        console.log('Calculated total fine income:', totalAmount); // Log total
       } else {
         console.error('Error fetching total fine income:', fineError);
         showError(fineError?.message || 'Gagal mengambil data pendapatan denda.');
