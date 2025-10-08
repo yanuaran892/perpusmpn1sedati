@@ -35,10 +35,12 @@ const StudentProfile = () => {
     if (!authLoading && !student) {
       navigate('/login');
     } else if (student?.id_nis) {
+      // Fetch the latest student profile data from the database when the component mounts or student data changes
+      fetchStudentProfile(student.id_nis); 
       refreshFineHistory();
       refreshCirculationHistory();
     }
-  }, [student?.id_nis, authLoading, navigate, refreshFineHistory, refreshCirculationHistory]);
+  }, [student?.id_nis, authLoading, navigate, refreshFineHistory, refreshCirculationHistory, fetchStudentProfile]); // Added fetchStudentProfile to dependencies
 
   const handleLogout = () => {
     logout();
