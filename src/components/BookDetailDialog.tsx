@@ -5,7 +5,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { CalendarIcon } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { format, addDays, setHours, setMinutes } from 'date-fns';
+import { format, addDays, setHours, setMinutes, startOfDay } from 'date-fns'; // Import startOfDay
 import { cn } from '@/lib/utils';
 import { getImageUrl } from '@/utils/imageStorage';
 import TimePicker from '@/components/TimePicker'; // Import TimePicker
@@ -135,7 +135,7 @@ const BookDetailDialog: React.FC<BookDetailDialogProps> = ({
                   selected={returnDate}
                   onSelect={setReturnDate}
                   initialFocus
-                  disabled={(date) => date < new Date() || date > addDays(new Date(), 3)} // Max 3 days loan
+                  disabled={(date) => date < startOfDay(new Date()) || date > addDays(new Date(), 3)} // Allow today, max 3 days loan
                 />
                 <TimePicker
                   selectedHour={selectedHour}
