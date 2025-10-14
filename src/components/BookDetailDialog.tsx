@@ -80,16 +80,16 @@ const BookDetailDialog: React.FC<BookDetailDialogProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[700px] max-h-[90vh] flex flex-col overflow-y-auto p-6"> {/* Increased max-width, added padding */}
-        <DialogHeader className="pb-4"> {/* Added padding-bottom */}
-          <DialogTitle className="text-3xl font-extrabold text-primary">{book.judul_buku}</DialogTitle> {/* Larger, bolder title */}
+      <DialogContent className="sm:max-w-[700px] max-h-[90vh] flex flex-col p-6"> {/* Removed overflow-y-auto */}
+        <DialogHeader className="pb-4">
+          <DialogTitle className="text-3xl font-extrabold text-primary">{book.judul_buku}</DialogTitle>
           <DialogDescription className="text-gray-700 text-base">Detail lengkap buku ini.</DialogDescription>
         </DialogHeader>
 
-        <ScrollArea className="flex-grow pr-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-4"> {/* Increased gap */}
+        <ScrollArea className="flex-grow pr-4"> {/* This should now correctly handle scrolling */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-4">
             {/* Image Section */}
-            <div className="flex justify-center items-center p-2 bg-gray-50 rounded-lg shadow-inner"> {/* Added background and shadow */}
+            <div className="flex justify-center items-center p-2 bg-gray-50 rounded-lg shadow-inner">
               <img
                 src={imageUrl}
                 alt={book.judul_buku}
@@ -102,9 +102,9 @@ const BookDetailDialog: React.FC<BookDetailDialogProps> = ({
             </div>
 
             {/* Details Section */}
-            <div className="space-y-4 p-4 bg-gray-50 rounded-lg shadow-inner"> {/* Added background and shadow */}
+            <div className="space-y-4 p-4 bg-gray-50 rounded-lg shadow-inner">
               <h4 className="text-xl font-bold text-foreground mb-2">Informasi Buku</h4>
-              <div className="grid grid-cols-2 gap-y-2"> {/* Use grid for better alignment of labels/values */}
+              <div className="grid grid-cols-2 gap-y-2">
                 <p className="text-sm text-muted-foreground">Penulis:</p>
                 <p className="font-semibold text-foreground">{book.penulis}</p>
 
@@ -130,26 +130,26 @@ const BookDetailDialog: React.FC<BookDetailDialogProps> = ({
                 <p className="font-semibold text-foreground">{book.kode_rak}</p>
 
                 <p className="text-sm text-muted-foreground">Jumlah Tersedia:</p>
-                <p className="font-bold text-lg text-accent">{availableCopies}</p> {/* Highlight available copies */}
+                <p className="font-bold text-lg text-accent">{availableCopies}</p>
               </div>
             </div>
           </div>
 
           {/* Synopsis Section */}
-          <div className="mt-6 p-4 bg-gray-50 rounded-lg shadow-inner"> {/* New section styling */}
+          <div className="mt-6 p-4 bg-gray-50 rounded-lg shadow-inner">
             <h4 className="text-xl font-bold text-foreground mb-3">Sinopsis</h4>
             <p className="text-gray-800 leading-relaxed text-base">{book.sinopsis || 'Tidak ada sinopsis tersedia.'}</p>
           </div>
 
           {/* Date Picker Section */}
-          <div className="mt-6 p-4 bg-gray-50 rounded-lg shadow-inner"> {/* New section styling */}
+          <div className="mt-6 p-4 bg-gray-50 rounded-lg shadow-inner">
             <h4 className="text-xl font-bold text-foreground mb-3">Pilih Tanggal & Waktu Pengembalian</h4>
             <Popover>
               <PopoverTrigger asChild>
                 <Button
                   variant={"outline"}
                   className={cn(
-                    "w-full justify-start text-left font-normal", // Make button full width
+                    "w-full justify-start text-left font-normal",
                     !returnDate && "text-muted-foreground"
                   )}
                 >
@@ -163,7 +163,7 @@ const BookDetailDialog: React.FC<BookDetailDialogProps> = ({
                   selected={returnDate}
                   onSelect={setReturnDate}
                   initialFocus
-                  disabled={(date) => date < startOfDay(new Date()) || date > addDays(new Date(), 3)} // Allow today, max 3 days loan
+                  disabled={(date) => date < startOfDay(new Date()) || date > addDays(new Date(), 3)}
                 />
                 <TimePicker
                   selectedHour={selectedHour}
@@ -177,7 +177,7 @@ const BookDetailDialog: React.FC<BookDetailDialogProps> = ({
           </div>
         </ScrollArea>
 
-        <DialogFooter className="mt-6 pt-4 border-t border-gray-200"> {/* Added top border and padding */}
+        <DialogFooter className="mt-6 pt-4 border-t border-gray-200">
           <Button variant="outline" onClick={onClose}>Tutup</Button>
           <Button
             onClick={handleConfirm}
