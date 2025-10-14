@@ -18,17 +18,14 @@ const InputWithIcon = React.forwardRef<HTMLInputElement, InputWithIconProps>(
     };
 
     // Tentukan padding kanan berdasarkan keberadaan tombol toggle password
-    // Jika ada toggle, beri pr-10. Jika tidak, beri pr-3 sebagai default padding kanan yang wajar.
-    const rightPaddingClass = isPasswordType && showPasswordToggle ? 'pr-10' : 'pr-3'; 
+    const rightPadding = isPasswordType && showPasswordToggle ? 'pr-10' : 'pr-3'; 
 
     return (
       <div className="relative flex items-center">
         <Icon className="absolute left-3 h-4 w-4 text-gray-400" />
         <Input
           type={isPasswordType && showPasswordToggle && showPassword ? 'text' : type}
-          // Pastikan pl-10 selalu diterapkan untuk ikon.
-          // Gabungkan className dari props *setelah* padding dasar agar tidak menimpa.
-          className={cn("pl-10", rightPaddingClass, className)}
+          className={cn("pl-10", rightPadding, className)}
           ref={ref}
           {...props}
         />

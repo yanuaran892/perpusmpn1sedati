@@ -51,10 +51,13 @@ const AdminCirculationManagement = () => {
       if (data) {
         // Apply client-side filtering for search and status
         const filteredData = (data as CirculationItem[]).filter(item => {
-          const matchesSearch = searchTerm === '' ||
-            (item.judul_buku && item.judul_buku.toLowerCase().includes(searchTerm.toLowerCase())) ||
-            (item.siswa_nama && item.siswa_nama.toLowerCase().includes(searchTerm.toLowerCase())) ||
-            (item.id_nis && item.id_nis.toLowerCase().includes(searchTerm.toLowerCase()));
+          const searchLower = searchTerm.toLowerCase();
+          const matchesSearch = (
+            (item.judul_buku && item.judul_buku.toLowerCase().includes(searchLower)) ||
+            (item.siswa_nama && item.siswa_nama.toLowerCase().includes(searchLower)) ||
+            (item.id_nis && item.id_nis.toLowerCase().includes(searchLower)) ||
+            (item.siswa_kelas && item.siswa_kelas.toLowerCase().includes(searchLower))
+          );
 
           const matchesStatus = filterStatus === 'all' || item.status === filterStatus;
 
@@ -201,9 +204,9 @@ const AdminCirculationManagement = () => {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">Semua Status</SelectItem>
-                <SelectItem value="pending">Menunggu Persetujuan Peminjaman</SelectItem>
+                <SelectItem value="pending">Menunggu Peminjaman</SelectItem>
                 <SelectItem value="dipinjam">Dipinjam</SelectItem>
-                <SelectItem value="return_pending">Menunggu Persetujuan Pengembalian</SelectItem> {/* New status */}
+                <SelectItem value="return_pending">Menunggu Pengembalian</SelectItem> {/* New status */}
                 <SelectItem value="dikembalikan">Dikembalikan</SelectItem>
                 <SelectItem value="rejected">Ditolak</SelectItem>
               </SelectContent>
@@ -222,7 +225,16 @@ const AdminCirculationManagement = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Judul Buku</TableHead><TableHead>Peminjam</TableHead><TableHead>NIS</TableHead><TableHead>Kelas</TableHead><TableHead>Tgl & Waktu Pinjam</TableHead><TableHead>Tgl & Waktu Kembali (Estimasi)</TableHead><TableHead>Tgl & Waktu Dikembalikan</TableHead><TableHead>Status</TableHead><TableHead className="text-right">Denda</TableHead><TableHead className="text-right">Aksi</TableHead>
+                    <TableHead>Judul Buku</TableHead>
+                    <TableHead>Peminjam</TableHead>
+                    <TableHead>NIS</TableHead>
+                    <TableHead>Kelas</TableHead>
+                    <TableHead>Pinjam</TableHead>
+                    <TableHead>Kembali (Est.)</TableHead> {/* Dispendekkan */}
+                    <TableHead>Dikembalikan</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead className="text-right">Denda</TableHead>
+                    <TableHead className="text-right">Aksi</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>

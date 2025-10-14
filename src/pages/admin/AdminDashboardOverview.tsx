@@ -168,7 +168,7 @@ const AdminDashboardOverview = () => {
         setTotalFineIncome(0);
       }
 
-      // Popular Books (empty for now, will be populated based on actual borrowing counts later)
+      // Popular Books (placeholder for now, will be populated based on actual borrowing counts later)
       setPopularBooks([]);
 
     } catch (err) {

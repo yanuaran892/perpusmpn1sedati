@@ -84,7 +84,7 @@ export const StudentAuthProvider = ({ children }: React.PropsWithChildren) => {
     } finally {
       setIsLoading(false);
     }
-  }, []); // Removed dependency on student?.id_nis, now depends on nothing as nis is passed as arg.
+  }, [showError]); // Added showError to dependencies
 
   const login = async (id_nis: string, password: string) => {
     setIsLoading(true);
