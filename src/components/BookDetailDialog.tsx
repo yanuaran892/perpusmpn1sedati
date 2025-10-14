@@ -80,12 +80,12 @@ const BookDetailDialog: React.FC<BookDetailDialogProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[600px] max-h-[90vh] flex flex-col">
+      <DialogContent className="sm:max-w-[600px] max-h-[90vh] flex flex-col overflow-y-auto"> {/* Added overflow-y-auto here */}
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-primary">{book.judul_buku}</DialogTitle>
           <DialogDescription className="text-gray-600">Detail lengkap buku ini.</DialogDescription>
         </DialogHeader>
-        <ScrollArea className="flex-grow pr-4 h-full"> {/* Added h-full here */}
+        <ScrollArea className="flex-grow pr-4"> {/* Removed h-full */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-4">
             <div className="flex justify-center items-center">
               <img
