@@ -84,16 +84,16 @@ const LandingPage = () => {
         <img src={heroImages[0]} alt="Perpustakaan SMPN 1 Sedati" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-black/50"></div>
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-white text-center p-4">
-          <img src="/smpn1sedati_logo.png" alt="Logo SMPN 1 Sedati" className="h-24 w-24 md:h-32 md:w-32 mb-4 drop-shadow-lg" />
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-wider drop-shadow-lg leading-tight">PERPUSTAKAAN</h1>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold drop-shadow-lg mb-6 leading-tight">SMP NEGERI 1 SEDATI</h2>
-          <p className="text-base md:text-lg italic max-w-xs sm:max-w-sm md:max-w-3xl drop-shadow-lg mb-8">
+          <img src="/smpn1sedati_logo.png" alt="Logo SMPN 1 Sedati" className="h-24 w-24 md:h-32 md:w-32 mb-4 drop-shadow-lg animate-fade-in-up" />
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-wider drop-shadow-lg leading-tight animate-fade-in-up" style={{ animationDelay: '100ms' }}>PERPUSTAKAAN</h1>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold drop-shadow-lg mb-6 leading-tight animate-fade-in-up" style={{ animationDelay: '200ms' }}>SMP NEGERI 1 SEDATI</h2>
+          <p className="text-base md:text-lg italic max-w-xs sm:max-w-sm md:max-w-3xl drop-shadow-lg mb-8 animate-fade-in-up" style={{ animationDelay: '300ms' }}>
             "Kalau engkau hanya membaca buku yang dibaca semua orang,
             engkau hanya bisa berpikir sama seperti semua orang."
             <br />
             (Haruki Murakami).
           </p>
-          <Link to="/login">
+          <Link to="/login" className="animate-fade-in-up" style={{ animationDelay: '400ms' }}>
             <Button className="bg-blue-500 hover:bg-blue-600 text-white rounded-full px-8 py-3 text-xl font-semibold shadow-lg transition-all duration-300 transform hover:scale-105">
               Mari Membaca
             </Button>
@@ -109,8 +109,10 @@ const LandingPage = () => {
         </p>
         <div className="grid md:grid-cols-3 gap-8">
           {cardImages.map((image, index) => (
-            <Card key={index} className="shadow-lg rounded-2xl overflow-hidden text-left hover:shadow-xl transition-shadow duration-300">
-              <img src={image} alt={`Kegiatan ${index + 1}`} className="w-full h-48 object-cover" />
+            <Card key={index} className="shadow-lg rounded-2xl overflow-hidden text-left hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+              <div className="overflow-hidden">
+                <img src={image} alt={`Kegiatan ${index + 1}`} className="w-full h-48 object-cover transition-transform duration-300 hover:scale-110" />
+              </div>
               <CardContent className="p-6">
                 <h4 className="font-bold text-xl mb-4">Judul Kegiatan Yang Dilaksanakan</h4>
                 <div className="flex justify-between text-sm text-gray-500">

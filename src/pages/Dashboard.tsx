@@ -11,6 +11,7 @@ import { showError, showSuccess } from '@/utils/toast';
 import { format, isPast } from 'date-fns';
 import BookCard from '@/components/BookCard';
 import BookDetailDialog from '@/components/BookDetailDialog';
+import BookCardSkeleton from '@/components/BookCardSkeleton';
 
 interface BookItem {
   id_buku: number;
@@ -337,9 +338,10 @@ const Dashboard = () => {
           </CardHeader>
           <CardContent className="pt-6">
             {loadingBooks ? (
-              <div className="flex justify-center items-center h-64">
-                <Loader2 className="h-12 w-12 animate-spin text-primary" />
-                <p className="ml-4 text-xl text-gray-700">Memuat buku...</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                {Array.from({ length: 8 }).map((_, index) => (
+                  <BookCardSkeleton key={index} />
+                ))}
               </div>
             ) : books.length === 0 ? (
               <p className="text-center text-gray-600 py-12 text-lg">Tidak ada buku ditemukan.</p>
@@ -347,7 +349,7 @@ const Dashboard = () => {
               <>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                   {books.map((book, index) => (
-                    <div key={book.id_buku} className="animate-scale-in" style={{ animationDelay: `${0.9 + index * 0.05}s` }}>
+                    <div key={book.id_buku} className="animate-fade-in-up" style={{ animationDelay: `${index * 50}ms`, animationFillMode: 'backwards' }}>
                       <BookCard
                         book={book}
                         onViewDetails={handleViewBookDetails}

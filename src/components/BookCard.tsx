@@ -40,12 +40,12 @@ const BookCard: React.FC<BookCardProps> = ({ book, onViewDetails, isBorrowDisabl
 
 
   return (
-    <Card className="flex flex-col justify-between h-full shadow-md hover:shadow-lg transition-shadow duration-200">
+    <Card className="group flex flex-col justify-between h-full shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden">
       <div className="w-full h-48 flex items-center justify-center rounded-t-lg overflow-hidden bg-gray-200">
         <img
           src={imageUrl}
           alt={book.judul_buku}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
           onError={() => {
             console.error(`BookCard: Failed to load image for Book ID ${book.id_buku} from URL: ${imageUrl}`);
             setImageError(true);
