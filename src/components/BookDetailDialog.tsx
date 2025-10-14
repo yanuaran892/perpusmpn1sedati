@@ -85,7 +85,7 @@ const BookDetailDialog: React.FC<BookDetailDialogProps> = ({
           <DialogTitle className="text-2xl font-bold text-primary">{book.judul_buku}</DialogTitle>
           <DialogDescription className="text-gray-600">Detail lengkap buku ini.</DialogDescription>
         </DialogHeader>
-        <ScrollArea className="flex-grow pr-4">
+        <ScrollArea className="flex-grow pr-4 h-full"> {/* Added h-full here */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-4">
             <div className="flex justify-center items-center">
               <img
