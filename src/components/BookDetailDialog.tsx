@@ -80,48 +80,76 @@ const BookDetailDialog: React.FC<BookDetailDialogProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[600px] max-h-[90vh] flex flex-col overflow-y-auto"> {/* Added overflow-y-auto here */}
-        <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-primary">{book.judul_buku}</DialogTitle>
-          <DialogDescription className="text-gray-600">Detail lengkap buku ini.</DialogDescription>
+      <DialogContent className="sm:max-w-[700px] max-h-[90vh] flex flex-col overflow-y-auto p-6"> {/* Increased max-width, added padding */}
+        <DialogHeader className="pb-4"> {/* Added padding-bottom */}
+          <DialogTitle className="text-3xl font-extrabold text-primary">{book.judul_buku}</DialogTitle> {/* Larger, bolder title */}
+          <DialogDescription className="text-gray-700 text-base">Detail lengkap buku ini.</DialogDescription>
         </DialogHeader>
-        <ScrollArea className="flex-grow pr-4"> {/* Removed h-full */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-4">
-            <div className="flex justify-center items-center">
+
+        <ScrollArea className="flex-grow pr-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-4"> {/* Increased gap */}
+            {/* Image Section */}
+            <div className="flex justify-center items-center p-2 bg-gray-50 rounded-lg shadow-inner"> {/* Added background and shadow */}
               <img
                 src={imageUrl}
                 alt={book.judul_buku}
-                className="w-full max-w-xs h-auto object-contain rounded-lg shadow-md"
+                className="w-full max-w-xs h-auto object-contain rounded-lg"
                 onError={() => {
                   console.error(`BookDetailDialog: Failed to load image for Book ID ${book.id_buku} from URL: ${imageUrl}`);
                   setImageError(true);
                 }}
               />
             </div>
-            <div className="space-y-3 text-gray-700">
-              <p><strong>Penulis:</strong> {book.penulis}</p>
-              <p><strong>ISBN:</strong> {book.isbn}</p>
-              <p><strong>Kategori:</strong> <span className="font-medium text-primary">{book.nama_kategori || 'Umum'}</span></p>
-              <p><strong>Tahun Terbit:</strong> {book.tahun_terbit}</p>
-              <p><strong>Penerbit:</strong> {book.penerbit}</p>
-              <p><strong>Kota Terbit:</strong> {book.kota_terbit}</p>
-              <p><strong>No. Klasifikasi:</strong> {book.no_klasifikasi}</p>
-              <p><strong>Kode Rak:</strong> {book.kode_rak}</p>
-              <p><strong>Jumlah Tersedia:</strong> <span className="font-semibold text-lg">{availableCopies}</span></p>
+
+            {/* Details Section */}
+            <div className="space-y-4 p-4 bg-gray-50 rounded-lg shadow-inner"> {/* Added background and shadow */}
+              <h4 className="text-xl font-bold text-foreground mb-2">Informasi Buku</h4>
+              <div className="grid grid-cols-2 gap-y-2"> {/* Use grid for better alignment of labels/values */}
+                <p className="text-sm text-muted-foreground">Penulis:</p>
+                <p className="font-semibold text-foreground">{book.penulis}</p>
+
+                <p className="text-sm text-muted-foreground">ISBN:</p>
+                <p className="font-semibold text-foreground">{book.isbn}</p>
+
+                <p className="text-sm text-muted-foreground">Kategori:</p>
+                <p className="font-semibold text-primary">{book.nama_kategori || 'Umum'}</p>
+
+                <p className="text-sm text-muted-foreground">Tahun Terbit:</p>
+                <p className="font-semibold text-foreground">{book.tahun_terbit}</p>
+
+                <p className="text-sm text-muted-foreground">Penerbit:</p>
+                <p className="font-semibold text-foreground">{book.penerbit}</p>
+
+                <p className="text-sm text-muted-foreground">Kota Terbit:</p>
+                <p className="font-semibold text-foreground">{book.kota_terbit}</p>
+
+                <p className="text-sm text-muted-foreground">No. Klasifikasi:</p>
+                <p className="font-semibold text-foreground">{book.no_klasifikasi}</p>
+
+                <p className="text-sm text-muted-foreground">Kode Rak:</p>
+                <p className="font-semibold text-foreground">{book.kode_rak}</p>
+
+                <p className="text-sm text-muted-foreground">Jumlah Tersedia:</p>
+                <p className="font-bold text-lg text-accent">{availableCopies}</p> {/* Highlight available copies */}
+              </div>
             </div>
           </div>
-          <div className="mt-4">
-            <h4 className="text-lg font-semibold text-primary mb-2">Sinopsis:</h4>
-            <p className="text-gray-800 leading-relaxed">{book.sinopsis || 'Tidak ada sinopsis tersedia.'}</p>
+
+          {/* Synopsis Section */}
+          <div className="mt-6 p-4 bg-gray-50 rounded-lg shadow-inner"> {/* New section styling */}
+            <h4 className="text-xl font-bold text-foreground mb-3">Sinopsis</h4>
+            <p className="text-gray-800 leading-relaxed text-base">{book.sinopsis || 'Tidak ada sinopsis tersedia.'}</p>
           </div>
-          <div className="mt-6">
-            <h4 className="text-lg font-semibold text-primary mb-2">Pilih Tanggal & Waktu Pengembalian:</h4>
+
+          {/* Date Picker Section */}
+          <div className="mt-6 p-4 bg-gray-50 rounded-lg shadow-inner"> {/* New section styling */}
+            <h4 className="text-xl font-bold text-foreground mb-3">Pilih Tanggal & Waktu Pengembalian</h4>
             <Popover>
               <PopoverTrigger asChild>
                 <Button
                   variant={"outline"}
                   className={cn(
-                    "w-[240px] justify-start text-left font-normal",
+                    "w-full justify-start text-left font-normal", // Make button full width
                     !returnDate && "text-muted-foreground"
                   )}
                 >
@@ -145,10 +173,11 @@ const BookDetailDialog: React.FC<BookDetailDialogProps> = ({
                 />
               </PopoverContent>
             </Popover>
-            <p className="text-sm text-gray-500 mt-2">Buku dapat dipinjam maksimal 3 hari. Waktu pengembalian yang dipilih akan dicatat, namun perlu diingat bahwa database saat ini hanya menyimpan tanggal pengembalian yang diharapkan.</p>
+            <p className="text-sm text-gray-500 mt-3">Buku dapat dipinjam maksimal 3 hari. Waktu pengembalian yang dipilih akan dicatat, namun perlu diingat bahwa database saat ini hanya menyimpan tanggal pengembalian yang diharapkan.</p>
           </div>
         </ScrollArea>
-        <DialogFooter className="mt-6">
+
+        <DialogFooter className="mt-6 pt-4 border-t border-gray-200"> {/* Added top border and padding */}
           <Button variant="outline" onClick={onClose}>Tutup</Button>
           <Button
             onClick={handleConfirm}
