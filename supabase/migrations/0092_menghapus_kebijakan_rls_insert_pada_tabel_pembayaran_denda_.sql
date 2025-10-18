@@ -1,0 +1,1 @@
+DROP POLICY IF EXISTS "Siswa can request their own fine payments" ON public.pembayaran_denda;
