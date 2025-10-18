@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -119,38 +119,6 @@ const LandingPage = () => {
           </div>
         </section>
 
-        {/* Visi & Misi Section */}
-        <SectionWrapper id="vision-mission">
-          <div className="text-center">
-            <h3 className="text-3xl md:text-4xl font-bold mb-6">VISI & MISI</h3>
-            <p className="max-w-4xl mx-auto text-base md:text-lg text-gray-600 leading-relaxed mb-12 md:mb-16">Mewujudkan sekolah yang beriman, bertaqwa, berkarakter, berprestasi, dan peduli lingkungan dengan lulusan yang cerdas, kreatif, kompetitif, serta cinta tanah air.</p>
-            <div className="grid md:grid-cols-3 gap-8">
-              {["/foto (1).jpg", "/foto (2).jpg", "/foto (3).jpg"].map((image, index) => (
-                <Card key={index} className="shadow-lg rounded-2xl overflow-hidden text-left hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                  <div className="overflow-hidden"><img src={image} alt={`Kegiatan ${index + 1}`} className="w-full h-48 object-cover transition-transform duration-300 hover:scale-110" /></div>
-                  <CardContent className="p-6">
-                    <h4 className="font-bold text-xl mb-4">Judul Kegiatan Yang Dilaksanakan</h4>
-                    <div className="flex justify-between text-sm text-gray-500"><span className="flex items-center gap-2"><Calendar size={16} /> AGUSTUS 16, 2025</span><span className="flex items-center gap-2"><MessageSquare size={16} /> NO COMMENT</span></div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </SectionWrapper>
-
-        {/* Tentang Section */}
-        <section id="about" className="relative py-16 md:py-24 px-4 bg-cover bg-center bg-fixed" style={{ backgroundImage: "url('/foto (3).jpg')" }}>
-          <div className="absolute inset-0 bg-black/60"></div>
-          <div className="relative container mx-auto grid md:grid-cols-2 items-center">
-            <div className="md:col-start-2 text-white p-6 md:p-8 bg-black/30 backdrop-blur-sm rounded-lg border border-white/20">
-              <p className="text-sm tracking-widest">SELAMAT DATANG DI</p>
-              <h3 className="text-3xl md:text-4xl font-bold my-2">Perpustakaan SMPN 1 SEDATI</h3>
-              <p className="text-lg font-semibold mb-4">Halo, Sobat Literasi!</p>
-              <p className="text-gray-300 leading-relaxed">Perpustakaan SMPN 1 Sedati hadir sebagai pusat belajar dan sumber inspirasi bagi seluruh warga sekolah. Di sini, kamu dapat menemukan berbagai koleksi buku, majalah, e-book, dan referensi pembelajaran yang akan membantumu memperluas wawasan dan meningkatkan prestasi.</p>
-            </div>
-          </div>
-        </section>
-
         {/* Testimonials Section */}
         <SectionWrapper id="testimonials">
           <div className="text-center">
@@ -172,6 +140,19 @@ const LandingPage = () => {
             </Carousel>
           </div>
         </SectionWrapper>
+
+        {/* Tentang Section */}
+        <section id="about" className="relative py-16 md:py-24 px-4 bg-cover bg-center bg-fixed" style={{ backgroundImage: "url('/foto (3).jpg')" }}>
+          <div className="absolute inset-0 bg-black/60"></div>
+          <div className="relative container mx-auto grid md:grid-cols-2 items-center">
+            <div className="md:col-start-2 text-white p-6 md:p-8 bg-black/30 backdrop-blur-sm rounded-lg border border-white/20">
+              <p className="text-sm tracking-widest">SELAMAT DATANG DI</p>
+              <h3 className="text-3xl md:text-4xl font-bold my-2">Perpustakaan SMPN 1 SEDATI</h3>
+              <p className="text-lg font-semibold mb-4">Halo, Sobat Literasi!</p>
+              <p className="text-gray-300 leading-relaxed">Perpustakaan SMPN 1 Sedati hadir sebagai pusat belajar dan sumber inspirasi bagi seluruh warga sekolah. Di sini, kamu dapat menemukan berbagai koleksi buku, majalah, e-book, dan referensi pembelajaran yang akan membantumu memperluas wawasan dan meningkatkan prestasi.</p>
+            </div>
+          </div>
+        </section>
 
         {/* Pustakawan Section */}
         <SectionWrapper id="librarians">
