@@ -31,30 +31,47 @@ export const StudentAuthProvider = ({ children }: React.PropsWithChildren) => {
   const [student, setStudent] = useState<Student | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Helper to set the session NIS in Supabase
+  const setSessionNis = useCallback(async (nis: string | null) => {
+    if (nis) {
+      try {
+        // Call the RPC function to set app.current_nis in the database session
+        const { error } = await supabase.rpc('set_student_session_nis', { p_id_nis: nis });
+        if (error) {
+          console.error('Error setting app.current_nis in session:', error);
+        } else {
+          console.log('app.current_nis set in session:', nis);
+        }
+      } catch (err) {
+        console.error('Unexpected error setting app.current_nis in session:', err);
+      }
+    }
+  }, []);
+
   useEffect(() => {
-    const loadStudentFromLocalStorage = () => {
+    const loadStudentFromLocalStorage = async () => { // Made async
       const storedStudent = localStorage.getItem('student');
       if (storedStudent) {
-        setStudent(JSON.parse(storedStudent));
+        const parsedStudent: Student = JSON.parse(storedStudent);
+        setStudent(parsedStudent);
+        await setSessionNis(parsedStudent.id_nis); // Set session NIS on load
       }
       setIsLoading(false);
     };
     loadStudentFromLocalStorage();
-  }, []);
+  }, [setSessionNis]); // Dependency on setSessionNis
 
-  // Modified: fetchStudentProfile now accepts nis as an argument
   const fetchStudentProfile = useCallback(async (nis: string) => {
     console.log('fetchStudentProfile called with NIS:', nis);
-    if (!nis) { // Check for valid nis argument
+    if (!nis) {
       console.log('fetchStudentProfile: NIS is null or undefined. Exiting early.');
       setIsLoading(false);
       return;
     }
     setIsLoading(true);
     try {
-      // Removed redundant set_config call here.
-      // It should be set by login_siswa RPC for the session.
-      console.log(`fetchStudentProfile: Attempting to fetch student profile for NIS: ${nis}`);
+      // Ensure session NIS is set before fetching profile, in case it was lost
+      await setSessionNis(nis); // Set session NIS before fetching
 
       const { data, error } = await supabase
         .from('siswa')
@@ -84,7 +101,7 @@ export const StudentAuthProvider = ({ children }: React.PropsWithChildren) => {
     } finally {
       setIsLoading(false);
     }
-  }, [showError]); // Added showError to dependencies
+  }, [showError, setSessionNis]); // Added setSessionNis to dependencies
 
   const login = async (id_nis: string, password: string) => {
     setIsLoading(true);
@@ -92,7 +109,6 @@ export const StudentAuthProvider = ({ children }: React.PropsWithChildren) => {
       const trimmedNis = id_nis.trim();
       const trimmedPassword = password.trim();
 
-      // login_siswa RPC now sets app.current_nis for the session
       const { data, error } = await supabase.rpc('login_siswa', { id_nis_param: trimmedNis, password_param: trimmedPassword });
 
       if (error) {
@@ -107,33 +123,31 @@ export const StudentAuthProvider = ({ children }: React.PropsWithChildren) => {
         setStudent(loggedInStudent);
         localStorage.setItem('student', JSON.stringify(loggedInStudent));
         showSuccess('Login successful!');
+        await setSessionNis(loggedInStudent.id_nis); // Ensure session NIS is set after login
 
         // --- LOGIC TO RECORD STUDENT VISIT ---
         const today = format(new Date(), 'yyyy-MM-dd');
         const currentTime = format(new Date(), 'HH:mm:ss');
 
-        // Check if there's an existing 'berkunjung' entry for this student today
         const { data: existingVisit, error: fetchVisitError } = await supabase
           .from('buku_tamu')
           .select('id_tamu')
           .eq('id_nis', loggedInStudent.id_nis)
           .eq('tanggal', today)
           .eq('status', 'berkunjung')
-          .order('waktu', { ascending: false }) // Get the most recent one
+          .order('waktu', { ascending: false })
           .limit(1);
 
         if (fetchVisitError) {
           console.error('Error checking existing visit:', fetchVisitError);
-          // Continue login process even if visit check fails
         }
 
         if (!existingVisit || existingVisit.length === 0) {
-          // If no active visit found, insert a new one
           const { error: insertVisitError } = await supabase.from('buku_tamu').insert({
             id_nis: loggedInStudent.id_nis,
             nama: loggedInStudent.nama,
             kelas: loggedInStudent.kelas,
-            tujuan: 'Membaca/Belajar', // Default purpose for login-triggered visit
+            tujuan: 'Membaca/Belajar',
             tanggal: today,
             waktu: currentTime,
             status: 'berkunjung',
@@ -174,14 +188,13 @@ export const StudentAuthProvider = ({ children }: React.PropsWithChildren) => {
       const today = format(new Date(), 'yyyy-MM-dd');
 
       try {
-        // Find the most recent 'berkunjung' entry for this student today
         const { data: activeVisit, error: fetchActiveVisitError } = await supabase
           .from('buku_tamu')
           .select('id_tamu')
           .eq('id_nis', student.id_nis)
           .eq('tanggal', today)
           .eq('status', 'berkunjung')
-          .order('waktu', { ascending: false }) // Get the most recent one
+          .order('waktu', { ascending: false })
           .limit(1);
 
         if (fetchActiveVisitError) {
@@ -214,6 +227,7 @@ export const StudentAuthProvider = ({ children }: React.PropsWithChildren) => {
     setStudent(null);
     localStorage.removeItem('student');
     showSuccess('Logged out successfully.');
+    await setSessionNis(null); // Clear session NIS on logout
   };
 
   const updateStudent = (newStudentData: Partial<Student>) => {
