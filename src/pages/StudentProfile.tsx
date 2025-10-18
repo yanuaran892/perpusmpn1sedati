@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStudentAuth } from '@/context/StudentAuthContext';
 import { Button } from '@/components/ui/button';
-import { Loader2, LogOut, ArrowLeft } from 'lucide-react';
+import { Loader2, LogOut, ArrowLeft, RefreshCcw } from 'lucide-react'; // Import RefreshCcw
 import FinePaymentRequestDialog from '@/components/FinePaymentRequestDialog';
 import StudentProfileInfo from '@/components/student/StudentProfileInfo';
 import StudentChangePasswordForm from '@/components/student/StudentChangePasswordForm';
@@ -14,6 +14,7 @@ const StudentProfile = () => {
   const navigate = useNavigate();
 
   const [isFinePaymentDialogOpen, setIsFinePaymentDialogOpen] = useState(false);
+  const [isRefreshingProfile, setIsRefreshingProfile] = useState(false); // New state for refresh loading
 
   const refreshFineHistory = useCallback(() => {
     // This empty function is passed down. The actual fetch logic is inside StudentFineHistory.
@@ -24,9 +25,11 @@ const StudentProfile = () => {
     // Similar to refreshFineHistory
   }, []);
 
-  const handleRefreshStudentProfile = useCallback(() => {
+  const handleRefreshStudentProfile = useCallback(async () => {
     if (student?.id_nis) {
-      fetchStudentProfile(student.id_nis);
+      setIsRefreshingProfile(true); // Start loading
+      await fetchStudentProfile(student.id_nis);
+      setIsRefreshingProfile(false); // End loading
     }
   }, [student?.id_nis, fetchStudentProfile]);
 
@@ -74,9 +77,24 @@ const StudentProfile = () => {
           <Button variant="outline" onClick={() => navigate('/dashboard')} className="text-primary hover:bg-primary/5 transition-colors duration-200">
             <ArrowLeft className="mr-2 h-5 w-5" /> Kembali ke Dashboard
           </Button>
-          <Button onClick={handleLogout} variant="ghost" className="text-red-600 hover:bg-red-50 transition-colors duration-200">
-            <LogOut className="mr-2 h-5 w-5" /> Logout
-          </Button>
+          <div className="flex space-x-2">
+            <Button 
+              onClick={handleRefreshStudentProfile} 
+              variant="outline" 
+              className="text-gray-600 hover:bg-gray-100 transition-colors duration-200"
+              disabled={isRefreshingProfile}
+            >
+              {isRefreshingProfile ? (
+                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+              ) : (
+                <RefreshCcw className="mr-2 h-5 w-5" />
+              )}
+              Refresh Data
+            </Button>
+            <Button onClick={handleLogout} variant="ghost" className="text-red-600 hover:bg-red-50 transition-colors duration-200">
+              <LogOut className="mr-2 h-5 w-5" /> Logout
+            </Button>
+          </div>
         </div>
 
         <h1 className="text-4xl font-extrabold text-center text-foreground mb-10 animate-fade-in-up">
