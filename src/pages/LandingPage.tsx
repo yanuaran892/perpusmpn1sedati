@@ -85,10 +85,11 @@ const LandingPage = () => {
 
       <main>
         {/* Hero Section */}
-        <section id="home" className="relative h-screen w-full overflow-hidden">
-          <motion.div className="absolute inset-0 w-full h-full" style={{ y: heroParallax }}>
-            <img src="/hero_landing.png" alt="Perpustakaan SMPN 1 Sedati" className="w-full h-full object-cover" />
-          </motion.div>
+        <section
+          id="home"
+          className="relative h-screen w-full bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url('/hero_landing.png')" }}
+        >
           <div className="absolute inset-0 bg-black/50"></div>
           <div className="relative z-10 flex flex-col items-center justify-center h-full text-white text-center p-4">
             <motion.img src="/smpn1sedati_logo.png" alt="Logo SMPN 1 Sedati" className="h-24 w-24 md:h-32 md:w-32 mb-4 drop-shadow-lg" initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5 }} />
