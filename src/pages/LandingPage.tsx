@@ -88,7 +88,7 @@ const LandingPage = () => {
         <section
           id="home"
           className="relative h-screen w-full bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/hero_landing.png')" }}
+          style={{ backgroundImage: "url('/foto (1).jpg')" }}
         >
           <div className="absolute inset-0 bg-black/50"></div>
           <div className="relative z-10 flex flex-col items-center justify-center h-full text-white text-center p-4">
