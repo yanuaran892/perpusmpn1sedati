@@ -9,7 +9,6 @@ import { useInView } from 'react-intersection-observer';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import AnimatedStatCard from "@/components/AnimatedStatCard";
-import TestimonialCard from "@/components/TestimonialCard";
 
 const LandingPage = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
@@ -26,16 +25,8 @@ const LandingPage = () => {
 
   const navLinks = [
     { id: 'about', label: 'Tentang' },
-    { id: 'testimonials', label: 'Testimoni' },
     { id: 'librarians', label: 'Pustakawan' },
     { id: 'information', label: 'Informasi' },
-  ];
-
-  const testimonials = [
-    { quote: "Perpustakaan ini sangat membantu saya menemukan referensi untuk tugas sekolah. Koleksinya lengkap!", author: "Ahmad Dhani", role: "Siswa Kelas IX" },
-    { quote: "Sistem online-nya memudahkan saya untuk meminjam buku tanpa harus antri. Sangat efisien!", author: "Budi Doremi", role: "Siswa Kelas VIII" },
-    { quote: "Tempatnya nyaman untuk membaca dan belajar. Pustakawannya juga sangat ramah dan membantu.", author: "Cici Paramida", role: "Siswa Kelas VII" },
-    { quote: "Sebagai guru, saya sering memanfaatkan koleksi buku di sini untuk materi ajar. Sangat bermanfaat!", author: "Dedi Mizwar", role: "Guru Bahasa Indonesia" },
   ];
 
   const SectionWrapper = ({ children, id }: { children: React.ReactNode, id: string }) => {
@@ -118,28 +109,6 @@ const LandingPage = () => {
             <AnimatedStatCard icon={BookOpen} label="Akses Online" value="24/7" isNumeric={false} animationDelay={0.4} />
           </div>
         </section>
-
-        {/* Testimonials Section */}
-        <SectionWrapper id="testimonials">
-          <div className="text-center">
-            <h3 className="text-3xl md:text-4xl font-bold mb-12 tracking-widest">APA KATA MEREKA</h3>
-            <Carousel
-              opts={{ align: "start", loop: true }}
-              plugins={[Autoplay({ delay: 5000, stopOnInteraction: true })]}
-              className="w-full max-w-4xl mx-auto"
-            >
-              <CarouselContent>
-                {testimonials.map((testimonial, index) => (
-                  <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3 p-4">
-                    <TestimonialCard {...testimonial} />
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious className="hidden sm:flex" />
-              <CarouselNext className="hidden sm:flex" />
-            </Carousel>
-          </div>
-        </SectionWrapper>
 
         {/* Tentang Section */}
         <section id="about" className="relative py-16 md:py-24 px-4 bg-cover bg-center bg-fixed" style={{ backgroundImage: "url('/foto (3).jpg')" }}>
