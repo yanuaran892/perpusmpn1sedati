@@ -3,8 +3,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'; // Import Select components
-import { Loader2, PlusCircle, Search, Edit, Trash2 } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Loader2, PlusCircle, Search, Edit, Trash2, ChevronLeft, ChevronRight } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { showError, showSuccess } from '@/utils/toast';
 import BookFormDialog from '@/components/admin/BookFormDialog';
@@ -38,8 +38,13 @@ const AdminBookManagement = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isFormDialogOpen, setIsFormDialogOpen] = useState(false);
   const [bookToEdit, setBookToEdit] = useState<BookItem | null>(null);
-  const [categories, setCategories] = useState<CategoryItem[]>([]); // State for categories
-  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>('all'); // State for selected category filter
+  const [categories, setCategories] = useState<CategoryItem[]>([]);
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>('all');
+
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const [booksPerPage] = useState(10); // Number of books per page
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     fetchCategories();
@@ -47,7 +52,7 @@ const AdminBookManagement = () => {
 
   useEffect(() => {
     fetchBooks();
-  }, [searchTerm, selectedCategoryId]); // Re-fetch books when search term or category changes
+  }, [searchTerm, selectedCategoryId, currentPage]); // Re-fetch books when search term, category, or page changes
 
   const fetchCategories = async () => {
     try {
@@ -73,37 +78,53 @@ const AdminBookManagement = () => {
   const fetchBooks = async () => {
     setLoading(true);
     try {
-      let query = supabase
-        .from('buku')
-        .select(`
-          *,
-          kategori (nama_kategori)
-        `)
-        .order('judul_buku', { ascending: true });
+      const categoryId = selectedCategoryId && selectedCategoryId !== 'all' ? parseInt(selectedCategoryId) : null;
 
-      if (searchTerm) {
-        query = query.ilike('judul_buku', `%${searchTerm}%`);
-      }
-
-      if (selectedCategoryId && selectedCategoryId !== 'all') {
-        query = query.eq('id_kategori', parseInt(selectedCategoryId));
-      }
-
-      const { data, error } = await query;
+      // Fetch paginated books using RPC function
+      const { data, error } = await supabase.rpc('search_buku', {
+        searchkey: searchTerm,
+        limit_value: booksPerPage,
+        offset_value: (currentPage - 1) * booksPerPage,
+        category_id: categoryId,
+      });
 
       if (error) {
         showError(error.message || 'Gagal mengambil data buku.');
         setBooks([]);
+        setTotalPages(1);
         return;
       }
 
       if (data) {
         const booksWithCategoryNames = data.map(book => ({
           ...book,
-          nama_kategori: book.kategori?.nama_kategori || 'N/A'
+          nama_kategori: categories.find(cat => cat.id_kategori === book.id_kategori)?.nama_kategori || 'N/A'
         }));
         setBooks(booksWithCategoryNames);
       }
+
+      // Fetch total count for pagination
+      let countQuery = supabase
+        .from('buku')
+        .select('*', { count: 'exact', head: true });
+
+      if (searchTerm) {
+        countQuery = countQuery.ilike('judul_buku', `%${searchTerm}%`);
+      }
+
+      if (categoryId !== null) {
+        countQuery = countQuery.eq('id_kategori', categoryId);
+      }
+
+      const { count, error: countError } = await countQuery;
+
+      if (countError) {
+        console.error('Error fetching total book count:', countError);
+        setTotalPages(1);
+      } else {
+        setTotalPages(Math.max(1, Math.ceil((count || 0) / booksPerPage)));
+      }
+
     } catch (err) {
       console.error('Error fetching books:', err);
       showError('Terjadi kesalahan tak terduga saat mengambil data buku.');
@@ -162,6 +183,14 @@ const AdminBookManagement = () => {
     setBookToEdit(null);
   };
 
+  const handlePreviousPage = () => {
+    setCurrentPage(prev => Math.max(1, prev - 1));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage(prev => Math.min(totalPages, prev + 1));
+  };
+
   return (
     <div className="space-y-6">
       <h1 className="text-3xl font-bold text-gray-900">Manajemen Buku</h1>
@@ -170,7 +199,7 @@ const AdminBookManagement = () => {
       <Card className="shadow-lg">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-2xl text-foreground">Daftar Buku</CardTitle>
-          <Button onClick={handleAddBook} size="sm"> {/* Moved button here */}
+          <Button onClick={handleAddBook} size="sm">
             <PlusCircle className="mr-2 h-4 w-4" /> Tambah Buku
           </Button>
         </CardHeader>
@@ -181,11 +210,17 @@ const AdminBookManagement = () => {
               <Input
                 placeholder="Cari berdasarkan judul buku..."
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={(e) => {
+                  setSearchTerm(e.target.value);
+                  setCurrentPage(1); // Reset to first page on search
+                }}
                 className="pl-10"
               />
             </div>
-            <Select onValueChange={setSelectedCategoryId} value={selectedCategoryId || ''}>
+            <Select onValueChange={(value) => {
+              setSelectedCategoryId(value);
+              setCurrentPage(1); // Reset to first page on category filter change
+            }} value={selectedCategoryId || ''}>
               <SelectTrigger className="w-full md:w-[180px]">
                 <SelectValue placeholder="Pilih Kategori" />
               </SelectTrigger>
@@ -248,6 +283,25 @@ const AdminBookManagement = () => {
                   ))}
                 </TableBody>
               </Table>
+              <div className="flex justify-end items-center space-x-2 mt-4">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handlePreviousPage}
+                  disabled={currentPage === 1 || loading}
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </Button>
+                <span className="text-sm text-gray-700">Page {currentPage} of {totalPages}</span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleNextPage}
+                  disabled={currentPage === totalPages || loading}
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </Button>
+              </div>
             </div>
           )}
         </CardContent>
