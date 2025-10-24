@@ -25,8 +25,8 @@ interface StudentFineHistoryProps {
 const StudentFineHistory: React.FC<StudentFineHistoryProps> = ({ studentNis, onRefreshFineHistory }) => {
   const [finePaymentHistory, setFinePaymentHistory] = useState<FinePaymentHistoryItem[]>([]);
   const [loadingFineHistory, setLoadingFineHistory] = useState(true);
-  const [isProofDialogOpen, setIsProofDialogOpen] = useState(false);
-  const [currentProofUrl, setCurrentProofUrl] = useState<string | null>(null);
+  // const [isProofDialogOpen, setIsProofDialogOpen] = useState(false); // Removed
+  // const [currentProofUrl, setCurrentProofUrl] = useState<string | null>(null); // Removed
 
   useEffect(() => {
     if (studentNis) {
@@ -59,14 +59,14 @@ const StudentFineHistory: React.FC<StudentFineHistoryProps> = ({ studentNis, onR
     }
   };
 
-  const handleViewProof = (url: string | null) => {
-    if (url) {
-      setCurrentProofUrl(url);
-      setIsProofDialogOpen(true);
-    } else {
-      showError('Tidak ada bukti pembayaran yang diunggah.');
-    }
-  };
+  // const handleViewProof = (url: string | null) => { // Removed
+  //   if (url) {
+  //     setCurrentProofUrl(url);
+  //     setIsProofDialogOpen(true);
+  //   } else {
+  //     showError('Tidak ada bukti pembayaran yang diunggah.');
+  //   }
+  // };
 
   return (
     <>
@@ -92,7 +92,7 @@ const StudentFineHistory: React.FC<StudentFineHistoryProps> = ({ studentNis, onR
                     <TableHead className="text-sm">Jumlah Bayar</TableHead>
                     <TableHead className="text-sm">Tanggal Permintaan</TableHead>
                     <TableHead className="text-sm">Status</TableHead>
-                    <TableHead className="text-right text-sm">Bukti</TableHead>
+                    {/* <TableHead className="text-right text-sm">Bukti</TableHead> */} {/* Removed */}
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -110,15 +110,15 @@ const StudentFineHistory: React.FC<StudentFineHistoryProps> = ({ studentNis, onR
                           {item.status_pembayaran}
                         </span>
                       </TableCell>
-                      <TableCell className="text-right">
-                        {item.bukti_pembayaran_url ? (
-                          <Button variant="outline" size="sm" onClick={() => handleViewProof(item.bukti_pembayaran_url)}>
-                            <Eye className="h-4 w-4" />
-                          </Button>
-                        ) : (
-                          <span className="text-gray-500 text-sm">-</span>
-                        )}
-                      </TableCell>
+                      {/* <TableCell className="text-right"> */} {/* Removed */}
+                        {/* {item.bukti_pembayaran_url ? ( */} {/* Removed */}
+                          {/* <Button variant="outline" size="sm" onClick={() => handleViewProof(item.bukti_pembayaran_url)}> */} {/* Removed */}
+                            {/* <Eye className="h-4 w-4" /> */} {/* Removed */}
+                          {/* </Button> */} {/* Removed */}
+                        {/* ) : ( */} {/* Removed */}
+                          {/* <span className="text-gray-500 text-sm">-</span> */} {/* Removed */}
+                        {/* )} */} {/* Removed */}
+                      {/* </TableCell> */} {/* Removed */}
                     </TableRow>
                   ))}
                 </TableBody>
@@ -129,21 +129,21 @@ const StudentFineHistory: React.FC<StudentFineHistoryProps> = ({ studentNis, onR
       </Card>
 
       {/* Proof of Payment Dialog for Student */}
-      <Dialog open={isProofDialogOpen} onOpenChange={setIsProofDialogOpen}>
-        <DialogContent className="sm:max-w-[600px]">
-          <DialogHeader>
-            <DialogTitle className="text-2xl font-bold text-primary">Bukti Pembayaran</DialogTitle>
-            <DialogDescription className="text-gray-600">Tampilan bukti pembayaran yang Anda unggah.</DialogDescription>
-          </DialogHeader>
-          <div className="py-4">
-            {currentProofUrl ? (
-              <img src={currentProofUrl} alt="Bukti Pembayaran" className="max-w-full h-auto object-contain rounded-md shadow-md" />
-            ) : (
-              <p className="text-center text-gray-600 text-base">Tidak ada bukti pembayaran untuk ditampilkan.</p>
-            )}
-          </div>
-        </DialogContent>
-      </Dialog>
+      {/* <Dialog open={isProofDialogOpen} onOpenChange={setIsProofDialogOpen}> */} {/* Removed */}
+        {/* <DialogContent className="sm:max-w-[600px]"> */} {/* Removed */}
+          {/* <DialogHeader> */} {/* Removed */}
+            {/* <DialogTitle className="text-2xl font-bold text-primary">Bukti Pembayaran</DialogTitle> */} {/* Removed */}
+            {/* <DialogDescription className="text-gray-600">Tampilan bukti pembayaran yang Anda unggah.</DialogDescription> */} {/* Removed */}
+          {/* </DialogHeader> */} {/* Removed */}
+          {/* <div className="py-4"> */} {/* Removed */}
+            {/* {currentProofUrl ? ( */} {/* Removed */}
+              {/* <img src={currentProofUrl} alt="Bukti Pembayaran" className="max-w-full h-auto object-contain rounded-md shadow-md" /> */} {/* Removed */}
+            {/* ) : ( */} {/* Removed */}
+              {/* <p className="text-center text-gray-600 text-base">Tidak ada bukti pembayaran untuk ditampilkan.</p> */} {/* Removed */}
+            {/* )} */} {/* Removed */}
+          {/* </div> */} {/* Removed */}
+        {/* </DialogContent> */} {/* Removed */}
+      {/* </Dialog> */} {/* Removed */}
     </>
   );
 };
