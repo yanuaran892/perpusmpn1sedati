@@ -50,7 +50,8 @@ const StudentDashboardHeader: React.FC<StudentDashboardHeaderProps> = ({
       initial="hidden"
       animate="visible"
       variants={headerVariants}
-      className="relative bg-gradient-to-r from-primary to-indigo-700 text-white p-4 md:p-8 shadow-lg pb-20 md:pb-24" // Increased padding-bottom to make space for content below
+      // Adjusted padding-bottom for mobile to make more space for stat cards
+      className="relative bg-gradient-to-r from-primary to-indigo-700 text-white p-4 md:p-8 shadow-lg pb-40 md:pb-24"
     >
       <div className="max-w-7xl mx-auto">
         {/* Top Bar */}
@@ -130,7 +131,7 @@ const StudentDashboardHeader: React.FC<StudentDashboardHeaderProps> = ({
       </div>
 
       {/* Stat Cards (positioned absolutely to overlap with content below) */}
-      <div className="absolute -bottom-16 left-1/2 -translate-x-1/2 w-full max-w-5xl px-4">
+      <div className="absolute -bottom-20 left-1/2 -translate-x-1/2 w-full max-w-full md:max-w-5xl px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
           <AnimatedStatCard icon={Book} label="Total Buku" value={totalBooksCount} animationDelay={0.3} />
           <AnimatedStatCard icon={LayoutGrid} label="Kategori Buku" value={totalCategoriesCount} animationDelay={0.4} />
