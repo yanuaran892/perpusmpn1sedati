@@ -49,7 +49,7 @@ const BookDetailDialog: React.FC<BookDetailDialogProps> = ({
   useEffect(() => {
     if (isOpen) {
       const now = new Date();
-      setReturnDate(addDays(now, 3));
+      setReturnDate(addDays(now, 3)); // Default return date is 3 days from now
       setSelectedHour(now.getHours());
       setSelectedMinute(now.getMinutes());
       setImageError(false);

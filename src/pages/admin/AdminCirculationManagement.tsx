@@ -23,6 +23,7 @@ interface CirculationItem {
   judul_buku: string | null; // Directly from RPC
   siswa_nama: string | null; // Directly from RPC
   siswa_kelas: string | null; // Directly from RPC
+  jumlah_perpanjangan: number; // New field
 }
 
 const AdminCirculationManagement = () => {
@@ -233,6 +234,7 @@ const AdminCirculationManagement = () => {
                     <TableHead>Kembali (Est.)</TableHead> {/* Dispendekkan */}
                     <TableHead>Dikembalikan</TableHead>
                     <TableHead>Status</TableHead>
+                    <TableHead>Perpanjangan</TableHead> {/* New column */}
                     <TableHead className="text-right">Denda</TableHead>
                     <TableHead className="text-right">Aksi</TableHead>
                   </TableRow>
@@ -260,6 +262,7 @@ const AdminCirculationManagement = () => {
                            item.status === 'rejected' ? 'Ditolak' : item.status}
                         </span>
                       </TableCell>
+                      <TableCell>{item.jumlah_perpanjangan} / 3</TableCell> {/* Display extension count */}
                       <TableCell className="text-right">Rp {item.denda.toLocaleString('id-ID')}</TableCell>
                       <TableCell className="text-right">
                         {item.status === 'pending' ? (
