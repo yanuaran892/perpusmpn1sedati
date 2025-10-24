@@ -51,7 +51,7 @@ const StudentDashboardHeader: React.FC<StudentDashboardHeaderProps> = ({
       animate="visible"
       variants={headerVariants}
       // Adjusted padding-bottom for mobile to make more space for stat cards
-      className="relative bg-gradient-to-r from-primary to-indigo-700 text-white p-4 md:p-8 shadow-lg pb-80 md:pb-24" // Increased pb-80 for mobile
+      className="relative bg-gradient-to-r from-primary to-indigo-700 text-white p-4 md:p-8 shadow-lg pb-10 md:pb-24" // Reduced pb-10 for mobile
     >
       <div className="max-w-7xl mx-auto">
         {/* Top Bar */}
@@ -128,11 +128,9 @@ const StudentDashboardHeader: React.FC<StudentDashboardHeaderProps> = ({
             />
           </div>
         </motion.div>
-      </div>
 
-      {/* Stat Cards (positioned absolutely to overlap with content below) */}
-      <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-full max-w-full md:max-w-5xl px-4"> {/* Adjusted -bottom-40 for mobile */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+        {/* Stat Cards (now inline, not absolutely positioned) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center mt-10 max-w-7xl mx-auto px-4">
           <AnimatedStatCard icon={Book} label="Total Buku" value={totalBooksCount} animationDelay={0.3} />
           <AnimatedStatCard icon={LayoutGrid} label="Kategori Buku" value={totalCategoriesCount} animationDelay={0.4} />
           <AnimatedStatCard icon={BookOpen} label="Akses Online" value="24/7" isNumeric={false} animationDelay={0.5} />
