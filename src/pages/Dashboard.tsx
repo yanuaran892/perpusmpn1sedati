@@ -3,15 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import { useStudentAuth } from '@/context/StudentAuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Loader2, Book, User, LogOut, Search, LibraryBig, BookOpen, LayoutGrid, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'; // Added import for Card components
+import { Loader2, ChevronLeft, ChevronRight } from 'lucide-react';
 import { showError, showSuccess } from '@/utils/toast';
-import { format, isPast } from 'date-fns';
+import { isPast } from 'date-fns';
 import BookCard from '@/components/BookCard';
 import BookDetailDialog from '@/components/BookDetailDialog';
 import BookCardSkeleton from '@/components/BookCardSkeleton';
+import StudentDashboardHeader from '@/components/student/StudentDashboardHeader'; // Import the new header component
 
 interface BookItem {
   id_buku: number;
@@ -241,6 +241,15 @@ const Dashboard = () => {
     navigate('/login');
   };
 
+  const handleProfileClick = () => {
+    navigate('/profile');
+  };
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1); // Reset to first page on search
+  };
+
   if (authLoading || !student) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -252,77 +261,22 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header Section */}
-      <div className="bg-gradient-to-r from-primary to-indigo-700 text-white p-4 md:p-8 shadow-lg">
-        <div className="flex flex-col md:flex-row justify-between items-center mb-6 animate-fade-in-up">
-          <div className="flex items-center mb-4 md:mb-0">
-            <LibraryBig className="h-10 w-10 mr-3" />
-            <h1 className="text-3xl md:text-4xl font-bold">PERPUS SMPN 1 SEDATI</h1>
-          </div>
-          <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4">
-            <Button onClick={() => navigate('/profile')} variant="ghost" className="text-white hover:bg-blue-700 transition-colors duration-300">
-              <User className="mr-2 h-5 w-5" /> Profil Siswa
-            </Button>
-            <Button onClick={handleLogout} variant="ghost" className="text-white hover:bg-blue-700 transition-colors duration-300">
-              <LogOut className="mr-2 h-5 w-5" /> Logout
-            </Button>
-          </div>
-        </div>
-        <p className="text-center text-sm mb-8 opacity-90 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>© Copyright {new Date().getFullYear()} SMPN 1 SEDATI</p>
+      <StudentDashboardHeader
+        studentName={student.nama}
+        onLogout={handleLogout}
+        onProfileClick={handleProfileClick}
+        searchTerm={searchTerm}
+        onSearchChange={handleSearchChange}
+        totalBooksCount={totalBooksCount}
+        totalCategoriesCount={totalCategoriesCount}
+      />
 
-        <div className="flex justify-center mb-10 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-          <img src="/smpn1sedati_logo.png" alt="Logo Sekolah" className="h-28 w-28 object-contain animate-pulse" />
-        </div>
-
-        <div className="text-center mb-10 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-          <h2 className="text-5xl font-extrabold mb-3">Jelajahi Koleksi Buku Kami</h2>
-          <p className="text-xl opacity-90 max-w-3xl mx-auto">
-            Temukan buku favorit Anda dari berbagai kategori dan tingkatkan pengetahuan Anda.
-          </p>
-        </div>
-
-        <div className="flex justify-center mb-10 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-          <div className="relative w-full max-w-xl">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500" />
-            <Input
-              placeholder="Cari buku berdasarkan judul..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 bg-white text-gray-800 border-none rounded-full shadow-lg focus:ring-2 focus:ring-blue-300 focus:border-blue-300 text-lg"
-            />
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center max-w-5xl mx-auto">
-          <Card className="bg-white text-primary border-primary shadow-xl animate-scale-in hover:shadow-2xl hover:scale-105 transition-all duration-300" style={{ animationDelay: '0.5s' }}>
-            <CardContent className="p-6 flex flex-col items-center">
-              <Book className="h-10 w-10 mb-3 text-primary" />
-              <p className="text-4xl font-bold">{totalBooksCount}</p>
-              <p className="text-base opacity-80">Total Buku</p>
-            </CardContent>
-          </Card>
-          <Card className="bg-white text-primary border-primary shadow-xl animate-scale-in hover:shadow-2xl hover:scale-105 transition-all duration-300" style={{ animationDelay: '0.6s' }}>
-            <CardContent className="p-6 flex flex-col items-center">
-              <LayoutGrid className="h-10 w-10 mb-3 text-primary" />
-              <p className="text-4xl font-bold">{totalCategoriesCount}</p>
-              <p className="text-base opacity-80">Kategori Buku</p>
-            </CardContent>
-          </Card>
-          <Card className="bg-white text-primary border-primary shadow-xl animate-scale-in hover:shadow-2xl hover:scale-105 transition-all duration-300" style={{ animationDelay: '0.7s' }}>
-            <CardContent className="p-6 flex flex-col items-center">
-              <BookOpen className="h-10 w-10 mb-3 text-primary" />
-              <p className="text-4xl font-bold">24/7</p>
-              <p className="text-base opacity-80">Akses Online</p>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-
-      <div className="p-4 md:p-8 max-w-7xl mx-auto">
-        <Card className="shadow-xl border-none animate-fade-in-up" style={{ animationDelay: '0.8s' }}>
+      {/* Main content area, adjusted for header height and overlapping cards */}
+      <div className="p-4 md:p-8 max-w-7xl mx-auto pt-32 md:pt-40 lg:pt-48"> {/* Adjusted padding-top */}
+        <Card className="shadow-xl border-none animate-fade-in-up">
           <CardHeader className="flex flex-col md:flex-row items-start md:items-center justify-between space-y-4 md:space-y-0 pb-4">
             <CardTitle className="text-3xl font-bold text-foreground">Koleksi Buku</CardTitle>
-            <Select onValueChange={setSelectedCategoryId} value={selectedCategoryId || ''}>
+            <Select onValueChange={(value) => { setSelectedCategoryId(value); setCurrentPage(1); }} value={selectedCategoryId || ''}>
               <SelectTrigger className="w-full md:w-[220px] shadow-sm text-base">
                 <SelectValue placeholder="Filter Kategori" />
               </SelectTrigger>
