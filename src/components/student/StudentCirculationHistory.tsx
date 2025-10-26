@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
-import { Loader2, RotateCcw, CalendarPlus, ChevronLeft, ChevronRight } from 'lucide-react'; // Added ChevronLeft, ChevronRight
+import { Loader2, RotateCcw, CalendarPlus, ChevronLeft, ChevronRight } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { showError, showSuccess } from '@/utils/toast';
-import { format, isPast } from 'date-fns'; // Added isPast for conditional button disabling
+import { format, isPast } from 'date-fns';
 
 interface CirculationItem {
   id_sirkulasi: number;
@@ -18,7 +18,7 @@ interface CirculationItem {
   denda: number;
   judul_buku?: string;
   jumlah_perpanjangan: number;
-  tanggal_kembali_request: string | null; // New field for extension requests
+  tanggal_kembali_request: string | null;
 }
 
 interface StudentCirculationHistoryProps {
@@ -35,28 +35,27 @@ const StudentCirculationHistory: React.FC<StudentCirculationHistoryProps> = ({
   const [circulationHistory, setCirculationHistory] = useState<CirculationItem[]>([]);
   const [loadingCirculation, setLoadingCirculation] = useState(true);
   const [isRequestingReturn, setIsRequestingReturn] = useState<number | null>(null);
-  const [isExtending, setIsExtending] = useState<number | null>(null); // New state for extension loading
+  const [isExtending, setIsExtending] = useState<number | null>(null);
 
-  // Pagination states
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(5); // Number of items per page
+  const [itemsPerPage] = useState(5);
   const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     if (studentNis) {
       fetchCirculationHistory();
     }
-  }, [studentNis, onRefreshCirculationHistory, currentPage]); // Re-fetch on page change
+  }, [studentNis, onRefreshCirculationHistory, currentPage]);
 
   const fetchCirculationHistory = async () => {
     if (!studentNis) return;
     setLoadingCirculation(true);
     try {
-      // Fetch paginated circulation data
+      // Memperbarui urutan parameter agar sesuai dengan definisi fungsi RPC di database
       const { data, error } = await supabase.rpc('get_student_circulation_history', {
-        p_id_nis: studentNis,
         limit_value: itemsPerPage,
         offset_value: (currentPage - 1) * itemsPerPage,
+        p_id_nis: studentNis,
       });
 
       if (error) {
@@ -70,7 +69,6 @@ const StudentCirculationHistory: React.FC<StudentCirculationHistoryProps> = ({
         setCirculationHistory(data as CirculationItem[]);
       }
 
-      // Fetch total count for pagination
       const { data: countData, error: countError } = await supabase.rpc('get_total_student_circulation_count', {
         p_id_nis: studentNis,
       });
@@ -130,7 +128,7 @@ const StudentCirculationHistory: React.FC<StudentCirculationHistoryProps> = ({
       const { data: rpcResult, error } = await supabase.rpc('extend_borrow_period', {
         p_sirkulasi_id: sirkulasiId,
         p_id_nis: studentNis,
-        p_extension_days: 3, // Extend by 3 days as per new rule
+        p_extension_days: 3,
       });
 
       if (error) {
@@ -179,7 +177,7 @@ const StudentCirculationHistory: React.FC<StudentCirculationHistoryProps> = ({
         ) : circulationHistory.length === 0 ? (
           <p className="text-center text-gray-600 py-4 text-base">Belum ada riwayat peminjaman.</p>
         ) : (
-          <div className="overflow-x-auto"> {/* Keep overflow-x-auto as fallback for very small screens */}
+          <div className="overflow-x-auto">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -214,11 +212,11 @@ const StudentCirculationHistory: React.FC<StudentCirculationHistoryProps> = ({
                         item.status === 'dipinjam' ? 'bg-yellow-100 text-yellow-800' :
                         item.status === 'dikembalikan' ? 'bg-accent/10 text-accent' :
                         item.status === 'return_pending' ? 'bg-purple-100 text-purple-800' :
-                        item.status === 'extension_pending' ? 'bg-blue-100 text-blue-800' : // Style for extension_pending
+                        item.status === 'extension_pending' ? 'bg-blue-100 text-blue-800' :
                         'bg-red-100 text-red-800'
                       }`}>
                         {item.status === 'return_pending' ? 'Menunggu Pengembalian' :
-                         item.status === 'extension_pending' ? 'Menunggu Perpanjangan' : // Display for extension_pending
+                         item.status === 'extension_pending' ? 'Menunggu Perpanjangan' :
                          item.status}
                       </span>
                     </TableCell>
@@ -226,10 +224,10 @@ const StudentCirculationHistory: React.FC<StudentCirculationHistoryProps> = ({
                     <TableCell className="text-right text-sm">Rp {item.denda.toLocaleString('id-ID')}</TableCell>
                     <TableCell className="text-right">
                       {item.status === 'dipinjam' && (
-                        <div className="flex justify-end space-x-1"> {/* Reduced space-x */}
+                        <div className="flex justify-end space-x-1">
                           <Button
                             variant="outline"
-                            size="icon" // Changed to icon size
+                            size="icon"
                             onClick={() => handleExtendBorrowPeriod(item.id_sirkulasi, item.judul_buku || 'Buku')}
                             disabled={isExtending === item.id_sirkulasi || item.jumlah_perpanjangan >= 3 || isPast(new Date(item.tanggal_kembali))}
                             className="text-blue-500 hover:bg-blue-50"
@@ -237,12 +235,12 @@ const StudentCirculationHistory: React.FC<StudentCirculationHistoryProps> = ({
                             {isExtending === item.id_sirkulasi ? (
                               <Loader2 className="h-4 w-4 animate-spin" />
                             ) : (
-                              <CalendarPlus className="h-4 w-4" /> // Icon only
+                              <CalendarPlus className="h-4 w-4" />
                             )}
                           </Button>
                           <Button
                             variant="outline"
-                            size="icon" // Changed to icon size
+                            size="icon"
                             onClick={() => handleRequestReturnBook(item.id_sirkulasi, item.judul_buku || 'Buku')}
                             disabled={isRequestingReturn === item.id_sirkulasi}
                             className="text-primary hover:bg-primary/5"
@@ -250,7 +248,7 @@ const StudentCirculationHistory: React.FC<StudentCirculationHistoryProps> = ({
                             {isRequestingReturn === item.id_sirkulasi ? (
                               <Loader2 className="h-4 w-4 animate-spin" />
                             ) : (
-                              <RotateCcw className="h-4 w-4" /> // Icon only
+                              <RotateCcw className="h-4 w-4" />
                             )}
                           </Button>
                         </div>
