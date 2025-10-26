@@ -1,0 +1,1 @@
+DROP FUNCTION IF EXISTS public.get_student_circulation_history_v2(integer, integer, text);

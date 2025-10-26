@@ -15,3 +15,5 @@ BEGIN
   RETURN total_count;
 END;
 $function$;
+
+COMMENT ON FUNCTION public.get_total_student_circulation_count_v2(text) IS 'Mengambil total jumlah entri sirkulasi untuk siswa tertentu.';

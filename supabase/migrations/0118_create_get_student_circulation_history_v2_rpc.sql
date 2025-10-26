@@ -40,3 +40,5 @@ BEGIN
   OFFSET offset_value;
 END;
 $function$;
+
+COMMENT ON FUNCTION public.get_student_circulation_history_v2(integer, integer, text) IS 'Mengambil riwayat sirkulasi buku siswa dengan paginasi dan filter NIS.';
