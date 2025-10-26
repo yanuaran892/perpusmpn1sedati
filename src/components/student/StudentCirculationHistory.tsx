@@ -51,7 +51,7 @@ const StudentCirculationHistory: React.FC<StudentCirculationHistoryProps> = ({
     if (!studentNis) return;
     setLoadingCirculation(true);
     try {
-      // Memperbarui urutan parameter agar sesuai dengan definisi fungsi RPC di database
+      // Memastikan urutan parameter sesuai dengan definisi fungsi RPC di database
       const { data, error } = await supabase.rpc('get_student_circulation_history', {
         limit_value: itemsPerPage,
         offset_value: (currentPage - 1) * itemsPerPage,

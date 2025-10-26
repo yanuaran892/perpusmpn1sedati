@@ -1,6 +1,6 @@
 CREATE OR REPLACE FUNCTION public.get_student_circulation_history(
-    limit_value integer DEFAULT 10,
-    offset_value integer DEFAULT 0,
+    limit_value integer,
+    offset_value integer,
     p_id_nis text
 )
  RETURNS TABLE(id_sirkulasi integer, id_nis character varying, id_buku integer, tanggal_pinjam timestamp with time zone, tanggal_kembali timestamp with time zone, tanggal_dikembalikan timestamp with time zone, status text, denda numeric, judul_buku text, jumlah_perpanjangan integer, tanggal_kembali_request timestamp with time zone)
