@@ -24,6 +24,7 @@ interface CirculationItem {
   siswa_nama: string | null; // Directly from RPC
   siswa_kelas: string | null; // Directly from RPC
   jumlah_perpanjangan: number; // New field
+  tanggal_kembali_request: string | null; // New field for extension requests
 }
 
 const AdminCirculationManagement = () => {
@@ -33,6 +34,7 @@ const AdminCirculationManagement = () => {
   const [filterStatus, setFilterStatus] = useState('all');
   const [isProcessingReturn, setIsProcessingReturn] = useState<number | null>(null); // State for loading during return approval/rejection
   const [isProcessingBorrowRequest, setIsProcessingBorrowRequest] = useState<number | null>(null); // State for loading during borrow request approval/rejection
+  const [isProcessingExtension, setIsProcessingExtension] = useState<number | null>(null); // New state for loading during extension approval/rejection
 
   useEffect(() => {
     fetchCirculation();
@@ -178,6 +180,58 @@ const AdminCirculationManagement = () => {
     }
   };
 
+  const handleApproveExtension = async (item: CirculationItem) => {
+    if (!window.confirm(`Apakah Anda yakin ingin MENYETUJUI perpanjangan peminjaman buku "${item.judul_buku}" oleh "${item.siswa_nama}" hingga ${format(new Date(item.tanggal_kembali_request!), 'dd MMM yyyy HH:mm', { locale: id })}?`)) {
+      return;
+    }
+
+    setIsProcessingExtension(item.id_sirkulasi);
+    try {
+      const { data, error } = await supabase.rpc('approve_extension_request_admin', {
+        p_sirkulasi_id: item.id_sirkulasi,
+      });
+
+      if (error || !data) {
+        showError(error?.message || 'Gagal menyetujui perpanjangan peminjaman.');
+        return;
+      }
+
+      showSuccess(`Perpanjangan peminjaman buku "${item.judul_buku}" oleh "${item.siswa_nama}" berhasil disetujui!`);
+      fetchCirculation(); // Refresh list
+    } catch (err) {
+      console.error('Error approving extension request:', err);
+      showError('Terjadi kesalahan saat menyetujui perpanjangan peminjaman.');
+    } finally {
+      setIsProcessingExtension(null);
+    }
+  };
+
+  const handleRejectExtension = async (item: CirculationItem) => {
+    if (!window.confirm(`Apakah Anda yakin ingin MENOLAK perpanjangan peminjaman buku "${item.judul_buku}" oleh "${item.siswa_nama}"? Status akan dikembalikan menjadi 'dipinjam'.`)) {
+      return;
+    }
+
+    setIsProcessingExtension(item.id_sirkulasi);
+    try {
+      const { data, error } = await supabase.rpc('reject_extension_request_admin', {
+        p_sirkulasi_id: item.id_sirkulasi,
+      });
+
+      if (error || !data) {
+        showError(error?.message || 'Gagal menolak perpanjangan peminjaman.');
+        return;
+      }
+
+      showSuccess(`Perpanjangan peminjaman buku "${item.judul_buku}" oleh "${item.siswa_nama}" berhasil ditolak. Status dikembalikan menjadi 'dipinjam'.`);
+      fetchCirculation(); // Refresh list
+    } catch (err) {
+      console.error('Error rejecting extension request:', err);
+      showError('Terjadi kesalahan saat menolak perpanjangan peminjaman.');
+    } finally {
+      setIsProcessingExtension(null);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <h1 className="text-3xl font-bold text-gray-900">Manajemen Sirkulasi</h1>
@@ -207,7 +261,8 @@ const AdminCirculationManagement = () => {
                 <SelectItem value="all">Semua Status</SelectItem>
                 <SelectItem value="pending">Menunggu Peminjaman</SelectItem>
                 <SelectItem value="dipinjam">Dipinjam</SelectItem>
-                <SelectItem value="return_pending">Menunggu Pengembalian</SelectItem> {/* New status */}
+                <SelectItem value="return_pending">Menunggu Pengembalian</SelectItem>
+                <SelectItem value="extension_pending">Menunggu Perpanjangan</SelectItem> {/* New status */}
                 <SelectItem value="dikembalikan">Dikembalikan</SelectItem>
                 <SelectItem value="rejected">Ditolak</SelectItem>
               </SelectContent>
@@ -231,10 +286,10 @@ const AdminCirculationManagement = () => {
                     <TableHead>NIS</TableHead>
                     <TableHead>Kelas</TableHead>
                     <TableHead>Pinjam</TableHead>
-                    <TableHead>Kembali (Est.)</TableHead> {/* Dispendekkan */}
+                    <TableHead>Kembali (Est.)</TableHead>
                     <TableHead>Dikembalikan</TableHead>
                     <TableHead>Status</TableHead>
-                    <TableHead>Perpanjangan</TableHead> {/* New column */}
+                    <TableHead>Perpanjangan</TableHead>
                     <TableHead className="text-right">Denda</TableHead>
                     <TableHead className="text-right">Aksi</TableHead>
                   </TableRow>
@@ -247,22 +302,33 @@ const AdminCirculationManagement = () => {
                       <TableCell>{item.id_nis}</TableCell>
                       <TableCell>{item.siswa_kelas || 'N/A'}</TableCell>
                       <TableCell>{format(new Date(item.tanggal_pinjam), 'dd MMM yyyy HH:mm', { locale: id })}</TableCell>
-                      <TableCell>{format(new Date(item.tanggal_kembali), 'dd MMM yyyy HH:mm', { locale: id })}</TableCell> {/* Updated format */}
+                      <TableCell>
+                        {item.status === 'extension_pending' && item.tanggal_kembali_request ? (
+                          <div className="flex flex-col">
+                            <span className="line-through text-gray-500">{format(new Date(item.tanggal_kembali), 'dd MMM yyyy HH:mm', { locale: id })}</span>
+                            <span className="font-semibold text-blue-600">{format(new Date(item.tanggal_kembali_request), 'dd MMM yyyy HH:mm', { locale: id })} (Req)</span>
+                          </div>
+                        ) : (
+                          format(new Date(item.tanggal_kembali), 'dd MMM yyyy HH:mm', { locale: id })
+                        )}
+                      </TableCell>
                       <TableCell>{item.tanggal_dikembalikan ? format(new Date(item.tanggal_dikembalikan), 'dd MMM yyyy HH:mm', { locale: id }) : '-'}</TableCell>
                       <TableCell>
                         <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
                           item.status === 'dipinjam' ? 'bg-yellow-100 text-yellow-800' :
                           item.status === 'dikembalikan' ? 'bg-accent/10 text-accent' :
                           item.status === 'pending' ? 'bg-primary/10 text-primary' :
-                          item.status === 'return_pending' ? 'bg-purple-100 text-purple-800' : // Style for return_pending
-                          'bg-red-100 text-red-800' // Style for rejected
+                          item.status === 'return_pending' ? 'bg-purple-100 text-purple-800' :
+                          item.status === 'extension_pending' ? 'bg-blue-100 text-blue-800' : // Style for extension_pending
+                          'bg-red-100 text-red-800'
                         }`}>
                           {item.status === 'pending' ? 'Menunggu Peminjaman' : 
                            item.status === 'return_pending' ? 'Menunggu Pengembalian' : 
+                           item.status === 'extension_pending' ? 'Menunggu Perpanjangan' : // Display for extension_pending
                            item.status === 'rejected' ? 'Ditolak' : item.status}
                         </span>
                       </TableCell>
-                      <TableCell>{item.jumlah_perpanjangan} / 3</TableCell> {/* Display extension count */}
+                      <TableCell>{item.jumlah_perpanjangan} / 3</TableCell>
                       <TableCell className="text-right">Rp {item.denda.toLocaleString('id-ID')}</TableCell>
                       <TableCell className="text-right">
                         {item.status === 'pending' ? (
@@ -295,7 +361,7 @@ const AdminCirculationManagement = () => {
                               Tolak
                             </Button>
                           </div>
-                        ) : item.status === 'return_pending' ? ( // New condition for return_pending
+                        ) : item.status === 'return_pending' ? (
                           <div className="flex justify-end space-x-2">
                             <Button
                               variant="outline"
@@ -323,6 +389,36 @@ const AdminCirculationManagement = () => {
                                 <XCircle className="h-4 w-4 mr-1" />
                               )}
                               Tolak Pengembalian
+                            </Button>
+                          </div>
+                        ) : item.status === 'extension_pending' ? ( // New condition for extension_pending
+                          <div className="flex justify-end space-x-2">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => handleApproveExtension(item)}
+                              disabled={isProcessingExtension === item.id_sirkulasi}
+                              className="text-blue-600 hover:bg-blue-50"
+                            >
+                              {isProcessingExtension === item.id_sirkulasi ? (
+                                <Loader2 className="h-4 w-4 animate-spin" />
+                              ) : (
+                                <CheckCircle className="h-4 w-4 mr-1" />
+                              )}
+                              Setujui Perpanjangan
+                            </Button>
+                            <Button
+                              variant="destructive"
+                              size="sm"
+                              onClick={() => handleRejectExtension(item)}
+                              disabled={isProcessingExtension === item.id_sirkulasi}
+                            >
+                              {isProcessingExtension === item.id_sirkulasi ? (
+                                <Loader2 className="h-4 w-4 animate-spin" />
+                              ) : (
+                                <XCircle className="h-4 w-4 mr-1" />
+                              )}
+                              Tolak Perpanjangan
                             </Button>
                           </div>
                         ) : null}

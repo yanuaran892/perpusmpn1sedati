@@ -17,7 +17,8 @@ interface CirculationItem {
   status: string;
   denda: number;
   judul_buku?: string;
-  jumlah_perpanjangan: number; // New field
+  jumlah_perpanjangan: number;
+  tanggal_kembali_request: string | null; // New field for extension requests
 }
 
 interface StudentCirculationHistoryProps {
@@ -111,7 +112,7 @@ const StudentCirculationHistory: React.FC<StudentCirculationHistoryProps> = ({
       });
 
       if (error) {
-        showError(error.message || 'Gagal memperpanjang masa peminjaman.');
+        showError(error.message || 'Gagal mengajukan perpanjangan masa peminjaman.');
         return;
       }
 
@@ -122,12 +123,12 @@ const StudentCirculationHistory: React.FC<StudentCirculationHistoryProps> = ({
       } else if (rpcResult && !rpcResult.success) {
         showError(rpcResult.message);
       } else {
-        showError('Gagal memperpanjang masa peminjaman. Respon tidak terduga.');
+        showError('Gagal mengajukan perpanjangan masa peminjaman. Respon tidak terduga.');
       }
 
     } catch (err) {
       console.error('Error extending borrow period:', err);
-      showError('Terjadi kesalahan saat memperpanjang masa peminjaman.');
+      showError('Terjadi kesalahan saat mengajukan perpanjangan masa peminjaman.');
     } finally {
       setIsExtending(null);
     }
@@ -157,7 +158,7 @@ const StudentCirculationHistory: React.FC<StudentCirculationHistoryProps> = ({
                   <TableHead className="text-sm">Tanggal Kembali</TableHead>
                   <TableHead className="text-sm">Dikembalikan</TableHead>
                   <TableHead className="text-sm">Status</TableHead>
-                  <TableHead className="text-sm">Perpanjangan</TableHead> {/* New column */}
+                  <TableHead className="text-sm">Perpanjangan</TableHead>
                   <TableHead className="text-right text-sm">Denda</TableHead>
                   <TableHead className="text-right text-sm">Aksi</TableHead>
                 </TableRow>
@@ -167,19 +168,31 @@ const StudentCirculationHistory: React.FC<StudentCirculationHistoryProps> = ({
                   <TableRow key={item.id_sirkulasi}>
                     <TableCell className="font-medium text-sm">{item.judul_buku}</TableCell>
                     <TableCell className="text-sm">{format(new Date(item.tanggal_pinjam), 'dd MMM yyyy')}</TableCell>
-                    <TableCell className="text-sm">{format(new Date(item.tanggal_kembali), 'dd MMM yyyy')}</TableCell>
+                    <TableCell className="text-sm">
+                      {item.status === 'extension_pending' && item.tanggal_kembali_request ? (
+                        <div className="flex flex-col">
+                          <span className="line-through text-gray-500">{format(new Date(item.tanggal_kembali), 'dd MMM yyyy')}</span>
+                          <span className="font-semibold text-blue-600">{format(new Date(item.tanggal_kembali_request), 'dd MMM yyyy')} (Req)</span>
+                        </div>
+                      ) : (
+                        format(new Date(item.tanggal_kembali), 'dd MMM yyyy')
+                      )}
+                    </TableCell>
                     <TableCell className="text-sm">{item.tanggal_dikembalikan ? format(new Date(item.tanggal_dikembalikan), 'dd MMM yyyy') : '-'}</TableCell>
                     <TableCell>
                       <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
                         item.status === 'dipinjam' ? 'bg-yellow-100 text-yellow-800' :
                         item.status === 'dikembalikan' ? 'bg-accent/10 text-accent' :
-                        item.status === 'return_pending' ? 'bg-primary/10 text-primary' :
+                        item.status === 'return_pending' ? 'bg-purple-100 text-purple-800' :
+                        item.status === 'extension_pending' ? 'bg-blue-100 text-blue-800' : // Style for extension_pending
                         'bg-red-100 text-red-800'
                       }`}>
-                        {item.status === 'return_pending' ? 'Menunggu Persetujuan' : item.status}
+                        {item.status === 'return_pending' ? 'Menunggu Pengembalian' :
+                         item.status === 'extension_pending' ? 'Menunggu Perpanjangan' : // Display for extension_pending
+                         item.status}
                       </span>
                     </TableCell>
-                    <TableCell className="text-sm">{item.jumlah_perpanjangan} / 3</TableCell> {/* Display extension count */}
+                    <TableCell className="text-sm">{item.jumlah_perpanjangan} / 3</TableCell>
                     <TableCell className="text-right text-sm">Rp {item.denda.toLocaleString('id-ID')}</TableCell>
                     <TableCell className="text-right">
                       {item.status === 'dipinjam' && (
@@ -215,6 +228,9 @@ const StudentCirculationHistory: React.FC<StudentCirculationHistoryProps> = ({
                         </div>
                       )}
                       {item.status === 'return_pending' && (
+                        <span className="text-sm text-gray-500">Menunggu Persetujuan</span>
+                      )}
+                      {item.status === 'extension_pending' && (
                         <span className="text-sm text-gray-500">Menunggu Persetujuan</span>
                       )}
                     </TableCell>
