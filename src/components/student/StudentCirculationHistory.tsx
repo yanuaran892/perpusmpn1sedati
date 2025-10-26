@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
-import { Loader2, RotateCcw, CalendarPlus } from 'lucide-react'; // Added CalendarPlus icon
+import { Loader2, RotateCcw, CalendarPlus, ChevronLeft, ChevronRight } from 'lucide-react'; // Added ChevronLeft, ChevronRight
 import { supabase } from '@/integrations/supabase/client';
 import { showError, showSuccess } from '@/utils/toast';
 import { format, isPast } from 'date-fns'; // Added isPast for conditional button disabling
@@ -37,29 +37,51 @@ const StudentCirculationHistory: React.FC<StudentCirculationHistoryProps> = ({
   const [isRequestingReturn, setIsRequestingReturn] = useState<number | null>(null);
   const [isExtending, setIsExtending] = useState<number | null>(null); // New state for extension loading
 
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5); // Number of items per page
+  const [totalPages, setTotalPages] = useState(1);
+
   useEffect(() => {
     if (studentNis) {
       fetchCirculationHistory();
     }
-  }, [studentNis, onRefreshCirculationHistory]);
+  }, [studentNis, onRefreshCirculationHistory, currentPage]); // Re-fetch on page change
 
   const fetchCirculationHistory = async () => {
     if (!studentNis) return;
     setLoadingCirculation(true);
     try {
+      // Fetch paginated circulation data
       const { data, error } = await supabase.rpc('get_student_circulation_history', {
         p_id_nis: studentNis,
+        limit_value: itemsPerPage,
+        offset_value: (currentPage - 1) * itemsPerPage,
       });
 
       if (error) {
         showError(error.message || 'Gagal mengambil riwayat sirkulasi.');
         setCirculationHistory([]);
+        setTotalPages(1);
         return;
       }
 
       if (data) {
         setCirculationHistory(data as CirculationItem[]);
       }
+
+      // Fetch total count for pagination
+      const { data: countData, error: countError } = await supabase.rpc('get_total_student_circulation_count', {
+        p_id_nis: studentNis,
+      });
+
+      if (countError) {
+        console.error('Error fetching total circulation count:', countError);
+        setTotalPages(1);
+      } else {
+        setTotalPages(Math.max(1, Math.ceil((countData || 0) / itemsPerPage)));
+      }
+
     } catch (err) {
       console.error('Error fetching circulation history:', err);
       showError('Terjadi kesalahan tak terduga saat mengambil riwayat sirkulasi.');
@@ -132,6 +154,14 @@ const StudentCirculationHistory: React.FC<StudentCirculationHistoryProps> = ({
     } finally {
       setIsExtending(null);
     }
+  };
+
+  const handlePreviousPage = () => {
+    setCurrentPage(prev => Math.max(1, prev - 1));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage(prev => Math.min(totalPages, prev + 1));
   };
 
   return (
@@ -236,6 +266,25 @@ const StudentCirculationHistory: React.FC<StudentCirculationHistoryProps> = ({
                 ))}
               </TableBody>
             </Table>
+            <div className="flex justify-end items-center space-x-2 mt-4">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handlePreviousPage}
+                disabled={currentPage === 1 || loadingCirculation}
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+              <span className="text-sm text-gray-700">Page {currentPage} of {totalPages}</span>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleNextPage}
+                disabled={currentPage === totalPages || loadingCirculation}
+              >
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
         )}
       </CardContent>
