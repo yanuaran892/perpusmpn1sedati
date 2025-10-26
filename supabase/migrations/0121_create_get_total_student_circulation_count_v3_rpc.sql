@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION public.get_total_student_circulation_count_v3(p_id_nis text)
+CREATE OR REPLACE FUNCTION public.get_total_student_circulation_count_v3(nis_input text)
  RETURNS integer
  LANGUAGE plpgsql
  SECURITY DEFINER
@@ -10,8 +10,10 @@ BEGIN
   SELECT COUNT(*)::integer
   INTO total_count
   FROM public.sirkulasi
-  WHERE id_nis = p_id_nis;
+  WHERE id_nis = nis_input;
 
   RETURN total_count;
 END;
 $function$;
+
+GRANT EXECUTE ON FUNCTION public.get_total_student_circulation_count_v3(text) TO authenticated;

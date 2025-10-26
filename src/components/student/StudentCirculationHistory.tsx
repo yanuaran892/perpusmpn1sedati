@@ -51,11 +51,10 @@ const StudentCirculationHistory: React.FC<StudentCirculationHistoryProps> = ({
     if (!studentNis) return;
     setLoadingCirculation(true);
     try {
-      // Memperbarui panggilan RPC untuk menggunakan nama fungsi baru
       const { data, error } = await supabase.rpc('get_student_circulation_history_v3', {
         limit_value: itemsPerPage,
         offset_value: (currentPage - 1) * itemsPerPage,
-        p_id_nis: studentNis,
+        nis_input: studentNis,
       });
 
       if (error) {
@@ -69,9 +68,8 @@ const StudentCirculationHistory: React.FC<StudentCirculationHistoryProps> = ({
         setCirculationHistory(data as CirculationItem[]);
       }
 
-      // Memperbarui panggilan RPC untuk menggunakan nama fungsi baru
       const { data: countData, error: countError } = await supabase.rpc('get_total_student_circulation_count_v3', {
-        p_id_nis: studentNis,
+        nis_input: studentNis,
       });
 
       if (countError) {
