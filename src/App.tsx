@@ -30,7 +30,15 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <Sonner />
+      <Sonner 
+        position="top-center" // Mengatur posisi notifikasi ke tengah atas
+        richColors // Mengaktifkan warna yang lebih kaya untuk notifikasi
+        className="w-full max-w-md mx-auto" // Menambahkan kelas untuk lebar maksimum dan penempatan di tengah
+        toastOptions={{
+          className: 'text-lg p-4 shadow-lg rounded-lg', // Menambahkan padding dan shadow untuk tampilan lebih besar
+          duration: 5000, // Durasi notifikasi 5 detik
+        }}
+      />
       <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <StudentAuthProvider>
           <AdminAuthProvider>
