@@ -149,18 +149,18 @@ const StudentCirculationHistory: React.FC<StudentCirculationHistoryProps> = ({
         ) : circulationHistory.length === 0 ? (
           <p className="text-center text-gray-600 py-4 text-base">Belum ada riwayat peminjaman.</p>
         ) : (
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto"> {/* Keep overflow-x-auto as fallback for very small screens */}
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="text-sm">Judul Buku</TableHead>
-                  <TableHead className="text-sm">Tanggal Pinjam</TableHead>
-                  <TableHead className="text-sm">Tanggal Kembali</TableHead>
-                  <TableHead className="text-sm">Dikembalikan</TableHead>
-                  <TableHead className="text-sm">Status</TableHead>
-                  <TableHead className="text-sm">Perpanjangan</TableHead>
-                  <TableHead className="text-right text-sm">Denda</TableHead>
-                  <TableHead className="text-right text-sm">Aksi</TableHead>
+                  <TableHead className="text-sm min-w-[150px]">Judul Buku</TableHead>
+                  <TableHead className="text-sm min-w-[120px]">Tanggal Pinjam</TableHead>
+                  <TableHead className="text-sm min-w-[120px]">Tanggal Kembali</TableHead>
+                  <TableHead className="text-sm min-w-[120px]">Dikembalikan</TableHead>
+                  <TableHead className="text-sm min-w-[100px]">Status</TableHead>
+                  <TableHead className="text-sm min-w-[100px]">Perpanjangan</TableHead>
+                  <TableHead className="text-right text-sm min-w-[80px]">Denda</TableHead>
+                  <TableHead className="text-right text-sm min-w-[80px]">Aksi</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -196,10 +196,10 @@ const StudentCirculationHistory: React.FC<StudentCirculationHistoryProps> = ({
                     <TableCell className="text-right text-sm">Rp {item.denda.toLocaleString('id-ID')}</TableCell>
                     <TableCell className="text-right">
                       {item.status === 'dipinjam' && (
-                        <div className="flex justify-end space-x-2">
+                        <div className="flex justify-end space-x-1"> {/* Reduced space-x */}
                           <Button
                             variant="outline"
-                            size="sm"
+                            size="icon" // Changed to icon size
                             onClick={() => handleExtendBorrowPeriod(item.id_sirkulasi, item.judul_buku || 'Buku')}
                             disabled={isExtending === item.id_sirkulasi || item.jumlah_perpanjangan >= 3 || isPast(new Date(item.tanggal_kembali))}
                             className="text-blue-500 hover:bg-blue-50"
@@ -207,13 +207,12 @@ const StudentCirculationHistory: React.FC<StudentCirculationHistoryProps> = ({
                             {isExtending === item.id_sirkulasi ? (
                               <Loader2 className="h-4 w-4 animate-spin" />
                             ) : (
-                              <CalendarPlus className="h-4 w-4 mr-1" />
+                              <CalendarPlus className="h-4 w-4" /> // Icon only
                             )}
-                            Perpanjang
                           </Button>
                           <Button
                             variant="outline"
-                            size="sm"
+                            size="icon" // Changed to icon size
                             onClick={() => handleRequestReturnBook(item.id_sirkulasi, item.judul_buku || 'Buku')}
                             disabled={isRequestingReturn === item.id_sirkulasi}
                             className="text-primary hover:bg-primary/5"
@@ -221,9 +220,8 @@ const StudentCirculationHistory: React.FC<StudentCirculationHistoryProps> = ({
                             {isRequestingReturn === item.id_sirkulasi ? (
                               <Loader2 className="h-4 w-4 animate-spin" />
                             ) : (
-                              <RotateCcw className="h-4 w-4 mr-1" />
+                              <RotateCcw className="h-4 w-4" /> // Icon only
                             )}
-                            Ajukan Pengembalian
                           </Button>
                         </div>
                       )}
