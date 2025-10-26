@@ -51,8 +51,8 @@ const StudentCirculationHistory: React.FC<StudentCirculationHistoryProps> = ({
     if (!studentNis) return;
     setLoadingCirculation(true);
     try {
-      // Memastikan urutan parameter sesuai dengan definisi fungsi RPC di database
-      const { data, error } = await supabase.rpc('get_student_circulation_history', {
+      // Memperbarui panggilan RPC untuk menggunakan nama fungsi baru
+      const { data, error } = await supabase.rpc('get_student_circulation_history_v2', {
         limit_value: itemsPerPage,
         offset_value: (currentPage - 1) * itemsPerPage,
         p_id_nis: studentNis,
@@ -69,7 +69,8 @@ const StudentCirculationHistory: React.FC<StudentCirculationHistoryProps> = ({
         setCirculationHistory(data as CirculationItem[]);
       }
 
-      const { data: countData, error: countError } = await supabase.rpc('get_total_student_circulation_count', {
+      // Memperbarui panggilan RPC untuk menggunakan nama fungsi baru
+      const { data: countData, error: countError } = await supabase.rpc('get_total_student_circulation_count_v2', {
         p_id_nis: studentNis,
       });
 
