@@ -1,0 +1,1 @@
+DROP FUNCTION IF EXISTS public.get_total_student_circulation_count_v2(text);
