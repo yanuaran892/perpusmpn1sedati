@@ -187,7 +187,7 @@ const StudentFormDialog: React.FC<StudentFormDialogProps> = ({ isOpen, onClose, 
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-xl max-w-[90vw] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-[95vw] sm:max-w-xl max-h-[90vh] overflow-y-auto"> {/* Adjusted max-w for better mobile centering */}
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-primary">{isNewStudent ? 'Tambah Siswa Baru' : 'Edit Data Siswa'}</DialogTitle>
           <DialogDescription>

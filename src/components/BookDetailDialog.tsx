@@ -72,7 +72,7 @@ const BookDetailDialog: React.FC<BookDetailDialogProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-2xl max-w-[95vw] max-h-[90vh] flex flex-col p-6">
+      <DialogContent className="max-w-[95vw] sm:max-w-2xl max-h-[90vh] flex flex-col p-6"> {/* Adjusted max-w for better mobile centering */}
         <DialogHeader className="pb-4 flex-shrink-0">
           <DialogTitle className="text-3xl font-extrabold text-primary">{book.judul_buku}</DialogTitle>
           <DialogDescription className="text-gray-700 text-base">Detail lengkap buku ini.</DialogDescription>

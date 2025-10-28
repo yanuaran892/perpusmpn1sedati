@@ -28,7 +28,7 @@ const ReportPreviewDialog: React.FC<ReportPreviewDialogProps> = ({
 }) => {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-4xl max-w-[95vw] max-h-[90vh] flex flex-col">
+      <DialogContent className="max-w-[95vw] sm:max-w-4xl max-h-[90vh] flex flex-col"> {/* Adjusted max-w for better mobile centering */}
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-primary">{reportTitle}</DialogTitle>
           <DialogDescription>{reportDescription}</DialogDescription>
@@ -37,11 +37,11 @@ const ReportPreviewDialog: React.FC<ReportPreviewDialogProps> = ({
           {data.length === 0 ? (
             <p className="text-center text-gray-600 py-8 text-lg">Tidak ada data untuk ditampilkan dalam laporan ini.</p>
           ) : (
-            <Table>
+            <Table className="w-full"> {/* Ensure table takes full width */}
               <TableHeader>
                 <TableRow>
                   {columns.map((col, index) => (
-                    <TableHead key={index}>{col}</TableHead>
+                    <TableHead key={index} className="whitespace-nowrap">{col}</TableHead> /* Ensure headers don't wrap */
                   ))}
                 </TableRow>
               </TableHeader>
@@ -49,7 +49,7 @@ const ReportPreviewDialog: React.FC<ReportPreviewDialogProps> = ({
                 {data.map((row, rowIndex) => (
                   <TableRow key={rowIndex}>
                     {columns.map((col, colIndex) => (
-                      <TableCell key={colIndex}>{row[col]}</TableCell>
+                      <TableCell key={colIndex} className="whitespace-nowrap">{row[col]}</TableCell> /* Ensure cells don't wrap */
                     ))}
                   </TableRow>
                 ))}

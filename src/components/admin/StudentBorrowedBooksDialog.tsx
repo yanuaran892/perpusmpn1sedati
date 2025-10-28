@@ -68,7 +68,7 @@ const StudentBorrowedBooksDialog: React.FC<StudentBorrowedBooksDialogProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-2xl max-w-[95vw] max-h-[90vh] flex flex-col">
+      <DialogContent className="max-w-[95vw] sm:max-w-2xl max-h-[90vh] flex flex-col"> {/* Adjusted max-w for better mobile centering */}
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-primary">
             Buku Dipinjam oleh {studentName || 'Siswa Tidak Dikenal'}
@@ -86,19 +86,19 @@ const StudentBorrowedBooksDialog: React.FC<StudentBorrowedBooksDialogProps> = ({
           ) : borrowedBooks.length === 0 ? (
             <p className="text-center text-gray-600 py-8 text-lg">Siswa ini tidak sedang meminjam buku apapun.</p>
           ) : (
-            <Table>
+            <Table className="w-full"> {/* Ensure table takes full width */}
               <TableHeader>
                 <TableRow>
-                  <TableHead>Judul Buku</TableHead>
-                  <TableHead>Tanggal Pinjam</TableHead>
-                  <TableHead>Tanggal Kembali</TableHead>
-                  <TableHead>Status</TableHead>
+                  <TableHead className="min-w-[150px]">Judul Buku</TableHead> {/* Added min-w */}
+                  <TableHead className="whitespace-nowrap">Tanggal Pinjam</TableHead>
+                  <TableHead className="whitespace-nowrap">Tanggal Kembali</TableHead>
+                  <TableHead className="whitespace-nowrap">Status</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {borrowedBooks.map((book) => (
                   <TableRow key={book.id_sirkulasi}>
-                    <TableCell className="font-medium whitespace-nowrap">{book.judul_buku || 'N/A'}</TableCell>
+                    <TableCell className="font-medium min-w-[150px]">{book.judul_buku || 'N/A'}</TableCell> {/* Added min-w */}
                     <TableCell className="whitespace-nowrap">{format(new Date(book.tanggal_pinjam), 'dd MMM yyyy')}</TableCell>
                     <TableCell className="whitespace-nowrap">{format(new Date(book.tanggal_kembali), 'dd MMM yyyy')}</TableCell>
                     <TableCell className="whitespace-nowrap">

@@ -188,23 +188,23 @@ const StudentCirculationHistory: React.FC<StudentCirculationHistoryProps> = ({
           <p className="text-center text-gray-600 py-4 text-base">Belum ada riwayat peminjaman.</p>
         ) : (
           <div className="overflow-x-auto">
-            <Table>
+            <Table className="w-full"> {/* Ensure table takes full width */}
               <TableHeader>
                 <TableRow>
-                  <TableHead className="text-sm">Judul Buku</TableHead>
-                  <TableHead className="text-sm">Tanggal Pinjam</TableHead>
-                  <TableHead className="text-sm">Tanggal Kembali</TableHead>
-                  <TableHead className="text-sm">Dikembalikan</TableHead>
-                  <TableHead className="text-sm">Status</TableHead>
-                  <TableHead className="text-sm">Perpanjangan</TableHead>
-                  <TableHead className="text-right text-sm">Denda</TableHead>
-                  <TableHead className="text-right text-sm">Aksi</TableHead>
+                  <TableHead className="text-sm min-w-[150px]">Judul Buku</TableHead> {/* Added min-w */}
+                  <TableHead className="text-sm whitespace-nowrap">Tanggal Pinjam</TableHead>
+                  <TableHead className="text-sm whitespace-nowrap">Tanggal Kembali</TableHead>
+                  <TableHead className="text-sm whitespace-nowrap">Dikembalikan</TableHead>
+                  <TableHead className="text-sm whitespace-nowrap">Status</TableHead>
+                  <TableHead className="text-sm whitespace-nowrap">Perpanjangan</TableHead>
+                  <TableHead className="text-right text-sm whitespace-nowrap">Denda</TableHead>
+                  <TableHead className="text-right text-sm whitespace-nowrap">Aksi</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {circulationHistory.map((item) => (
                   <TableRow key={item.id_sirkulasi}>
-                    <TableCell className="font-medium text-sm whitespace-nowrap">{item.judul_buku}</TableCell>
+                    <TableCell className="font-medium text-sm min-w-[150px]">{item.judul_buku}</TableCell> {/* Added min-w */}
                     <TableCell className="text-sm whitespace-nowrap">{format(new Date(item.tanggal_pinjam), 'dd MMM yyyy')}</TableCell>
                     <TableCell className="text-sm whitespace-nowrap">
                       {item.status === 'extension_pending' && item.tanggal_kembali_request ? (
@@ -230,7 +230,7 @@ const StudentCirculationHistory: React.FC<StudentCirculationHistoryProps> = ({
                          item.status}
                       </span>
                     </TableCell>
-                    <TableCell className="text-sm">{item.jumlah_perpanjangan} / 3</TableCell>
+                    <TableCell className="text-sm whitespace-nowrap">{item.jumlah_perpanjangan} / 3</TableCell>
                     <TableCell className="text-right text-sm whitespace-nowrap">Rp {item.denda.toLocaleString('id-ID')}</TableCell>
                     <TableCell className="text-right whitespace-nowrap">
                       {item.status === 'dipinjam' && (
