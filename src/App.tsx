@@ -35,7 +35,7 @@ const App = () => (
         position="top-center" // Mengatur posisi notifikasi ke tengah atas
         richColors // Mengaktifkan warna yang lebih kaya untuk notifikasi
         toastOptions={{
-          className: 'w-full max-w-sm mx-auto', // Menerapkan lebar maksimum dan pemusatan pada setiap toast individual
+          className: 'w-full max-w-sm mx-auto inset-x-0', // Menerapkan lebar maksimum, pemusatan, dan inset-x-0
           duration: 5000, // Durasi notifikasi 5 detik
         }}
       />
