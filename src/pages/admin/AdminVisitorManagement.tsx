@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Loader2, PlusCircle, Search, Edit, Trash2, CheckCircle, XCircle, User, UserCheck } from 'lucide-react';
+import { Loader2, PlusCircle, Search, Edit, Trash2, CheckCircle, XCircle, User, UserCheck, ChevronLeft, ChevronRight } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { showError, showSuccess } from '@/utils/toast';
 import { format } from 'date-fns';
@@ -27,19 +27,27 @@ const AdminVisitorManagement = () => {
   const [activeVisitors, setActiveVisitors] = useState(0);
   const [finishedVisitors, setFinishedVisitors] = useState(0);
 
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10); // Number of items per page
+  const [totalPages, setTotalPages] = useState(1);
+
   useEffect(() => {
     fetchGuestEntries();
     fetchVisitorCounts();
-  }, [searchTerm]);
+  }, [searchTerm, currentPage]); // Re-fetch on search term or page change
 
   const fetchGuestEntries = async () => {
     setLoading(true);
     try {
+      const offset = (currentPage - 1) * itemsPerPage;
+
       let query = supabase
         .from('buku_tamu')
         .select('*')
         .order('tanggal', { ascending: false })
-        .order('waktu', { ascending: false });
+        .order('waktu', { ascending: false })
+        .range(offset, offset + itemsPerPage - 1); // Supabase range is inclusive
 
       if (searchTerm) {
         query = query.or(`nama.ilike.%${searchTerm}%,kelas.ilike.%${searchTerm}%,tujuan.ilike.%${searchTerm}%`);
@@ -50,11 +58,31 @@ const AdminVisitorManagement = () => {
       if (error) {
         showError(error.message || 'Gagal mengambil entri pengunjung.');
         setGuestEntries([]);
+        setTotalPages(1);
         return;
       }
       if (data) {
         setGuestEntries(data);
       }
+
+      // Fetch total count for pagination
+      let countQuery = supabase
+        .from('buku_tamu')
+        .select('*', { count: 'exact', head: true });
+
+      if (searchTerm) {
+        countQuery = countQuery.or(`nama.ilike.%${searchTerm}%,kelas.ilike.%${searchTerm}%,tujuan.ilike.%${searchTerm}%`);
+      }
+
+      const { count, error: countError } = await countQuery;
+
+      if (countError) {
+        console.error('Error fetching total guest entry count:', countError);
+        setTotalPages(1);
+      } else {
+        setTotalPages(Math.max(1, Math.ceil((count || 0) / itemsPerPage)));
+      }
+
     } catch (err) {
       console.error('Error fetching guest entries:', err);
       showError('Terjadi kesalahan tak terduga saat mengambil entri pengunjung.');
@@ -139,6 +167,14 @@ const AdminVisitorManagement = () => {
     }
   };
 
+  const handlePreviousPage = () => {
+    setCurrentPage(prev => Math.max(1, prev - 1));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage(prev => Math.min(totalPages, prev + 1));
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -155,7 +191,7 @@ const AdminVisitorManagement = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{totalTodayVisitors}</div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-muted-foreground mt-1">
               {totalTodayVisitors === 0 ? 'Belum ada pengunjung' : `${totalTodayVisitors} pengunjung`}
             </p>
           </CardContent>
@@ -195,7 +231,10 @@ const AdminVisitorManagement = () => {
             <Input
               placeholder="Cari pengunjung..."
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+                setCurrentPage(1); // Reset to first page on search
+              }}
               className="pl-10"
             />
           </div>
@@ -257,6 +296,25 @@ const AdminVisitorManagement = () => {
                   ))}
                 </TableBody>
               </Table>
+              <div className="flex justify-end items-center space-x-2 mt-4">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handlePreviousPage}
+                  disabled={currentPage === 1 || loading}
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </Button>
+                <span className="text-sm text-gray-700">Page {currentPage} of {totalPages}</span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleNextPage}
+                  disabled={currentPage === totalPages || loading}
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </Button>
+              </div>
             </div>
           )}
         </CardContent>
