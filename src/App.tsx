@@ -34,7 +34,6 @@ const App = () => (
       <Sonner 
         position="top-center" // Mengatur posisi notifikasi ke tengah atas
         richColors // Mengaktifkan warna yang lebih kaya untuk notifikasi
-        // Menghapus className dari Sonner karena styling akan diterapkan pada setiap toast individual
         toastOptions={{
           className: 'w-full max-w-sm mx-auto', // Menerapkan lebar maksimum dan pemusatan pada setiap toast individual
           duration: 5000, // Durasi notifikasi 5 detik

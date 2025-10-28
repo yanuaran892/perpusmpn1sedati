@@ -33,7 +33,7 @@ const CustomToastContent: React.FC<CustomToastContentProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-xl p-8 flex flex-col items-center text-center max-w-sm mx-auto">
+    <div className="bg-white rounded-xl shadow-xl p-4 sm:p-8 flex flex-col items-center text-center w-full">
       <Icon className={`h-20 w-20 mb-6 ${iconColorClass}`} />
       <h3 className="text-3xl font-bold mb-3 text-foreground">{title}</h3>
       <p className="text-lg text-muted-foreground mb-8">{description}</p>
