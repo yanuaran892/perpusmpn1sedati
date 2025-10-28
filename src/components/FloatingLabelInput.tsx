@@ -25,7 +25,7 @@ const FloatingLabelInput = React.forwardRef<HTMLInputElement, FloatingLabelInput
     return (
       <div className={cn("relative pt-8 w-full", className)}> {/* Increased padding-top for label to float above */}
         {Icon && (
-          <Icon className="absolute left-3 top-[50px] -translate-y-1/2 h-5 w-5 text-gray-500 peer-focus:text-accent peer-not-placeholder-shown:text-accent transition-colors duration-300" />
+          <Icon className="absolute left-3 top-[23px] h-5 w-5 text-gray-500 peer-focus:text-accent peer-not-placeholder-shown:text-accent transition-colors duration-300" />
         )}
         <input
           id={props.id || label.toLowerCase().replace(/\s/g, '-')}
@@ -45,18 +45,16 @@ const FloatingLabelInput = React.forwardRef<HTMLInputElement, FloatingLabelInput
           className={cn(
             "absolute left-0 text-lg text-gray-500 pointer-events-none transition-all duration-300",
             Icon && "left-10",
-            // Default state: label is aligned with the input text
-            "top-[30px]", // This positions it relative to the parent div's top, which has pt-8. So it's 22px below the parent's top.
-            // When input is focused OR has a value (not placeholder-shown)
-            "peer-focus:top-0 peer-focus:text-accent peer-focus:text-base peer-focus:font-bold",
-            "peer-not-placeholder-shown:top-0 peer-not-placeholder-shown:text-accent peer-not-placeholder-shown:text-base peer-not-placeholder-shown:font-bold"
+            "top-[14px]" // Position the label container to align with input text
           )}
         >
           {label.split('').map((char, index) => (
             <span
               key={index}
               style={{ transitionDelay: `${index * 50}ms` }}
-              className="inline-block min-w-[5px] transition-all duration-300 cubic-bezier(0.68, -0.55, 0.265, 1.55)"
+              className="inline-block min-w-[5px] transition-all duration-300 cubic-bezier(0.68, -0.55, 0.265, 1.55)
+                         peer-focus:transform peer-focus:-translate-y-8 peer-focus:text-base peer-focus:text-accent
+                         peer-not-placeholder-shown:transform peer-not-placeholder-shown:-translate-y-8 peer-not-placeholder-shown:text-base peer-not-placeholder-shown:text-accent"
             >
               {char}
             </span>
@@ -66,7 +64,7 @@ const FloatingLabelInput = React.forwardRef<HTMLInputElement, FloatingLabelInput
           <button
             type="button"
             onClick={togglePasswordVisibility}
-            className="absolute right-3 top-[50px] -translate-y-1/2 text-gray-500 hover:text-accent transition-colors duration-300"
+            className="absolute right-3 top-[23px] text-gray-500 hover:text-accent transition-colors duration-300"
           >
             {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
           </button>
