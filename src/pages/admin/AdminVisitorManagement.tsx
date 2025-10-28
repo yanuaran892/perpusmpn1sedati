@@ -56,7 +56,7 @@ const AdminVisitorManagement = () => {
       const { data, error } = await query;
 
       if (error) {
-        showError(error.message || 'Gagal mengambil entri pengunjung.');
+        showError(error.message || 'Gagal mengambil entri siswa.');
         setGuestEntries([]);
         setTotalPages(1);
         return;
@@ -85,7 +85,7 @@ const AdminVisitorManagement = () => {
 
     } catch (err) {
       console.error('Error fetching guest entries:', err);
-      showError('Terjadi kesalahan tak terduga saat mengambil entri pengunjung.');
+      showError('Terjadi kesalahan tak terduga saat mengambil entri siswa.');
     } finally {
       setLoading(false);
     }
@@ -119,7 +119,7 @@ const AdminVisitorManagement = () => {
   };
 
   const handleDeleteEntry = async (id_tamu: number, nama: string) => {
-    if (!window.confirm(`Apakah Anda yakin ingin menghapus entri pengunjung dari "${nama}"?`)) {
+    if (!window.confirm(`Apakah Anda yakin ingin menghapus entri siswa dari "${nama}"?`)) {
       return;
     }
     try {
@@ -129,22 +129,22 @@ const AdminVisitorManagement = () => {
         .eq('id_tamu', id_tamu);
 
       if (error) {
-        showError(error.message || 'Gagal menghapus entri pengunjung.');
+        showError(error.message || 'Gagal menghapus entri siswa.');
         return;
       }
 
-      showSuccess(`Entri pengunjung dari "${nama}" berhasil dihapus.`);
+      showSuccess(`Entri siswa dari "${nama}" berhasil dihapus.`);
       fetchGuestEntries(); // Refresh list
       fetchVisitorCounts(); // Refresh counts
     } catch (err) {
       console.error('Error deleting guest entry:', err);
-      showError('Terjadi kesalahan tak terduga saat menghapus entri pengunjung.');
+      showError('Terjadi kesalahan tak terduga saat menghapus entri siswa.');
     }
   };
 
   const handleToggleStatus = async (entry: GuestBookEntry) => {
     const newStatus = entry.status === 'berkunjung' ? 'selesai' : 'berkunjung';
-    if (!window.confirm(`Apakah Anda yakin ingin mengubah status kunjungan "${entry.nama}" menjadi "${newStatus}"?`)) {
+    if (!window.confirm(`Apakah Anda yakin ingin mengubah status kunjungan siswa "${entry.nama}" menjadi "${newStatus}"?`)) {
       return;
     }
     try {
@@ -154,16 +154,16 @@ const AdminVisitorManagement = () => {
         .eq('id_tamu', entry.id_tamu);
 
       if (error) {
-        showError(error.message || 'Gagal mengubah status kunjungan.');
+        showError(error.message || 'Gagal mengubah status kunjungan siswa.');
         return;
       }
 
-      showSuccess(`Status kunjungan "${entry.nama}" berhasil diubah menjadi "${newStatus}".`);
+      showSuccess(`Status kunjungan siswa "${entry.nama}" berhasil diubah menjadi "${newStatus}".`);
       fetchGuestEntries(); // Refresh list
       fetchVisitorCounts(); // Refresh counts
     } catch (err) {
       console.error('Error toggling guest status:', err);
-      showError('Terjadi kesalahan tak terduga saat mengubah status kunjungan.');
+      showError('Terjadi kesalahan tak terduga saat mengubah status kunjungan siswa.');
     }
   };
 
@@ -178,58 +178,58 @@ const AdminVisitorManagement = () => {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold text-gray-900">Manajemen Pengunjung</h1>
+        <h1 className="text-3xl font-bold text-gray-900">Manajemen Siswa Berkunjung</h1>
         {/* Removed the button from here */}
       </div>
-      <p className="text-gray-600">Kelola data pengunjung perpustakaan, termasuk siswa yang sedang aktif.</p>
+      <p className="text-gray-600">Kelola data siswa yang berkunjung ke perpustakaan, termasuk siswa yang sedang aktif.</p>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Pengunjung Hari Ini</CardTitle>
+            <CardTitle className="text-sm font-medium">Total Siswa Berkunjung Hari Ini</CardTitle>
             <User className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{totalTodayVisitors}</div>
             <p className="text-xs text-muted-foreground mt-1">
-              {totalTodayVisitors === 0 ? 'Belum ada pengunjung' : `${totalTodayVisitors} pengunjung`}
+              {totalTodayVisitors === 0 ? 'Belum ada siswa berkunjung' : `${totalTodayVisitors} siswa`}
             </p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Sedang Berkunjung</CardTitle>
+            <CardTitle className="text-sm font-medium">Siswa Sedang Berkunjung</CardTitle>
             <UserCheck className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{activeVisitors}</div>
-            <p className="text-xs text-muted-foreground">{activeVisitors} pengunjung aktif</p>
+            <p className="text-xs text-muted-foreground">{activeVisitors} siswa aktif</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Selesai Berkunjung</CardTitle>
+            <CardTitle className="text-sm font-medium">Kunjungan Siswa Selesai</CardTitle>
             <XCircle className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{finishedVisitors}</div>
-            <p className="text-xs text-muted-foreground">{finishedVisitors} kunjungan selesai</p>
+            <p className="text-xs text-muted-foreground">{finishedVisitors} kunjungan siswa selesai</p>
           </CardContent>
         </Card>
       </div>
 
       <Card className="shadow-lg">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2"> {/* Added flex for alignment */}
-          <CardTitle className="text-2xl text-foreground">Daftar Pengunjung</CardTitle>
+          <CardTitle className="text-2xl text-foreground">Daftar Siswa Berkunjung</CardTitle>
           <Button> {/* Moved button here */}
-            <PlusCircle className="mr-2 h-4 w-4" /> Tambah Pengunjung
+            <PlusCircle className="mr-2 h-4 w-4" /> Tambah Siswa Berkunjung
           </Button>
         </CardHeader>
         <CardContent>
           <div className="relative mb-4">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
             <Input
-              placeholder="Cari pengunjung..."
+              placeholder="Cari siswa..."
               value={searchTerm}
               onChange={(e) => {
                 setSearchTerm(e.target.value);
@@ -242,10 +242,10 @@ const AdminVisitorManagement = () => {
           {loading ? (
             <div className="flex justify-center items-center h-64">
               <Loader2 className="h-12 w-12 animate-spin text-primary" />
-              <p className="ml-4 text-xl text-gray-700">Memuat entri pengunjung...</p>
+              <p className="ml-4 text-xl text-gray-700">Memuat entri siswa...</p>
             </div>
           ) : guestEntries.length === 0 ? (
-            <p className="text-center text-gray-600 py-12 text-lg">Belum ada data pengunjung.</p>
+            <p className="text-center text-gray-600 py-12 text-lg">Belum ada data siswa berkunjung.</p>
           ) : (
             <div className="overflow-x-auto">
               <Table>
