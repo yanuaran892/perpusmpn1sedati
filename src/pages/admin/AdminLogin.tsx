@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Loader2, User, Lock } from 'lucide-react';
-import { InputWithIcon } from '@/components/InputWithIcon';
+import { FloatingLabelInput } from '@/components/FloatingLabelInput'; // Menggunakan FloatingLabelInput
 
 const AdminLogin = () => {
   const [username, setUsername] = useState('');
@@ -44,30 +44,26 @@ const AdminLogin = () => {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <Label htmlFor="username" className="text-base font-medium text-gray-700">Username</Label>
-              <InputWithIcon
+              <FloatingLabelInput
                 id="username"
+                label="Username"
                 type="text"
-                placeholder="Masukkan username admin"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
                 icon={User}
-                className="mt-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary"
               />
             </div>
             <div>
-              <Label htmlFor="password" className="text-base font-medium text-gray-700">Password</Label>
-              <InputWithIcon
+              <FloatingLabelInput
                 id="password"
+                label="Password"
                 type="password"
-                placeholder="Masukkan password admin"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 icon={Lock}
                 showPasswordToggle
-                className="mt-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary"
               />
             </div>
             <Button

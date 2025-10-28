@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Loader2, Lock } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { showError, showSuccess } from '@/utils/toast';
-import { InputWithIcon } from '@/components/InputWithIcon';
+import { FloatingLabelInput } from '@/components/FloatingLabelInput'; // Menggunakan FloatingLabelInput
 
 interface StudentChangePasswordFormProps {
   studentNis: string;
@@ -69,42 +69,39 @@ const StudentChangePasswordForm: React.FC<StudentChangePasswordFormProps> = ({ s
       <CardContent>
         <form onSubmit={handleChangePassword} className="space-y-5">
           <div>
-            <Label htmlFor="old-password" className="text-base font-medium text-gray-700">Kata Sandi Lama</Label>
-            <InputWithIcon
+            <FloatingLabelInput
               id="old-password"
+              label="Kata Sandi Lama"
               type="password"
               value={oldPassword}
               onChange={(e) => setOldPassword(e.target.value)}
               required
               icon={Lock}
               showPasswordToggle
-              className="mt-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary"
             />
           </div>
           <div>
-            <Label htmlFor="new-password" className="text-base font-medium text-gray-700">Kata Sandi Baru</Label>
-            <InputWithIcon
+            <FloatingLabelInput
               id="new-password"
+              label="Kata Sandi Baru"
               type="password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               required
               icon={Lock}
               showPasswordToggle
-              className="mt-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary"
             />
           </div>
           <div>
-            <Label htmlFor="confirm-new-password" className="text-base font-medium text-gray-700">Konfirmasi Kata Sandi Baru</Label>
-            <InputWithIcon
+            <FloatingLabelInput
               id="confirm-new-password"
+              label="Konfirmasi Kata Sandi Baru"
               type="password"
               value={confirmNewPassword}
               onChange={(e) => setConfirmNewPassword(e.target.value)}
               required
               icon={Lock}
               showPasswordToggle
-              className="mt-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary"
             />
           </div>
           <Button type="submit" disabled={isChangingPassword} className="bg-primary hover:bg-primary/90 text-white py-2 px-5 rounded-md transition-colors duration-300">
