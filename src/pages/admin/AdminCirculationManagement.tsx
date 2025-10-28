@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Loader2, Search, CheckCircle, XCircle, RotateCcw, Clock } from 'lucide-react'; // Added Clock icon
+import { Loader2, Search, CheckCircle, XCircle, RotateCcw, Clock, ChevronLeft, ChevronRight } from 'lucide-react'; // Added Clock icon
 import { supabase } from '@/integrations/supabase/client';
 import { showError, showSuccess } from '@/utils/toast';
 import { format } from 'date-fns';
@@ -36,38 +36,49 @@ const AdminCirculationManagement = () => {
   const [isProcessingBorrowRequest, setIsProcessingBorrowRequest] = useState<number | null>(null); // State for loading during borrow request approval/rejection
   const [isProcessingExtension, setIsProcessingExtension] = useState<number | null>(null); // New state for loading during extension approval/rejection
 
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10); // Number of items per page
+  const [totalPages, setTotalPages] = useState(1);
+
   useEffect(() => {
     fetchCirculation();
-  }, [searchTerm, filterStatus]);
+  }, [searchTerm, filterStatus, currentPage]); // Re-fetch on search term, filter status, or page change
 
   const fetchCirculation = async () => {
     setLoading(true);
     try {
-      // Use the RPC function to fetch all circulation data for admin
-      const { data, error } = await supabase.rpc('get_admin_dashboard_circulation_data');
+      // Use the new RPC function for paginated and filtered data
+      const { data, error } = await supabase.rpc('get_paginated_admin_circulation_data', {
+        limit_value: itemsPerPage,
+        offset_value: (currentPage - 1) * itemsPerPage,
+        searchkey: searchTerm,
+        filter_status: filterStatus,
+      });
 
       if (error) {
         showError(error.message || 'Gagal mengambil data sirkulasi.');
         setCirculation([]);
+        setTotalPages(1);
         return;
       }
       if (data) {
-        // Apply client-side filtering for search and status
-        const filteredData = (data as CirculationItem[]).filter(item => {
-          const searchLower = searchTerm.toLowerCase();
-          const matchesSearch = (
-            (item.judul_buku && item.judul_buku.toLowerCase().includes(searchLower)) ||
-            (item.siswa_nama && item.siswa_nama.toLowerCase().includes(searchLower)) ||
-            (item.id_nis && item.id_nis.toLowerCase().includes(searchLower)) ||
-            (item.siswa_kelas && item.siswa_kelas.toLowerCase().includes(searchLower))
-          );
-
-          const matchesStatus = filterStatus === 'all' || item.status === filterStatus;
-
-          return matchesSearch && matchesStatus;
-        });
-        setCirculation(filteredData);
+        setCirculation(data as CirculationItem[]);
       }
+
+      // Fetch total count for pagination
+      const { data: countData, error: countError } = await supabase.rpc('get_total_admin_circulation_count', {
+        searchkey: searchTerm,
+        filter_status: filterStatus,
+      });
+
+      if (countError) {
+        console.error('Error fetching total circulation count:', countError);
+        setTotalPages(1);
+      } else {
+        setTotalPages(Math.max(1, Math.ceil((countData || 0) / itemsPerPage)));
+      }
+
     } catch (err) {
       console.error('Error fetching circulation:', err);
       showError('Terjadi kesalahan tak terduga saat mengambil data sirkulasi.');
@@ -232,6 +243,14 @@ const AdminCirculationManagement = () => {
     }
   };
 
+  const handlePreviousPage = () => {
+    setCurrentPage(prev => Math.max(1, prev - 1));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage(prev => Math.min(totalPages, prev + 1));
+  };
+
   return (
     <div className="space-y-6">
       <h1 className="text-3xl font-bold text-gray-900">Manajemen Sirkulasi</h1>
@@ -249,11 +268,17 @@ const AdminCirculationManagement = () => {
               <Input
                 placeholder="Cari buku, siswa, atau NIS..."
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={(e) => {
+                  setSearchTerm(e.target.value);
+                  setCurrentPage(1); // Reset to first page on search
+                }}
                 className="pl-10"
               />
             </div>
-            <Select onValueChange={setFilterStatus} value={filterStatus}>
+            <Select onValueChange={(value) => {
+              setFilterStatus(value);
+              setCurrentPage(1); // Reset to first page on filter change
+            }} value={filterStatus}>
               <SelectTrigger className="w-full md:w-[180px]">
                 <SelectValue placeholder="Semua Status" />
               </SelectTrigger>
@@ -427,6 +452,25 @@ const AdminCirculationManagement = () => {
                   ))}
                 </TableBody>
               </Table>
+              <div className="flex justify-end items-center space-x-2 mt-4">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handlePreviousPage}
+                  disabled={currentPage === 1 || loading}
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </Button>
+                <span className="text-sm text-gray-700">Page {currentPage} of {totalPages}</span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleNextPage}
+                  disabled={currentPage === totalPages || loading}
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </Button>
+              </div>
             </div>
           )}
         </CardContent>
