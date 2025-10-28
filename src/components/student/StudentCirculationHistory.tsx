@@ -19,6 +19,7 @@ interface CirculationItem {
   judul_buku?: string;
   jumlah_perpanjangan: number;
   tanggal_kembali_request: string | null;
+  extension_rejected: boolean; // New field
 }
 
 interface StudentCirculationHistoryProps {
@@ -36,6 +37,7 @@ const StudentCirculationHistory: React.FC<StudentCirculationHistoryProps> = ({
   const [loadingCirculation, setLoadingCirculation] = useState(true);
   const [isRequestingReturn, setIsRequestingReturn] = useState<number | null>(null);
   const [isExtending, setIsExtending] = useState<number | null>(null);
+  const [shownRejectionPopups, setShownRejectionPopups] = useState<Set<number>>(new Set());
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
@@ -65,7 +67,16 @@ const StudentCirculationHistory: React.FC<StudentCirculationHistoryProps> = ({
       }
 
       if (data) {
-        setCirculationHistory(data as CirculationItem[]);
+        const circulationData = data as CirculationItem[];
+        setCirculationHistory(circulationData);
+
+        // Check for new rejections to show a popup
+        circulationData.forEach(item => {
+          if (item.extension_rejected && !shownRejectionPopups.has(item.id_sirkulasi)) {
+            showError("MOHON MAAF PENGAJUAN PERPANJANGAN PEMINJAMAN BUKU DITOLAK");
+            setShownRejectionPopups(prev => new Set(prev).add(item.id_sirkulasi));
+          }
+        });
       }
 
       const { data: countData, error: countError } = await supabase.rpc('get_total_student_circulation_count_v3', {
@@ -228,7 +239,12 @@ const StudentCirculationHistory: React.FC<StudentCirculationHistoryProps> = ({
                             variant="outline"
                             size="icon"
                             onClick={() => handleExtendBorrowPeriod(item.id_sirkulasi, item.judul_buku || 'Buku')}
-                            disabled={isExtending === item.id_sirkulasi || item.jumlah_perpanjangan >= 3 || isPast(new Date(item.tanggal_kembali))}
+                            disabled={
+                              isExtending === item.id_sirkulasi || 
+                              item.jumlah_perpanjangan >= 3 || 
+                              isPast(new Date(item.tanggal_kembali)) ||
+                              item.extension_rejected // Disable if rejected
+                            }
                             className="text-blue-500 hover:bg-blue-50"
                           >
                             {isExtending === item.id_sirkulasi ? (

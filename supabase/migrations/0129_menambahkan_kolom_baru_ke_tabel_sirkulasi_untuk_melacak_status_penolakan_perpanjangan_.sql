@@ -1,0 +1,1 @@
+ALTER TABLE public.sirkulasi ADD COLUMN extension_rejected BOOLEAN DEFAULT FALSE;
