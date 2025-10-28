@@ -103,4 +103,49 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  @keyframes sh02 {
+    from {
+      opacity: 0;
+      left: 0%;
+    }
+    50% {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+      left: 100%;
+    }
+  }
+}
+
+@layer components {
+  .btn-shiny {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.2s ease-in;
+  }
+
+  .btn-shiny::before {
+    content: '';
+    display: block;
+    width: 0px;
+    height: 86%;
+    position: absolute;
+    top: 7%;
+    left: 0%;
+    opacity: 0;
+    background: #fff;
+    box-shadow: 0 0 50px 30px #fff;
+    transform: skewX(-20deg);
+  }
+
+  .btn-shiny:hover::before {
+    animation: sh02 0.5s 0s linear;
+  }
+
+  .btn-shiny:active {
+    box-shadow: 0 0 0 0 transparent;
+    transition: box-shadow 0.2s ease-in;
+  }
 }
