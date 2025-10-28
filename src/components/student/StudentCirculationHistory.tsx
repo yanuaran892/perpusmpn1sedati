@@ -191,22 +191,22 @@ const StudentCirculationHistory: React.FC<StudentCirculationHistoryProps> = ({
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="text-sm min-w-[150px]">Judul Buku</TableHead>
-                  <TableHead className="text-sm min-w-[120px]">Tanggal Pinjam</TableHead>
-                  <TableHead className="text-sm min-w-[120px]">Tanggal Kembali</TableHead>
-                  <TableHead className="text-sm min-w-[120px]">Dikembalikan</TableHead>
-                  <TableHead className="text-sm min-w-[100px]">Status</TableHead>
-                  <TableHead className="text-sm min-w-[100px]">Perpanjangan</TableHead>
-                  <TableHead className="text-right text-sm min-w-[80px]">Denda</TableHead>
-                  <TableHead className="text-right text-sm min-w-[80px]">Aksi</TableHead>
+                  <TableHead className="text-sm">Judul Buku</TableHead>
+                  <TableHead className="text-sm">Tanggal Pinjam</TableHead>
+                  <TableHead className="text-sm">Tanggal Kembali</TableHead>
+                  <TableHead className="text-sm">Dikembalikan</TableHead>
+                  <TableHead className="text-sm">Status</TableHead>
+                  <TableHead className="text-sm">Perpanjangan</TableHead>
+                  <TableHead className="text-right text-sm">Denda</TableHead>
+                  <TableHead className="text-right text-sm">Aksi</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {circulationHistory.map((item) => (
                   <TableRow key={item.id_sirkulasi}>
-                    <TableCell className="font-medium text-sm">{item.judul_buku}</TableCell>
-                    <TableCell className="text-sm">{format(new Date(item.tanggal_pinjam), 'dd MMM yyyy')}</TableCell>
-                    <TableCell className="text-sm">
+                    <TableCell className="font-medium text-sm whitespace-nowrap">{item.judul_buku}</TableCell>
+                    <TableCell className="text-sm whitespace-nowrap">{format(new Date(item.tanggal_pinjam), 'dd MMM yyyy')}</TableCell>
+                    <TableCell className="text-sm whitespace-nowrap">
                       {item.status === 'extension_pending' && item.tanggal_kembali_request ? (
                         <div className="flex flex-col">
                           <span className="line-through text-gray-500">{format(new Date(item.tanggal_kembali), 'dd MMM yyyy')}</span>
@@ -216,8 +216,8 @@ const StudentCirculationHistory: React.FC<StudentCirculationHistoryProps> = ({
                         format(new Date(item.tanggal_kembali), 'dd MMM yyyy')
                       )}
                     </TableCell>
-                    <TableCell className="text-sm">{item.tanggal_dikembalikan ? format(new Date(item.tanggal_dikembalikan), 'dd MMM yyyy') : '-'}</TableCell>
-                    <TableCell>
+                    <TableCell className="text-sm whitespace-nowrap">{item.tanggal_dikembalikan ? format(new Date(item.tanggal_dikembalikan), 'dd MMM yyyy') : '-'}</TableCell>
+                    <TableCell className="whitespace-nowrap">
                       <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
                         item.status === 'dipinjam' ? 'bg-yellow-100 text-yellow-800' :
                         item.status === 'dikembalikan' ? 'bg-accent/10 text-accent' :
@@ -231,8 +231,8 @@ const StudentCirculationHistory: React.FC<StudentCirculationHistoryProps> = ({
                       </span>
                     </TableCell>
                     <TableCell className="text-sm">{item.jumlah_perpanjangan} / 3</TableCell>
-                    <TableCell className="text-right text-sm">Rp {item.denda.toLocaleString('id-ID')}</TableCell>
-                    <TableCell className="text-right">
+                    <TableCell className="text-right text-sm whitespace-nowrap">Rp {item.denda.toLocaleString('id-ID')}</TableCell>
+                    <TableCell className="text-right whitespace-nowrap">
                       {item.status === 'dipinjam' && (
                         <div className="flex justify-end space-x-1">
                           <Button

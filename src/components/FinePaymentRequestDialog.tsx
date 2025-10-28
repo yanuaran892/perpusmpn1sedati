@@ -128,7 +128,7 @@ const FinePaymentRequestDialog: React.FC<FinePaymentRequestDialogProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="sm:max-w-lg max-w-[90vw]">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-primary">Ajukan Pembayaran Denda</DialogTitle>
           <DialogDescription>

@@ -76,7 +76,7 @@ const AdminAddFineDialog: React.FC<AdminAddFineDialogProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="sm:max-w-lg max-w-[90vw]">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-primary">Tambah Denda Manual</DialogTitle>
           <DialogDescription>

@@ -72,7 +72,7 @@ const StudentProfile = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4 md:p-8">
-      <div className="max-w-5xl mx-auto bg-white rounded-xl shadow-lg p-6 md:p-10">
+      <div className="max-w-full lg:max-w-5xl mx-auto bg-white rounded-xl shadow-lg p-6 md:p-10">
         <div className="flex justify-between items-center mb-8">
           <Button variant="outline" onClick={() => navigate('/dashboard')} className="text-primary hover:bg-primary/5 transition-colors duration-200">
             <ArrowLeft className="mr-2 h-5 w-5" /> Kembali ke Dashboard

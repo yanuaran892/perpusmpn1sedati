@@ -92,7 +92,7 @@ const CategoryFormDialog: React.FC<CategoryFormDialogProps> = ({ isOpen, onClose
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="sm:max-w-lg max-w-[90vw]">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-primary">{categoryToEdit ? 'Edit Kategori' : 'Tambah Kategori Baru'}</DialogTitle>
           <DialogDescription>

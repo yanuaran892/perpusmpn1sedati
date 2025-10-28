@@ -28,7 +28,7 @@ const ReportPreviewDialog: React.FC<ReportPreviewDialogProps> = ({
 }) => {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[900px] max-h-[90vh] flex flex-col">
+      <DialogContent className="sm:max-w-4xl max-w-[95vw] max-h-[90vh] flex flex-col">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-primary">{reportTitle}</DialogTitle>
           <DialogDescription>{reportDescription}</DialogDescription>

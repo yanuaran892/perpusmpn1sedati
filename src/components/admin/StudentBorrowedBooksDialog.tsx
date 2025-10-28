@@ -68,7 +68,7 @@ const StudentBorrowedBooksDialog: React.FC<StudentBorrowedBooksDialogProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[700px] max-h-[90vh] flex flex-col">
+      <DialogContent className="sm:max-w-2xl max-w-[95vw] max-h-[90vh] flex flex-col">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-primary">
             Buku Dipinjam oleh {studentName || 'Siswa Tidak Dikenal'}
@@ -98,10 +98,10 @@ const StudentBorrowedBooksDialog: React.FC<StudentBorrowedBooksDialogProps> = ({
               <TableBody>
                 {borrowedBooks.map((book) => (
                   <TableRow key={book.id_sirkulasi}>
-                    <TableCell className="font-medium">{book.judul_buku || 'N/A'}</TableCell>
-                    <TableCell>{format(new Date(book.tanggal_pinjam), 'dd MMM yyyy')}</TableCell>
-                    <TableCell>{format(new Date(book.tanggal_kembali), 'dd MMM yyyy')}</TableCell>
-                    <TableCell>
+                    <TableCell className="font-medium whitespace-nowrap">{book.judul_buku || 'N/A'}</TableCell>
+                    <TableCell className="whitespace-nowrap">{format(new Date(book.tanggal_pinjam), 'dd MMM yyyy')}</TableCell>
+                    <TableCell className="whitespace-nowrap">{format(new Date(book.tanggal_kembali), 'dd MMM yyyy')}</TableCell>
+                    <TableCell className="whitespace-nowrap">
                       <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
                         book.status === 'dipinjam' ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-100 text-gray-800'
                       }`}>

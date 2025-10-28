@@ -251,7 +251,7 @@ const BookFormDialog: React.FC<BookFormDialogProps> = ({ isOpen, onClose, onSave
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-2xl max-w-[95vw] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-primary">{bookToEdit ? 'Edit Buku' : 'Tambah Buku Baru'}</DialogTitle>
           <DialogDescription>
