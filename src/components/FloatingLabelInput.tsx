@@ -12,7 +12,6 @@ const FloatingLabelInput = React.forwardRef<HTMLInputElement, FloatingLabelInput
   ({ className, type, label, icon: Icon, showPasswordToggle = false, ...props }, ref) => {
     const [showPassword, setShowPassword] = useState(false);
     const isPasswordType = type === 'password';
-    const isInputFilled = props.value !== undefined && props.value !== null && String(props.value).length > 0;
 
     const togglePasswordVisibility = () => {
       setShowPassword(prev => !prev);
@@ -21,7 +20,7 @@ const FloatingLabelInput = React.forwardRef<HTMLInputElement, FloatingLabelInput
     return (
       <div className={cn("relative mt-6 mb-8 w-full", className)}>
         {Icon && (
-          <Icon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500 peer-focus:text-accent peer-valid:text-accent transition-colors duration-300" />
+          <Icon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500 peer-focus:text-accent peer-not-placeholder-shown:text-accent transition-colors duration-300" />
         )}
         <input
           id={props.id || label.toLowerCase().replace(/\s/g, '-')}
@@ -33,26 +32,21 @@ const FloatingLabelInput = React.forwardRef<HTMLInputElement, FloatingLabelInput
             isPasswordType && showPasswordToggle && "pr-10"
           )}
           {...props}
-          // Add placeholder to make it work with :valid pseudo-class for initial state
-          placeholder=" " 
+          placeholder=" " // Penting untuk peer-not-placeholder-shown
         />
         <label
           htmlFor={props.id || label.toLowerCase().replace(/\s/g, '-')}
           className={cn(
-            "absolute top-3 left-0 text-lg text-gray-500 pointer-events-none transition-all duration-300",
+            "absolute left-0 text-lg text-gray-500 pointer-events-none transition-all duration-300",
             Icon && "left-10",
-            (isInputFilled || showPasswordToggle) && "transform -translate-y-7 text-accent text-base" // Adjusted translateY
+            // Posisi default saat placeholder ditampilkan (input kosong, tidak fokus)
+            "top-1/2 -translate-y-1/2",
+            // Saat fokus atau memiliki nilai (placeholder tidak ditampilkan)
+            "peer-focus:-top-4 peer-focus:text-accent peer-focus:text-base",
+            "peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-accent peer-not-placeholder-shown:text-base"
           )}
         >
-          {label.split('').map((char, index) => (
-            <span
-              key={index}
-              style={{ transitionDelay: `${index * 50}ms` }}
-              className="inline-block min-w-[5px] peer-focus:text-accent peer-focus:transform peer-focus:-translate-y-7 peer-focus:text-base peer-valid:text-accent peer-valid:transform peer-valid:-translate-y-7 peer-valid:text-base"
-            >
-              {char}
-            </span>
-          ))}
+          {label}
         </label>
         {isPasswordType && showPasswordToggle && (
           <button
