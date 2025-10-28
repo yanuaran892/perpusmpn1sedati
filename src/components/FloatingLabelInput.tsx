@@ -39,14 +39,18 @@ const FloatingLabelInput = React.forwardRef<HTMLInputElement, FloatingLabelInput
           className={cn(
             "absolute left-0 text-lg text-gray-500 pointer-events-none transition-all duration-300",
             Icon && "left-10",
-            // Posisi default saat placeholder ditampilkan (input kosong, tidak fokus)
-            "top-1/2 -translate-y-1/2",
-            // Saat fokus atau memiliki nilai (placeholder tidak ditampilkan)
-            "peer-focus:-top-4 peer-focus:text-accent peer-focus:text-base",
-            "peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-accent peer-not-placeholder-shown:text-base"
+            "top-1/2 -translate-y-1/2" // Posisi default
           )}
         >
-          {label}
+          {label.split('').map((char, index) => (
+            <span
+              key={index}
+              style={{ transitionDelay: `${index * 50}ms` }}
+              className="inline-block min-w-[5px] peer-focus:text-accent peer-focus:transform peer-focus:-translate-y-8 peer-focus:text-base peer-not-placeholder-shown:text-accent peer-not-placeholder-shown:transform peer-not-placeholder-shown:-translate-y-8 peer-not-placeholder-shown:text-base transition-all duration-300 cubic-bezier(0.68, -0.55, 0.265, 1.55)"
+            >
+              {char}
+            </span>
+          ))}
         </label>
         {isPasswordType && showPasswordToggle && (
           <button

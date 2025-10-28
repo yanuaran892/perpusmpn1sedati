@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Loader2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { showError, showSuccess } from '@/utils/toast';
-import { InputWithIcon } from '@/components/InputWithIcon'; // Assuming this component is available
+import { FloatingLabelInput } from '@/components/FloatingLabelInput'; // Menggunakan FloatingLabelInput
 import { User, Lock, Maximize2, CheckCircle, XCircle } from 'lucide-react'; // Icons for inputs
 
 interface StudentItem {
@@ -197,10 +197,10 @@ const StudentFormDialog: React.FC<StudentFormDialogProps> = ({ isOpen, onClose, 
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="id_nis" className="text-right">NIS</Label>
-            <InputWithIcon
+            <FloatingLabelInput
               id="id_nis"
               type="text"
-              placeholder="Nomor Induk Siswa"
+              label="Nomor Induk Siswa"
               value={formData.id_nis}
               onChange={handleChange}
               className="col-span-3"
@@ -241,10 +241,10 @@ const StudentFormDialog: React.FC<StudentFormDialogProps> = ({ isOpen, onClose, 
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="password" className="text-right">Password {isNewStudent ? '' : '(Kosongkan jika tidak diubah)'}</Label>
-            <InputWithIcon
+            <FloatingLabelInput
               id="password"
+              label={isNewStudent ? "Password" : "Password baru"}
               type="password"
-              placeholder={isNewStudent ? "Password" : "Password baru"}
               value={formData.password}
               onChange={handleChange}
               className="col-span-3"
