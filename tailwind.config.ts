@@ -18,6 +18,10 @@ export default {
       },
     },
     extend: {
+      borderWidth: { // Menambahkan konfigurasi border-width kustom
+        '3': '3px',
+        '4': '4px',
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

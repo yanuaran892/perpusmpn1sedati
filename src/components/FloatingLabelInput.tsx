@@ -17,36 +17,46 @@ const FloatingLabelInput = React.forwardRef<HTMLInputElement, FloatingLabelInput
       setShowPassword(prev => !prev);
     };
 
+    // Calculate padding-left for icon
+    const plClass = Icon ? "pl-10" : "pl-0";
+    // Calculate padding-right for password toggle
+    const prClass = isPasswordType && showPasswordToggle ? "pr-10" : "pr-0";
+
     return (
-      <div className={cn("relative mt-6 mb-8 w-full", className)}>
+      <div className={cn("relative pt-8 w-full", className)}> {/* Increased padding-top for label to float above */}
         {Icon && (
-          <Icon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500 peer-focus:text-accent peer-not-placeholder-shown:text-accent transition-colors duration-300" />
+          <Icon className="absolute left-3 top-[50px] -translate-y-1/2 h-5 w-5 text-gray-500 peer-focus:text-accent peer-not-placeholder-shown:text-accent transition-colors duration-300" />
         )}
         <input
           id={props.id || label.toLowerCase().replace(/\s/g, '-')}
           type={isPasswordType && showPasswordToggle && showPassword ? 'text' : type}
           ref={ref}
           className={cn(
-            "peer w-full bg-transparent border-0 border-b-2 border-gray-300 focus:border-accent block py-3 px-0 text-lg text-foreground focus:outline-none transition-all duration-300",
-            Icon && "pl-10",
-            isPasswordType && showPasswordToggle && "pr-10"
+            "peer w-full bg-transparent border-0 border-b-2 border-gray-300 focus:border-accent block py-2 px-0 text-lg text-foreground focus:outline-none transition-all duration-300", // py-2 for 7px padding, text-foreground for dark text
+            plClass,
+            prClass,
+            "focus:pb-1.5 focus:font-bold focus:border-b-3" // Simulate border-width 3px and font-bold on focus
           )}
           {...props}
-          placeholder=" " // Penting untuk peer-not-placeholder-shown
+          placeholder=" " // Crucial for peer-not-placeholder-shown
         />
         <label
           htmlFor={props.id || label.toLowerCase().replace(/\s/g, '-')}
           className={cn(
             "absolute left-0 text-lg text-gray-500 pointer-events-none transition-all duration-300",
             Icon && "left-10",
-            "top-1/2 -translate-y-1/2" // Posisi default
+            // Default state: label is aligned with the input text
+            "top-[30px]", // This positions it relative to the parent div's top, which has pt-8. So it's 22px below the parent's top.
+            // When input is focused OR has a value (not placeholder-shown)
+            "peer-focus:top-0 peer-focus:text-accent peer-focus:text-base peer-focus:font-bold",
+            "peer-not-placeholder-shown:top-0 peer-not-placeholder-shown:text-accent peer-not-placeholder-shown:text-base peer-not-placeholder-shown:font-bold"
           )}
         >
           {label.split('').map((char, index) => (
             <span
               key={index}
               style={{ transitionDelay: `${index * 50}ms` }}
-              className="inline-block min-w-[5px] peer-focus:text-accent peer-focus:transform peer-focus:-translate-y-8 peer-focus:text-base peer-not-placeholder-shown:text-accent peer-not-placeholder-shown:transform peer-not-placeholder-shown:-translate-y-8 peer-not-placeholder-shown:text-base transition-all duration-300 cubic-bezier(0.68, -0.55, 0.265, 1.55)"
+              className="inline-block min-w-[5px] transition-all duration-300 cubic-bezier(0.68, -0.55, 0.265, 1.55)"
             >
               {char}
             </span>
@@ -56,7 +66,7 @@ const FloatingLabelInput = React.forwardRef<HTMLInputElement, FloatingLabelInput
           <button
             type="button"
             onClick={togglePasswordVisibility}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-accent transition-colors duration-300"
+            className="absolute right-3 top-[50px] -translate-y-1/2 text-gray-500 hover:text-accent transition-colors duration-300"
           >
             {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
           </button>
