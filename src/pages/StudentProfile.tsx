@@ -74,25 +74,38 @@ const StudentProfile = () => {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4 md:p-8">
       <div className="max-w-full lg:max-w-5xl mx-auto bg-white rounded-xl shadow-lg p-6 md:p-10">
         <div className="flex justify-between items-center mb-8">
-          <Button variant="outline" onClick={() => navigate('/dashboard')} className="text-primary hover:bg-primary/5 transition-colors duration-200">
-            <ArrowLeft className="mr-2 h-5 w-5" /> Kembali ke Dashboard
+          <Button 
+            variant="outline" 
+            onClick={() => navigate('/dashboard')} 
+            size="icon" // Default to icon size
+            className="text-primary hover:bg-primary/5 transition-colors duration-200 md:w-auto md:px-4 md:py-2" // Adjust for larger screens
+          >
+            <ArrowLeft className="h-5 w-5" />
+            <span className="hidden md:inline ml-2">Kembali ke Dashboard</span>
           </Button>
           <div className="flex space-x-2">
             <Button 
               onClick={handleRefreshStudentProfile} 
               variant="outline" 
-              className="text-gray-600 hover:bg-gray-100 transition-colors duration-200"
+              size="icon" // Default to icon size
+              className="text-gray-600 hover:bg-gray-100 transition-colors duration-200 md:w-auto md:px-4 md:py-2" // Adjust for larger screens
               disabled={isRefreshingProfile}
             >
               {isRefreshingProfile ? (
-                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                <Loader2 className="h-5 w-5 animate-spin" />
               ) : (
-                <RefreshCcw className="mr-2 h-5 w-5" />
+                <RefreshCcw className="h-5 w-5" />
               )}
-              Refresh Data
+              <span className="hidden md:inline ml-2">Refresh Data</span>
             </Button>
-            <Button onClick={handleLogout} variant="ghost" className="text-red-600 hover:bg-red-50 transition-colors duration-200">
-              <LogOut className="mr-2 h-5 w-5" /> Logout
+            <Button 
+              onClick={handleLogout} 
+              variant="ghost" 
+              size="icon" // Default to icon size
+              className="text-red-600 hover:bg-red-50 transition-colors duration-200 md:w-auto md:px-4 md:py-2" // Adjust for larger screens
+            >
+              <LogOut className="h-5 w-5" />
+              <span className="hidden md:inline ml-2">Logout</span>
             </Button>
           </div>
         </div>
