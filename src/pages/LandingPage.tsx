@@ -2,18 +2,16 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Calendar, MessageSquare, Phone, Mail, Instagram, Youtube, Twitter, Menu, Book, LayoutGrid, BookOpen } from 'lucide-react';
+import { Calendar, MessageSquare, Phone, Mail, Instagram, Youtube, Twitter, Menu, Book, LayoutGrid, BookOpen, UserCircle } from 'lucide-react'; // Added UserCircle
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useInView } from 'react-intersection-observer';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import Autoplay from "embla-carousel-autoplay";
 import AnimatedStatCard from "@/components/AnimatedStatCard";
 
 const LandingPage = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const { scrollY } = useScroll();
-  const heroParallax = useTransform(scrollY, [0, 500], [0, -100]);
+  const heroParallax = useTransform(scrollY, [0, 500], [0, -100]); // Keep for potential future use or subtle effect
 
   const handleScrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -29,7 +27,7 @@ const LandingPage = () => {
     { id: 'information', label: 'Informasi' },
   ];
 
-  const SectionWrapper = ({ children, id }: { children: React.ReactNode, id: string }) => {
+  const SectionWrapper = ({ children, id, className = "" }: { children: React.ReactNode, id: string, className?: string }) => {
     const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
     return (
       <motion.section
@@ -38,7 +36,7 @@ const LandingPage = () => {
         initial={{ opacity: 0, y: 50 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.8 }}
-        className="py-16 md:py-24 px-4 container mx-auto"
+        className={`py-16 md:py-24 px-4 container mx-auto ${className}`}
       >
         {children}
       </motion.section>
@@ -127,12 +125,15 @@ const LandingPage = () => {
         {/* Pustakawan Section */}
         <SectionWrapper id="librarians">
           <div className="text-center">
-            <h3 className="text-3xl md:text-4xl font-bold mb-12 tracking-widest">PUSTAKAWAN</h3>
+            <h3 className="text-3xl md:text-4xl font-bold mb-12 tracking-widest text-gray-900">TIM KAMI</h3>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
-              {["Nama Pustakawan", "Nama Pustakawan", "Nama Pustakawan", "Nama Pustakawan"].map((name, index) => (
+              {["Nama Pustakawan 1", "Nama Pustakawan 2", "Nama Pustakawan 3", "Nama Pustakawan 4"].map((name, index) => (
                 <div key={index} className="flex flex-col items-center">
-                  <div className="w-32 h-44 md:w-40 md:h-52 bg-gray-200 rounded-2xl shadow-md mb-4"></div>
-                  <p className="font-semibold">{name}</p>
+                  <div className="w-32 h-44 md:w-40 md:h-52 bg-gray-200 rounded-2xl shadow-md mb-4 flex items-center justify-center text-gray-500 text-sm">
+                    <UserCircle className="h-20 w-20 text-gray-400" />
+                  </div>
+                  <p className="font-semibold text-lg text-gray-800">{name}</p>
+                  <p className="text-sm text-gray-600">Pustakawan</p>
                 </div>
               ))}
             </div>
@@ -143,20 +144,31 @@ const LandingPage = () => {
         <section id="information" className="relative py-16 md:py-24 px-4 bg-cover bg-center bg-fixed text-white text-center" style={{ backgroundImage: "url('/foto (2).jpg')" }}>
           <div className="absolute inset-0 bg-black/70"></div>
           <div className="relative z-10 container mx-auto">
-            <h3 className="text-2xl md:text-3xl font-bold">WAKTU PELAYANAN PERPUSTAKAAN</h3>
-            <h4 className="text-xl md:text-2xl font-semibold mb-4">SMPN 1 SEDATI</h4>
-            <p className="text-lg md:text-xl bg-white/20 inline-block px-4 py-2 rounded-md mb-12">Senin - Sabtu : 07.00 - 16.00 <br /> mengikuti waktu kegiatan sekolah</p>
-            <h3 className="text-2xl md:text-3xl font-bold">INFORMASI</h3>
-            <h4 className="text-xl md:text-2xl font-semibold mb-6">Tata Cara Peminjaman Buku</h4>
-            <ul className="list-disc list-inside text-left max-w-3xl mx-auto space-y-2 text-gray-300">
-              <li>Login ke Website Perpustakaan SMPN 1 Sedati menggunakan akun yang telah terdaftar.</li>
-              <li>Siswa dapat meminjam maksimal 2 buku dan guru maksimal 5 buku dengan masa pinjam selama 7 hari.</li>
-              <li>Perpanjangan masa pinjam dapat dilakukan satu kali selama 7 hari tambahan.</li>
-              <li>Proses peminjaman dilakukan dengan memilih buku dari katalog online dan mengajukan peminjaman.</li>
-              <li>Pengambilan buku fisik dilakukan di meja petugas perpustakaan setelah peminjaman disetujui.</li>
-              <li>Keterlambatan pengembalian dikenakan denda Rp500 per buku per hari.</li>
-              <li>Buku yang rusak atau hilang wajib diganti dengan buku yang sama atau membayar sesuai harga buku.</li>
-            </ul>
+            <h3 className="text-3xl md:text-4xl font-bold mb-8">INFORMASI PERPUSTAKAAN</h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+              <Card className="bg-white/10 backdrop-blur-sm border border-white/20 text-white p-6 rounded-lg shadow-lg">
+                <CardContent className="p-0">
+                  <h4 className="text-2xl font-bold mb-4 flex items-center justify-center"><Calendar className="mr-3 h-6 w-6" /> Waktu Pelayanan</h4>
+                  <p className="text-lg md:text-xl font-semibold">Senin - Sabtu : 07.00 - 16.00</p>
+                  <p className="text-sm text-gray-300 mt-1">Mengikuti waktu kegiatan sekolah</p>
+                </CardContent>
+              </Card>
+              <Card className="bg-white/10 backdrop-blur-sm border border-white/20 text-white p-6 rounded-lg shadow-lg">
+                <CardContent className="p-0">
+                  <h4 className="text-2xl font-bold mb-4 flex items-center justify-center"><BookOpen className="mr-3 h-6 w-6" /> Tata Cara Peminjaman</h4>
+                  <ul className="list-disc list-inside text-left space-y-2 text-gray-300 text-base">
+                    <li>Login ke Website Perpustakaan SMPN 1 Sedati menggunakan akun yang telah terdaftar.</li>
+                    <li>Siswa dapat meminjam maksimal 2 buku dan guru maksimal 5 buku dengan masa pinjam selama 7 hari.</li>
+                    <li>Perpanjangan masa pinjam dapat dilakukan satu kali selama 7 hari tambahan.</li>
+                    <li>Proses peminjaman dilakukan dengan memilih buku dari katalog online dan mengajukan peminjaman.</li>
+                    <li>Pengambilan buku fisik dilakukan di meja petugas perpustakaan setelah peminjaman disetujui.</li>
+                    <li>Keterlambatan pengembalian dikenakan denda Rp500 per buku per hari.</li>
+                    <li>Buku yang rusak atau hilang wajib diganti dengan buku yang sama atau membayar sesuai harga buku.</li>
+                  </ul>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </section>
       </main>
@@ -168,11 +180,22 @@ const LandingPage = () => {
             <div className="flex items-center mb-4"><img src="/smpn1sedati_logo.png" alt="Logo" className="h-12 w-12 mr-3" /><div><p className="font-bold">SMP NEGERI 1</p><p className="font-bold text-lg">SEDATI</p></div></div>
             <p className="font-bold mb-2">Alamat Perpustakaan SMPN 1 Sedati</p>
             <p className="text-gray-400">Jl. Raya Sedati No. XX, Sedati, Sidoarjo, Jawa Timur</p>
-            <div className="flex gap-4 mt-4"><Instagram size={20} className="hover:text-blue-400 cursor-pointer transition-colors" /><Youtube size={20} className="hover:text-blue-400 cursor-pointer transition-colors" /><Mail size={20} className="hover:text-blue-400 cursor-pointer transition-colors" /><Twitter size={20} className="hover:text-blue-400 cursor-pointer transition-colors" /></div>
+            <div className="flex gap-4 mt-4">
+              <a href="#" aria-label="Instagram" className="text-gray-400 hover:text-blue-400 cursor-pointer transition-colors"><Instagram size={20} /></a>
+              <a href="#" aria-label="Youtube" className="text-gray-400 hover:text-blue-400 cursor-pointer transition-colors"><Youtube size={20} /></a>
+              <a href="#" aria-label="Email" className="text-gray-400 hover:text-blue-400 cursor-pointer transition-colors"><Mail size={20} /></a>
+              <a href="#" aria-label="Twitter" className="text-gray-400 hover:text-blue-400 cursor-pointer transition-colors"><Twitter size={20} /></a>
+            </div>
           </div>
           <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-8">
-            <div><div className="flex items-center mb-2"><Phone size={20} className="mr-3" /><p className="font-bold">Telephone/Whatsapp</p></div><p className="text-gray-400">0812-3456-7890</p></div>
-            <div><div className="flex items-center mb-2"><Mail size={20} className="mr-3" /><p className="font-bold">Email</p></div><p className="text-gray-400">perpustakaan@smpn1sedati.sch.id</p></div>
+            <div>
+              <div className="flex items-center mb-2"><Phone size={20} className="mr-3" /><p className="font-bold">Telephone/Whatsapp</p></div>
+              <p className="text-gray-400">0812-3456-7890</p>
+            </div>
+            <div>
+              <div className="flex items-center mb-2"><Mail size={20} className="mr-3" /><p className="font-bold">Email</p></div>
+              <p className="text-gray-400">perpustakaan@smpn1sedati.sch.id</p>
+            </div>
           </div>
         </div>
         <div className="container mx-auto text-center border-t border-gray-700 mt-12 pt-8"><p className="text-gray-500">&copy; 2025 Perpustakaan SMPN 1 Sedati. All rights reserved.</p></div>
