@@ -170,7 +170,7 @@ const LandingPage = () => {
           <div>
             <div className="flex items-center mb-4"><img src="/smpn1sedati_logo.png" alt="Logo" className="h-12 w-12 mr-3" /><div><p className="font-bold">SMP NEGERI 1</p><p className="font-bold text-lg">SEDATI</p></div></div>
             <p className="font-bold mb-2">Alamat Perpustakaan SMPN 1 Sedati</p>
-            <p className="text-gray-400">Jl. Raya Sedati No. XX, Sedati, Sidoarjo, Jawa Timur</p>
+            <p className="text-gray-400">Jl. Brantas No. 1, Jalan Juanda, Jl. Raya Bandara Juanda, Kepuh, Betro, Kec. Sedati, Kabupaten Sidoarjo, Jawa Timur 61253</p>
             <div className="flex gap-4 mt-4">
               <a href="#" aria-label="Instagram" className="text-gray-400 hover:text-blue-400 cursor-pointer transition-colors"><Instagram size={20} /></a>
               <a href="#" aria-label="Youtube" className="text-gray-400 hover:text-blue-400 cursor-pointer transition-colors"><Youtube size={20} /></a>
