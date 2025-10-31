@@ -29,7 +29,7 @@ const navItems = [
   { path: '/admin/categories', icon: List, label: 'Kategori' },
   { path: '/admin/students', icon: Users, label: 'Siswa' },
   { path: '/admin/circulation', icon: RotateCcw, label: 'Sirkulasi' },
-  { path: '/admin/visitor-management', icon: BookOpen, label: 'Manajemen Pengunjung' },
+  { path: '/admin/visitor-management', icon: BookOpen, label: 'Manajemen Siswa' },
   { path: '/admin/fines', icon: DollarSign, label: 'Manajemen Denda' }, // New: Fine Management
   { path: '/admin/reports', icon: FileText, label: 'Laporan' },
   { path: '/admin/export', icon: FileSpreadsheet, label: 'Export Laporan' },
