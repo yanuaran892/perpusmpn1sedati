@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card"; // Keep Card import for footer
+import { Button } from "@/components/ui/button"; // Keep original Button for other uses if needed
+import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, MessageSquare, Phone, Mail, Instagram, Youtube, Twitter, Menu, Book, LayoutGrid, BookOpen, UserCircle } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useInView } from 'react-intersection-observer';
 import AnimatedStatCard from "@/components/AnimatedStatCard";
-import LandingPageCard from "@/components/LandingPageCard"; // Import the new card component
+import LandingPageCard from "@/components/LandingPageCard";
+import GSAPButton from "@/components/GSAPButton"; // Import the new GSAPButton
 
 const LandingPage = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
@@ -61,7 +62,7 @@ const LandingPage = () => {
           </nav>
           <div className="hidden md:block">
             <Link to="/login">
-              <Button className="bg-blue-500 hover:bg-blue-600 text-white rounded-full px-6">Masuk</Button>
+              <GSAPButton className="bg-blue-500 hover:bg-blue-600 text-white rounded-full px-6">Masuk</GSAPButton>
             </Link>
           </div>
           <div className="md:hidden">
@@ -74,7 +75,7 @@ const LandingPage = () => {
                     <button onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); setIsSheetOpen(false); }} className="text-left py-2 hover:text-blue-300 transition-colors">Beranda</button>
                     {navLinks.map(link => (<button key={link.id} onClick={() => handleScrollToSection(link.id)} className="text-left py-2 hover:text-blue-300 transition-colors">{link.label}</button>))}
                   </nav>
-                  <div className="mt-auto"><Link to="/login"><Button className="w-full bg-blue-500 hover:bg-blue-600 text-white rounded-full px-6">Masuk</Button></Link></div>
+                  <div className="mt-auto"><Link to="/login"><GSAPButton className="w-full bg-blue-500 hover:bg-blue-600 text-white rounded-full px-6">Masuk</GSAPButton></Link></div>
                 </div>
               </SheetContent>
             </Sheet>
@@ -96,7 +97,7 @@ const LandingPage = () => {
             <motion.h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold drop-shadow-lg mb-6 leading-tight" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }}>SMP NEGERI 1 SEDATI</motion.h2>
             <motion.p className="text-base md:text-lg italic max-w-xs sm:max-w-sm md:max-w-3xl drop-shadow-lg mb-8" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }}>"Kalau engkau hanya membaca buku yang dibaca semua orang, engkau hanya bisa berpikir sama seperti semua orang."<br />(Haruki Murakami).</motion.p>
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.4 }}>
-              <Link to="/login"><Button className="bg-blue-500 hover:bg-blue-600 text-white rounded-full px-8 py-3 text-xl font-semibold shadow-lg transition-all duration-300 transform hover:scale-105">Mari Membaca</Button></Link>
+              <Link to="/login"><GSAPButton className="bg-blue-500 hover:bg-blue-600 text-white rounded-full px-8 py-3 text-xl font-semibold shadow-lg transition-all duration-300 transform hover:scale-105">Mari Membaca</GSAPButton></Link>
             </motion.div>
           </div>
         </section>
@@ -147,7 +148,7 @@ const LandingPage = () => {
           <div className="relative z-10 container mx-auto">
             <h3 className="text-3xl md:text-4xl font-bold mb-8">INFORMASI PERPUSTAKAAN</h3>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 justify-items-center"> {/* Added justify-items-center */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 justify-items-center">
               <LandingPageCard
                 icon={Calendar}
                 title="Waktu Pelayanan"
