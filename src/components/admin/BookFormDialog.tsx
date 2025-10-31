@@ -21,6 +21,7 @@ interface BookItem {
   penerbit: string;
   no_klasifikasi: string;
   jumlah_buku: string;
+  kode_rak: string; // Ditambahkan properti kode_rak
   gambar_buku: string; // This will store the path in Supabase Storage
   sinopsis: string;
   id_kategori: number;
