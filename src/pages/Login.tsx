@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStudentAuth } from '@/context/StudentAuthContext';
-import { Button } from '@/components/ui/button';
+import GSAPButton from '@/components/GSAPButton'; // Menggunakan GSAPButton
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Loader2, User, Lock, ArrowLeft } from 'lucide-react'; // Import ArrowLeft icon
@@ -32,14 +32,14 @@ const Login = () => {
 
       <Card className="w-full max-w-md shadow-2xl rounded-xl animate-scale-in" style={{ animationDelay: '0.4s' }}>
         <CardHeader className="text-center pt-8 relative">
-          <Button
+          <GSAPButton
             variant="ghost"
             size="icon"
             onClick={() => navigate('/landing')}
             className="absolute top-4 left-4 text-gray-500 hover:bg-gray-100"
           >
             <ArrowLeft className="h-5 w-5" />
-          </Button>
+          </GSAPButton>
           <img
             src="/smpn1sedati_logo.png"
             alt="Logo SMPN 1 SEDATI"
@@ -74,7 +74,7 @@ const Login = () => {
                 showPasswordToggle
               />
             </div>
-            <Button
+            <GSAPButton
               type="submit"
               className="w-full bg-primary hover:bg-primary/90 text-white py-3 text-lg font-semibold rounded-md transition-colors duration-300"
               disabled={isLoading}
@@ -87,7 +87,7 @@ const Login = () => {
               ) : (
                 'Masuk'
               )}
-            </Button>
+            </GSAPButton>
           </form>
         </CardContent>
       </Card>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import GSAPButton from '@/components/GSAPButton'; // Menggunakan GSAPButton
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Loader2, Lock } from 'lucide-react';
@@ -104,7 +104,7 @@ const StudentChangePasswordForm: React.FC<StudentChangePasswordFormProps> = ({ s
               showPasswordToggle
             />
           </div>
-          <Button type="submit" disabled={isChangingPassword} className="bg-primary hover:bg-primary/90 text-white py-2 px-5 rounded-md transition-colors duration-300">
+          <GSAPButton type="submit" disabled={isChangingPassword} className="bg-primary hover:bg-primary/90 text-white py-2 px-5 rounded-md transition-colors duration-300">
             {isChangingPassword ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -113,7 +113,7 @@ const StudentChangePasswordForm: React.FC<StudentChangePasswordFormProps> = ({ s
             ) : (
               'Ubah Kata Sandi'
             )}
-          </Button>
+          </GSAPButton>
         </form>
       </CardContent>
     </Card>

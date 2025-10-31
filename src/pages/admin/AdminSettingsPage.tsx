@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import GSAPButton from '@/components/GSAPButton'; // Menggunakan GSAPButton
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Settings, Save, Loader2 } from 'lucide-react';
@@ -141,7 +141,7 @@ const AdminSettingsPage = () => {
             <Label htmlFor="fine-per-day">Denda Per Hari (Rp)</Label>
             <Input id="fine-per-day" type="number" value={settings.fine_per_day} onChange={handleChange} min={0} step={100} />
           </div>
-          <Button onClick={handleSaveSettings} disabled={isSaving}>
+          <GSAPButton onClick={handleSaveSettings} disabled={isSaving}>
             {isSaving ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -152,7 +152,7 @@ const AdminSettingsPage = () => {
                 <Save className="mr-2 h-4 w-4" /> Simpan Pengaturan
               </>
             )}
-          </Button>
+          </GSAPButton>
         </CardContent>
       </Card>
     </div>

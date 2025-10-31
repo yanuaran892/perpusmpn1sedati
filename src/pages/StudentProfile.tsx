@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStudentAuth } from '@/context/StudentAuthContext';
-import { Button } from '@/components/ui/button';
+import GSAPButton from '@/components/GSAPButton'; // Menggunakan GSAPButton
 import { Loader2, LogOut, ArrowLeft, RefreshCcw } from 'lucide-react'; // Import RefreshCcw
 import FinePaymentRequestDialog from '@/components/FinePaymentRequestDialog';
 import StudentProfileInfo from '@/components/student/StudentProfileInfo';
@@ -74,7 +74,7 @@ const StudentProfile = () => {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4 md:p-8">
       <div className="max-w-full lg:max-w-5xl mx-auto bg-white rounded-xl shadow-lg p-6 md:p-10">
         <div className="flex justify-between items-center mb-8">
-          <Button 
+          <GSAPButton 
             variant="outline" 
             onClick={() => navigate('/dashboard')} 
             size="icon" // Default to icon size
@@ -82,9 +82,9 @@ const StudentProfile = () => {
           >
             <ArrowLeft className="h-5 w-5" />
             <span className="hidden md:inline ml-2">Kembali ke Dashboard</span>
-          </Button>
+          </GSAPButton>
           <div className="flex space-x-2">
-            <Button 
+            <GSAPButton 
               onClick={handleRefreshStudentProfile} 
               variant="outline" 
               size="icon" // Default to icon size
@@ -97,8 +97,8 @@ const StudentProfile = () => {
                 <RefreshCcw className="h-5 w-5" />
               )}
               <span className="hidden md:inline ml-2">Refresh Data</span>
-            </Button>
-            <Button 
+            </GSAPButton>
+            <GSAPButton 
               onClick={handleLogout} 
               variant="ghost" 
               size="icon" // Default to icon size
@@ -106,7 +106,7 @@ const StudentProfile = () => {
             >
               <LogOut className="h-5 w-5" />
               <span className="hidden md:inline ml-2">Logout</span>
-            </Button>
+            </GSAPButton>
           </div>
         </div>
 

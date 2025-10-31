@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
+import GSAPButton from '@/components/GSAPButton'; // Menggunakan GSAPButton
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { CalendarIcon } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
@@ -120,13 +120,13 @@ const BookDetailDialog: React.FC<BookDetailDialogProps> = ({
             <h4 className="text-xl font-bold text-foreground mb-3">Pilih Tanggal & Waktu Pengembalian</h4>
             <Popover>
               <PopoverTrigger asChild>
-                <Button
+                <GSAPButton
                   variant={"outline"}
                   className={cn("w-full justify-start text-left font-normal", !returnDate && "text-muted-foreground")}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
                   {returnDate ? format(setHours(setMinutes(returnDate, selectedMinute), selectedHour), "PPP HH:mm") : <span>Pilih tanggal & waktu</span>}
-                </Button>
+                </GSAPButton>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" side="bottom" align="start">
                 <Calendar
@@ -149,14 +149,14 @@ const BookDetailDialog: React.FC<BookDetailDialogProps> = ({
         </div>
 
         <DialogFooter className="mt-6 pt-4 border-t border-gray-200 flex-shrink-0">
-          <Button variant="outline" onClick={onClose}>Tutup</Button>
-          <Button
+          <GSAPButton variant="outline" onClick={onClose}>Tutup</GSAPButton>
+          <GSAPButton
             onClick={handleConfirm}
             disabled={isBorrowDisabled || availableCopies <= 0 || isBorrowing || !returnDate}
             className="bg-accent hover:bg-accent/90 text-white"
           >
             {isBorrowing ? 'Meminjam...' : (availableCopies <= 0 ? 'Tidak Tersedia' : 'Pinjam Buku Ini')}
-          </Button>
+          </GSAPButton>
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState } => 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAdminAuth } from '@/context/AdminAuthContext';
-import { Button } from '@/components/ui/button';
+import GSAPButton from '@/components/GSAPButton'; // Menggunakan GSAPButton
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Loader2, User, Lock } from 'lucide-react';
@@ -66,7 +66,7 @@ const AdminLogin = () => {
                 showPasswordToggle
               />
             </div>
-            <Button
+            <GSAPButton
               type="submit"
               className="w-full bg-primary hover:bg-primary/90 text-white py-3 text-lg font-semibold rounded-md transition-colors duration-300"
               disabled={isLoading}
@@ -79,7 +79,7 @@ const AdminLogin = () => {
               ) : (
                 'Masuk Admin'
               )}
-            </Button>
+            </GSAPButton>
           </form>
         </CardContent>
       </Card>

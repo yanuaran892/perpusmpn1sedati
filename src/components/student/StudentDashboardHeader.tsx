@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+import GSAPButton from '@/components/GSAPButton'; // Menggunakan GSAPButton
 import { Input } from '@/components/ui/input';
 import { LibraryBig, User, LogOut, Search, Book, LayoutGrid, BookOpen, Menu } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -64,9 +64,9 @@ const StudentDashboardHeader: React.FC<StudentDashboardHeaderProps> = ({
           {isMobile ? (
             <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="text-white hover:bg-blue-700">
+                <GSAPButton variant="ghost" size="icon" className="text-white hover:bg-blue-700">
                   <Menu className="h-6 w-6" />
-                </Button>
+                </GSAPButton>
               </SheetTrigger>
               <SheetContent side="right" className="w-[250px] p-4 bg-white text-gray-800">
                 <div className="flex flex-col space-y-4">
@@ -74,23 +74,23 @@ const StudentDashboardHeader: React.FC<StudentDashboardHeaderProps> = ({
                     <User className="mr-2 h-5 w-5 text-primary" />
                     <span className="font-semibold text-lg text-primary">{studentName}</span>
                   </div>
-                  <Button onClick={() => { onProfileClick(); setIsSheetOpen(false); }} variant="ghost" className="w-full justify-start text-primary hover:bg-primary/5">
+                  <GSAPButton onClick={() => { onProfileClick(); setIsSheetOpen(false); }} variant="ghost" className="w-full justify-start text-primary hover:bg-primary/5">
                     <User className="mr-2 h-5 w-5" /> Profil Siswa
-                  </Button>
-                  <Button onClick={() => { onLogout(); setIsSheetOpen(false); }} variant="ghost" className="w-full justify-start text-red-600 hover:bg-red-50">
+                  </GSAPButton>
+                  <GSAPButton onClick={() => { onLogout(); setIsSheetOpen(false); }} variant="ghost" className="w-full justify-start text-red-600 hover:bg-red-50">
                     <LogOut className="mr-2 h-5 w-5" /> Logout
-                  </Button>
+                  </GSAPButton>
                 </div>
               </SheetContent>
             </Sheet>
           ) : (
             <div className="flex items-center space-x-4">
-              <Button onClick={onProfileClick} variant="ghost" className="text-white hover:bg-blue-700 transition-colors duration-300">
+              <GSAPButton onClick={onProfileClick} variant="ghost" className="text-white hover:bg-blue-700 transition-colors duration-300">
                 <User className="mr-2 h-5 w-5" /> Profil Siswa
-              </Button>
-              <Button onClick={onLogout} variant="ghost" className="text-white hover:bg-blue-700 transition-colors duration-300">
+              </GSAPButton>
+              <GSAPButton onClick={onLogout} variant="ghost" className="text-white hover:bg-blue-700 transition-colors duration-300">
                 <LogOut className="mr-2 h-5 w-5" /> Logout
-              </Button>
+              </GSAPButton>
             </div>
           )}
         </div>

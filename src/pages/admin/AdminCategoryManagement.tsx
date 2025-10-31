@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
+import GSAPButton from '@/components/GSAPButton'; // Menggunakan GSAPButton
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -102,9 +102,9 @@ const AdminCategoryManagement = () => {
       <Card className="shadow-lg">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2"> {/* Added flex for alignment */}
           <CardTitle className="text-2xl text-foreground">Daftar Kategori</CardTitle>
-          <Button onClick={handleAddCategory} size="sm"> {/* Moved button here */}
+          <GSAPButton onClick={handleAddCategory} size="sm"> {/* Moved button here */}
             <PlusCircle className="mr-2 h-4 w-4" /> Tambah Kategori
-          </Button>
+          </GSAPButton>
         </CardHeader>
         <CardContent>
           <div className="relative mb-4">
@@ -150,12 +150,12 @@ const AdminCategoryManagement = () => {
                         </div>
                       </TableCell>
                       <TableCell className="text-right">
-                        <Button variant="ghost" size="sm" className="mr-2" onClick={() => handleEditCategory(category)}>
+                        <GSAPButton variant="ghost" size="sm" className="mr-2" onClick={() => handleEditCategory(category)}>
                           <Edit className="h-4 w-4" />
-                        </Button>
-                        <Button variant="destructive" size="sm" onClick={() => handleDeleteCategory(category.id_kategori, category.nama_kategori)}>
+                        </GSAPButton>
+                        <GSAPButton variant="destructive" size="sm" onClick={() => handleDeleteCategory(category.id_kategori, category.nama_kategori)}>
                           <Trash2 className="h-4 w-4" />
-                        </Button>
+                        </GSAPButton>
                       </TableCell>
                     </TableRow>
                   ))}

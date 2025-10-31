@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
+import GSAPButton from '@/components/GSAPButton'; // Menggunakan GSAPButton
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -358,7 +358,7 @@ const AdminCirculationManagement = () => {
                       <TableCell className="text-right">
                         {item.status === 'pending' ? (
                           <div className="flex justify-end space-x-2">
-                            <Button
+                            <GSAPButton
                               variant="outline"
                               size="sm"
                               onClick={() => handleApproveBorrow(item)}
@@ -371,8 +371,8 @@ const AdminCirculationManagement = () => {
                                 <CheckCircle className="h-4 w-4 mr-1" />
                               )}
                               Setujui
-                            </Button>
-                            <Button
+                            </GSAPButton>
+                            <GSAPButton
                               variant="destructive"
                               size="sm"
                               onClick={() => handleRejectBorrow(item)}
@@ -384,11 +384,11 @@ const AdminCirculationManagement = () => {
                                 <XCircle className="h-4 w-4 mr-1" />
                               )}
                               Tolak
-                            </Button>
+                            </GSAPButton>
                           </div>
                         ) : item.status === 'return_pending' ? (
                           <div className="flex justify-end space-x-2">
-                            <Button
+                            <GSAPButton
                               variant="outline"
                               size="sm"
                               onClick={() => handleApproveReturn(item)}
@@ -401,8 +401,8 @@ const AdminCirculationManagement = () => {
                                 <CheckCircle className="h-4 w-4 mr-1" />
                               )}
                               Setujui Pengembalian
-                            </Button>
-                            <Button
+                            </GSAPButton>
+                            <GSAPButton
                               variant="destructive"
                               size="sm"
                               onClick={() => handleRejectReturn(item)}
@@ -414,11 +414,11 @@ const AdminCirculationManagement = () => {
                                 <XCircle className="h-4 w-4 mr-1" />
                               )}
                               Tolak Pengembalian
-                            </Button>
+                            </GSAPButton>
                           </div>
                         ) : item.status === 'extension_pending' ? ( // New condition for extension_pending
                           <div className="flex justify-end space-x-2">
-                            <Button
+                            <GSAPButton
                               variant="outline"
                               size="sm"
                               onClick={() => handleApproveExtension(item)}
@@ -431,8 +431,8 @@ const AdminCirculationManagement = () => {
                                 <CheckCircle className="h-4 w-4 mr-1" />
                               )}
                               Setujui Perpanjangan
-                            </Button>
-                            <Button
+                            </GSAPButton>
+                            <GSAPButton
                               variant="destructive"
                               size="sm"
                               onClick={() => handleRejectExtension(item)}
@@ -444,7 +444,7 @@ const AdminCirculationManagement = () => {
                                 <XCircle className="h-4 w-4 mr-1" />
                               )}
                               Tolak Perpanjangan
-                            </Button>
+                            </GSAPButton>
                           </div>
                         ) : null}
                       </TableCell>
@@ -453,23 +453,23 @@ const AdminCirculationManagement = () => {
                 </TableBody>
               </Table>
               <div className="flex justify-end items-center space-x-2 mt-4">
-                <Button
+                <GSAPButton
                   variant="outline"
                   size="sm"
                   onClick={handlePreviousPage}
                   disabled={currentPage === 1 || loading}
                 >
                   <ChevronLeft className="h-4 w-4" />
-                </Button>
+                </GSAPButton>
                 <span className="text-sm text-gray-700">Page {currentPage} of {totalPages}</span>
-                <Button
+                <GSAPButton
                   variant="outline"
                   size="sm"
                   onClick={handleNextPage}
                   disabled={currentPage === totalPages || loading}
                 >
                   <ChevronRight className="h-4 w-4" />
-                </Button>
+                </GSAPButton>
               </div>
             </div>
           )}

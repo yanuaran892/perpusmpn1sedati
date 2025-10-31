@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
+import GSAPButton from '@/components/GSAPButton'; // Menggunakan GSAPButton
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -21,7 +21,6 @@ interface BookItem {
   penerbit: string;
   no_klasifikasi: string;
   jumlah_buku: string;
-  kode_rak: string;
   gambar_buku: string; // This will store the path in Supabase Storage
   sinopsis: string;
   id_kategori: number;
@@ -326,8 +325,8 @@ const BookFormDialog: React.FC<BookFormDialogProps> = ({ isOpen, onClose, onSave
           </div>
         </div>
         <DialogFooter>
-          <Button variant="outline" onClick={onClose}>Batal</Button>
-          <Button onClick={handleSaveBook} disabled={loading}>
+          <GSAPButton variant="outline" onClick={onClose}>Batal</GSAPButton>
+          <GSAPButton onClick={handleSaveBook} disabled={loading}>
             {loading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -336,7 +335,7 @@ const BookFormDialog: React.FC<BookFormDialogProps> = ({ isOpen, onClose, onSave
             ) : (
               'Simpan Buku'
             )}
-          </Button>
+          </GSAPButton>
         </DialogFooter>
       </DialogContent>
     </Dialog>

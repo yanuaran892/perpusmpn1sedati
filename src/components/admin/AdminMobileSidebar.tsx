@@ -15,7 +15,7 @@ import {
   FileSpreadsheet,
   DollarSign, // Added DollarSign icon for Fine Management
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import GSAPButton from '@/components/GSAPButton'; // Menggunakan GSAPButton
 import { cn } from '@/lib/utils';
 
 interface AdminMobileSidebarProps {
@@ -63,7 +63,7 @@ const AdminMobileSidebar: React.FC<AdminMobileSidebarProps> = ({ onLogout, onLin
         ))}
       </nav>
       <div className="p-4 border-t">
-        <Button
+        <GSAPButton
           onClick={() => {
             onLogout();
             onLinkClick?.(); // Close sidebar after logout
@@ -73,7 +73,7 @@ const AdminMobileSidebar: React.FC<AdminMobileSidebarProps> = ({ onLogout, onLin
         >
           <LogOut className="h-5 w-5 mr-3" />
           Logout
-        </Button>
+        </GSAPButton>
       </div>
     </div>
   );

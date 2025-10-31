@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
+import GSAPButton from '@/components/GSAPButton'; // Menggunakan GSAPButton
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -162,8 +162,8 @@ const FinePaymentRequestDialog: React.FC<FinePaymentRequestDialogProps> = ({
           </div>
         </div>
         <DialogFooter>
-          <Button variant="outline" onClick={onClose}>Batal</Button>
-          <Button onClick={handleSubmitPaymentRequest} disabled={loading || parseFloat(jumlahBayar) <= 0 || parseFloat(jumlahBayar) > currentTotalDenda}>
+          <GSAPButton variant="outline" onClick={onClose}>Batal</GSAPButton>
+          <GSAPButton onClick={handleSubmitPaymentRequest} disabled={loading || parseFloat(jumlahBayar) <= 0 || parseFloat(jumlahBayar) > currentTotalDenda}>
             {loading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -174,7 +174,7 @@ const FinePaymentRequestDialog: React.FC<FinePaymentRequestDialogProps> = ({
                 <DollarSign className="mr-2 h-4 w-4" /> Ajukan Pembayaran
               </>
             )}
-          </Button>
+          </GSAPButton>
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Button } from '@/components/ui/button';
+import GSAPButton from '@/components/GSAPButton'; // Menggunakan GSAPButton
 import { Loader2, Eye } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { showError } from '@/utils/toast';
@@ -112,9 +112,9 @@ const StudentFineHistory: React.FC<StudentFineHistoryProps> = ({ studentNis, onR
                       </TableCell>
                       {/* <TableCell className="text-right"> */} {/* Removed */}
                         {/* {item.bukti_pembayaran_url ? ( */} {/* Removed */}
-                          {/* <Button variant="outline" size="sm" onClick={() => handleViewProof(item.bukti_pembayaran_url)}> */} {/* Removed */}
+                          {/* <GSAPButton variant="outline" size="sm" onClick={() => handleViewProof(item.bukti_pembayaran_url)}> */} {/* Removed */}
                             {/* <Eye className="h-4 w-4" /> */} {/* Removed */}
-                          {/* </Button> */} {/* Removed */}
+                          {/* </GSAPButton> */} {/* Removed */}
                         {/* ) : ( */} {/* Removed */}
                           {/* <span className="text-gray-500 text-sm">-</span> */} {/* Removed */}
                         {/* )} */} {/* Removed */}

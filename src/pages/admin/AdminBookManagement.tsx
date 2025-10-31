@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
+import GSAPButton from '@/components/GSAPButton'; // Menggunakan GSAPButton
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -199,9 +199,9 @@ const AdminBookManagement = () => {
       <Card className="shadow-lg">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-2xl text-foreground">Daftar Buku</CardTitle>
-          <Button onClick={handleAddBook} size="sm">
+          <GSAPButton onClick={handleAddBook} size="sm">
             <PlusCircle className="mr-2 h-4 w-4" /> Tambah Buku
-          </Button>
+          </GSAPButton>
         </CardHeader>
         <CardContent>
           <div className="flex flex-col md:flex-row gap-4 mb-4">
@@ -272,35 +272,35 @@ const AdminBookManagement = () => {
                       <TableCell>{book.penerbit}</TableCell>
                       <TableCell>{book.jumlah_buku}</TableCell>
                       <TableCell className="text-right">
-                        <Button variant="ghost" size="sm" className="mr-2" onClick={() => handleEditBook(book)}>
+                        <GSAPButton variant="ghost" size="sm" className="mr-2" onClick={() => handleEditBook(book)}>
                           <Edit className="h-4 w-4" />
-                        </Button>
-                        <Button variant="destructive" size="sm" onClick={() => handleDeleteBook(book.id_buku, book.judul_buku, book.gambar_buku)}>
+                        </GSAPButton>
+                        <GSAPButton variant="destructive" size="sm" onClick={() => handleDeleteBook(book.id_buku, book.judul_buku, book.gambar_buku)}>
                           <Trash2 className="h-4 w-4" />
-                        </Button>
+                        </GSAPButton>
                       </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
               </Table>
               <div className="flex justify-end items-center space-x-2 mt-4">
-                <Button
+                <GSAPButton
                   variant="outline"
                   size="sm"
                   onClick={handlePreviousPage}
                   disabled={currentPage === 1 || loading}
                 >
                   <ChevronLeft className="h-4 w-4" />
-                </Button>
+                </GSAPButton>
                 <span className="text-sm text-gray-700">Page {currentPage} of {totalPages}</span>
-                <Button
+                <GSAPButton
                   variant="outline"
                   size="sm"
                   onClick={handleNextPage}
                   disabled={currentPage === totalPages || loading}
                 >
                   <ChevronRight className="h-4 w-4" />
-                </Button>
+                </GSAPButton>
               </div>
             </div>
           )}

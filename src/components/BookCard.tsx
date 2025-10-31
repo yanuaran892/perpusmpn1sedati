@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
+import GSAPButton from '@/components/GSAPButton'; // Menggunakan GSAPButton
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { getImageUrl } from '@/utils/imageStorage'; // Import the new utility function
 
@@ -64,13 +64,13 @@ const BookCard: React.FC<BookCardProps> = ({ book, onViewDetails, isBorrowDisabl
         <p className="mb-1">Jumlah Tersedia: <span className="font-semibold">{availableCopies}</span></p>
       </CardContent>
       <CardFooter className="pt-4">
-        <Button
+        <GSAPButton
           onClick={() => onViewDetails(book)}
           disabled={isBorrowDisabled || availableCopies <= 0}
           className="w-full bg-accent hover:bg-accent/90 text-white"
         >
           {availableCopies <= 0 ? 'Tidak Tersedia' : 'Lihat Detail & Pinjam'}
-        </Button>
+        </GSAPButton>
       </CardFooter>
     </Card>
   );

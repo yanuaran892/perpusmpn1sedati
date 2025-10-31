@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import GSAPButton from '@/components/GSAPButton'; // Menggunakan GSAPButton
 import { Download, FileSpreadsheet, Loader2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { showError, showSuccess } from '@/utils/toast';
@@ -160,12 +160,12 @@ const AdminExportPage = () => {
           <CardDescription>Unduh semua data buku dalam format CSV atau Excel.</CardDescription>
         </CardHeader>
         <CardContent className="space-x-4">
-          <Button onClick={() => handleExportBooks('csv')} disabled={loadingBooks}>
+          <GSAPButton onClick={() => handleExportBooks('csv')} disabled={loadingBooks}>
             {loadingBooks ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <FileSpreadsheet className="mr-2 h-4 w-4" />} Export ke CSV
-          </Button>
-          <Button variant="outline" onClick={() => handleExportBooks('excel')} disabled={loadingBooks}>
+          </GSAPButton>
+          <GSAPButton variant="outline" onClick={() => handleExportBooks('excel')} disabled={loadingBooks}>
             {loadingBooks ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <FileSpreadsheet className="mr-2 h-4 w-4" />} Export ke Excel
-          </Button>
+          </GSAPButton>
         </CardContent>
       </Card>
 
@@ -175,12 +175,12 @@ const AdminExportPage = () => {
           <CardDescription>Unduh semua data siswa dalam format CSV atau Excel.</CardDescription>
         </CardHeader>
         <CardContent className="space-x-4">
-          <Button onClick={() => handleExportStudents('csv')} disabled={loadingStudents}>
+          <GSAPButton onClick={() => handleExportStudents('csv')} disabled={loadingStudents}>
             {loadingStudents ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <FileSpreadsheet className="mr-2 h-4 w-4" />} Export ke CSV
-          </Button>
-          <Button variant="outline" onClick={() => handleExportStudents('excel')} disabled={loadingStudents}>
+          </GSAPButton>
+          <GSAPButton variant="outline" onClick={() => handleExportStudents('excel')} disabled={loadingStudents}>
             {loadingStudents ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <FileSpreadsheet className="mr-2 h-4 w-4" />} Export ke Excel
-          </Button>
+          </GSAPButton>
         </CardContent>
       </Card>
     </div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
+import GSAPButton from '@/components/GSAPButton'; // Menggunakan GSAPButton
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -121,7 +121,7 @@ const StudentVisitEntry = () => {
                 className="mt-2 p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary"
               />
             </div>
-            <Button
+            <GSAPButton
               type="submit"
               className="w-full bg-primary hover:bg-primary/90 text-white py-3 text-lg font-semibold rounded-md transition-colors duration-300"
               disabled={loading}
@@ -134,7 +134,7 @@ const StudentVisitEntry = () => {
               ) : (
                 'Catat Kunjungan'
               )}
-            </Button>
+            </GSAPButton>
           </form>
         </CardContent>
       </Card>

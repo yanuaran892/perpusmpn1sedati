@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
+import GSAPButton from '@/components/GSAPButton'; // Menggunakan GSAPButton
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -212,7 +212,7 @@ const AdminFineManagement = () => {
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-2xl text-foreground">Perhitungan Denda Otomatis</CardTitle>
           <div className="flex space-x-2">
-            <Button
+            <GSAPButton
               onClick={handleCalculateOverdueFines}
               disabled={isCalculatingFines}
               className="bg-purple-600 hover:bg-purple-700 text-white"
@@ -227,13 +227,13 @@ const AdminFineManagement = () => {
                   <DollarSign className="mr-2 h-4 w-4" /> Hitung Denda Terlambat
                 </>
               )}
-            </Button>
-            <Button
+            </GSAPButton>
+            <GSAPButton
               onClick={handleOpenAddFineDialog}
               className="bg-primary hover:bg-primary/90 text-white"
             >
               <PlusCircle className="mr-2 h-4 w-4" /> Tambah Denda Manual
-            </Button>
+            </GSAPButton>
           </div>
         </CardHeader>
         <CardContent>
@@ -290,16 +290,16 @@ const AdminFineManagement = () => {
                       <TableCell>{format(new Date(payment.created_at), 'dd MMM yyyy HH:mm', { locale: id })}</TableCell>
                       <TableCell>
                         {payment.bukti_pembayaran_url ? (
-                          <Button variant="outline" size="sm" onClick={() => handleViewProof(payment.bukti_pembayaran_url)}>
+                          <GSAPButton variant="outline" size="sm" onClick={() => handleViewProof(payment.bukti_pembayaran_url)}>
                             <Eye className="h-4 w-4 mr-1" /> Lihat Bukti
-                          </Button>
+                          </GSAPButton>
                         ) : (
                           <span className="text-gray-500">- Tidak Ada -</span>
                         )}
                       </TableCell>
                       <TableCell className="text-right">
                         <div className="flex justify-end space-x-2">
-                          <Button
+                          <GSAPButton
                             variant="outline"
                             size="sm"
                             onClick={() => handleApprovePayment(payment)}
@@ -312,8 +312,8 @@ const AdminFineManagement = () => {
                               <CheckCircle className="h-4 w-4 mr-1" />
                             )}
                             Setujui
-                          </Button>
-                          <Button
+                          </GSAPButton>
+                          <GSAPButton
                             variant="destructive"
                             size="sm"
                             onClick={() => handleRejectPayment(payment)}
@@ -325,7 +325,7 @@ const AdminFineManagement = () => {
                               <XCircle className="h-4 w-4 mr-1" />
                             )}
                             Tolak
-                          </Button>
+                          </GSAPButton>
                         </div>
                       </TableCell>
                     </TableRow>

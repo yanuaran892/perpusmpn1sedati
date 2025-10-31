@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import GSAPButton from '@/components/GSAPButton'; // Menggunakan GSAPButton
 import { DollarSign, UserCircle } from 'lucide-react';
 
 interface Student {
@@ -61,14 +61,14 @@ const StudentProfileInfo: React.FC<StudentProfileInfoProps> = ({ student, onOpen
             <p className="text-gray-500 text-sm">Total Denda:</p>
             <p className="font-semibold text-lg text-red-600">Rp {student.total_denda.toLocaleString('id-ID')}</p>
             {student.total_denda > 0 && (
-              <Button
+              <GSAPButton
                 variant="default"
                 size="sm"
                 className="mt-3 bg-red-500 hover:bg-red-600 text-white shadow-md"
                 onClick={onOpenFinePaymentDialog}
               >
                 <DollarSign className="mr-2 h-4 w-4" /> Bayar Denda
-              </Button>
+              </GSAPButton>
             )}
           </div>
           <div>

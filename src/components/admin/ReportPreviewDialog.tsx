@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '@/components/ui/button';
+import GSAPButton from '@/components/GSAPButton'; // Menggunakan GSAPButton
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -58,8 +58,8 @@ const ReportPreviewDialog: React.FC<ReportPreviewDialogProps> = ({
           )}
         </ScrollArea>
         <DialogFooter className="mt-6">
-          <Button variant="outline" onClick={onClose}>Tutup</Button>
-          <Button onClick={onDownload} disabled={isDownloading || data.length === 0}>
+          <GSAPButton variant="outline" onClick={onClose}>Tutup</GSAPButton>
+          <GSAPButton onClick={onDownload} disabled={isDownloading || data.length === 0}>
             {isDownloading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -70,7 +70,7 @@ const ReportPreviewDialog: React.FC<ReportPreviewDialogProps> = ({
                 <Download className="mr-2 h-4 w-4" /> Unduh Laporan
               </>
             )}
-          </Button>
+          </GSAPButton>
         </DialogFooter>
       </DialogContent>
     </Dialog>

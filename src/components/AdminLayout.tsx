@@ -18,7 +18,7 @@ import {
   Loader2,
   DollarSign, // Added DollarSign icon for Fine Management
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import GSAPButton from '@/components/GSAPButton'; // Menggunakan GSAPButton
 import { useAdminAuth } from '@/context/AdminAuthContext';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -95,14 +95,14 @@ const AdminLayout = () => {
               <UserCircle className="h-6 w-6 mr-2 text-gray-600" />
               <span className="font-medium text-gray-800">{admin.username}</span>
             </div>
-            <Button
+            <GSAPButton
               onClick={handleLogout}
               variant="ghost"
               className="w-full justify-start text-red-600 hover:bg-red-50 hover:text-red-700"
             >
               <LogOut className="h-5 w-5 mr-3" />
               Logout
-            </Button>
+            </GSAPButton>
           </div>
         </aside>
       )}
@@ -114,9 +114,9 @@ const AdminLayout = () => {
           <header className="bg-white shadow-md p-4 flex items-center justify-between h-16">
             <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon">
+                <GSAPButton variant="ghost" size="icon">
                   <Menu className="h-6 w-6" />
-                </Button>
+                </GSAPButton>
               </SheetTrigger>
               <SheetContent side="left" className="p-0 w-64">
                 <SheetHeader>
@@ -132,9 +132,9 @@ const AdminLayout = () => {
               <img src="/smpn1sedati_logo.png" alt="Logo" className="h-8 w-8 mr-2" />
               <h2 className="text-lg font-bold text-foreground">Admin Panel</h2>
             </div>
-            <Button onClick={handleLogout} variant="ghost" size="icon" className="text-red-600 hover:bg-red-50">
+            <GSAPButton onClick={handleLogout} variant="ghost" size="icon" className="text-red-600 hover:bg-red-50">
               <LogOut className="h-5 w-5" />
-            </Button>
+            </GSAPButton>
           </header>
         )}
 

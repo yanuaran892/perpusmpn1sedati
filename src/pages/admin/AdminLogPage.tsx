@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Button } from '@/components/ui/button';
+import GSAPButton from '@/components/GSAPButton'; // Menggunakan GSAPButton
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Input } from '@/components/ui/input';
@@ -47,7 +47,6 @@ const AdminLogPage = () => {
       // To get the total count for pagination, we need a separate RPC or adjust the existing one
       // For simplicity, let's assume the RPC returns all filtered data and we paginate client-side for now,
       // or create a separate RPC for count.
-      // Given the RPC now has limit/offset, we need a separate count RPC.
 
       const { count, error: countError } = await supabase
         .from('admin_logs')
@@ -153,23 +152,23 @@ const AdminLogPage = () => {
                 </TableBody>
               </Table>
               <div className="flex justify-end items-center space-x-2 mt-4">
-                <Button
+                <GSAPButton
                   variant="outline"
                   size="sm"
                   onClick={handlePreviousPage}
                   disabled={currentPage === 1 || loading}
                 >
                   <ChevronLeft className="h-4 w-4" />
-                </Button>
+                </GSAPButton>
                 <span className="text-sm text-gray-700">Page {currentPage} of {totalPages}</span>
-                <Button
+                <GSAPButton
                   variant="outline"
                   size="sm"
                   onClick={handleNextPage}
                   disabled={currentPage === totalPages || loading}
                 >
                   <ChevronRight className="h-4 w-4" />
-                </Button>
+                </GSAPButton>
               </div>
             </div>
           )}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Button } from '@/components/ui/button';
+import GSAPButton from '@/components/GSAPButton'; // Menggunakan GSAPButton
 import { Loader2, RotateCcw, CalendarPlus, ChevronLeft, ChevronRight } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { showError, showSuccess } from '@/utils/toast';
@@ -235,7 +235,7 @@ const StudentCirculationHistory: React.FC<StudentCirculationHistoryProps> = ({
                     <TableCell className="text-right whitespace-nowrap">
                       {item.status === 'dipinjam' && (
                         <div className="flex justify-end space-x-1">
-                          <Button
+                          <GSAPButton
                             variant="outline"
                             size="icon"
                             onClick={() => handleExtendBorrowPeriod(item.id_sirkulasi, item.judul_buku || 'Buku')}
@@ -252,8 +252,8 @@ const StudentCirculationHistory: React.FC<StudentCirculationHistoryProps> = ({
                             ) : (
                               <CalendarPlus className="h-4 w-4" />
                             )}
-                          </Button>
-                          <Button
+                          </GSAPButton>
+                          <GSAPButton
                             variant="outline"
                             size="icon"
                             onClick={() => handleRequestReturnBook(item.id_sirkulasi, item.judul_buku || 'Buku')}
@@ -265,7 +265,7 @@ const StudentCirculationHistory: React.FC<StudentCirculationHistoryProps> = ({
                             ) : (
                               <RotateCcw className="h-4 w-4" />
                             )}
-                          </Button>
+                          </GSAPButton>
                         </div>
                       )}
                       {item.status === 'return_pending' && (
@@ -280,23 +280,23 @@ const StudentCirculationHistory: React.FC<StudentCirculationHistoryProps> = ({
               </TableBody>
             </Table>
             <div className="flex justify-end items-center space-x-2 mt-4">
-              <Button
+              <GSAPButton
                 variant="outline"
                 size="sm"
                 onClick={handlePreviousPage}
                 disabled={currentPage === 1 || loadingCirculation}
               >
                 <ChevronLeft className="h-4 w-4" />
-              </Button>
+              </GSAPButton>
               <span className="text-sm text-gray-700">Page {currentPage} of {totalPages}</span>
-              <Button
+              <GSAPButton
                 variant="outline"
                 size="sm"
                 onClick={handleNextPage}
                 disabled={currentPage === totalPages || loadingCirculation}
               >
                 <ChevronRight className="h-4 w-4" />
-              </Button>
+              </GSAPButton>
             </div>
           </div>
         )}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import GSAPButton from '@/components/GSAPButton'; // Menggunakan GSAPButton
 import { Download, FileText, Loader2, CalendarIcon, Eye } from 'lucide-react'; // Added Eye icon
 import { supabase } from '@/integrations/supabase/client';
 import { showError, showSuccess } from '@/utils/toast';
@@ -142,7 +142,7 @@ const AdminReportPage = () => {
           <div className="flex flex-col sm:flex-row items-center gap-4">
             <Popover>
               <PopoverTrigger asChild>
-                <Button
+                <GSAPButton
                   variant={"outline"}
                   className={cn(
                     "w-[280px] justify-start text-left font-normal",
@@ -151,7 +151,7 @@ const AdminReportPage = () => {
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
                   {startDate ? format(startDate, "PPP", { locale: id }) : <span>Tanggal Mulai</span>}
-                </Button>
+                </GSAPButton>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0">
                 <Calendar
@@ -168,7 +168,7 @@ const AdminReportPage = () => {
             <span className="text-gray-500">hingga</span>
             <Popover>
               <PopoverTrigger asChild>
-                <Button
+                <GSAPButton
                   variant={"outline"}
                   className={cn(
                     "w-[280px] justify-start text-left font-normal",
@@ -177,7 +177,7 @@ const AdminReportPage = () => {
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
                   {endDate ? format(endDate, "PPP", { locale: id }) : <span>Tanggal Akhir</span>}
-                </Button>
+                </GSAPButton>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0">
                 <Calendar
@@ -193,7 +193,7 @@ const AdminReportPage = () => {
             </Popover>
           </div>
           <div className="flex gap-4">
-            <Button onClick={handlePreviewCirculationReport} disabled={loadingReport}>
+            <GSAPButton onClick={handlePreviewCirculationReport} disabled={loadingReport}>
               {loadingReport ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -204,7 +204,7 @@ const AdminReportPage = () => {
                   <Eye className="mr-2 h-4 w-4" /> Preview Laporan
                 </>
               )}
-            </Button>
+            </GSAPButton>
             {/* The download button is now inside the preview dialog */}
           </div>
         </CardContent>
@@ -217,9 +217,9 @@ const AdminReportPage = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-gray-700">Analisis tren pengunjung harian, mingguan, atau bulanan.</p>
-          <Button>
+          <GSAPButton>
             <Download className="mr-2 h-4 w-4" /> Unduh Laporan Pengunjung
-          </Button>
+          </GSAPButton>
         </CardContent>
       </Card>
 

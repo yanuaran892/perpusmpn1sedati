@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStudentAuth } from '@/context/StudentAuthContext';
 import { supabase } from '@/integrations/supabase/client';
-import { Button } from '@/components/ui/button';
+import GSAPButton from '@/components/GSAPButton'; // Menggunakan GSAPButton
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'; // Added import for Card components
 import { Loader2, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -313,23 +313,23 @@ const Dashboard = () => {
                   ))}
                 </div>
                 <div className="flex justify-center items-center space-x-3 mt-10 animate-fade-in-up" style={{ animationDelay: `${0.9 + books.length * 0.05 + 0.1}s` }}>
-                  <Button
+                  <GSAPButton
                     onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
                     disabled={currentPage === 1}
                     variant="outline"
                     className="bg-primary/5 hover:bg-primary/10 text-primary shadow-sm px-4 py-2"
                   >
                     <ChevronLeft className="h-5 w-5" />
-                  </Button>
+                  </GSAPButton>
                   <span className="text-lg text-gray-700 font-medium">Halaman {currentPage} dari {totalPages}</span>
-                  <Button
+                  <GSAPButton
                     onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
                     disabled={currentPage === totalPages}
                     variant="outline"
                     className="bg-primary/5 hover:bg-primary/10 text-primary shadow-sm px-4 py-2"
                   >
                     <ChevronRight className="h-5 w-5" />
-                  </Button>
+                  </GSAPButton>
                 </div>
               </>
             )}

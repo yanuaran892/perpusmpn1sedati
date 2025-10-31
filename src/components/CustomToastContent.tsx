@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '@/components/ui/button';
+import GSAPButton from '@/components/GSAPButton'; // Menggunakan GSAPButton
 import { CheckCircle, XCircle, LucideIcon } from 'lucide-react';
 import { toast } from 'sonner'; // Import toast untuk menutup notifikasi
 
@@ -37,13 +37,13 @@ const CustomToastContent: React.FC<CustomToastContentProps> = ({
       <Icon className={`h-20 w-20 mb-6 ${iconColorClass}`} />
       <h3 className="text-3xl font-bold mb-3 text-foreground">{title}</h3>
       <p className="text-lg text-muted-foreground mb-8">{description}</p>
-      <Button
+      <GSAPButton
         variant={buttonVariant}
         onClick={handleButtonClick}
         className="w-full py-4 text-xl font-semibold"
       >
         {buttonText || defaultButtonText}
-      </Button>
+      </GSAPButton>
     </div>
   );
 };
