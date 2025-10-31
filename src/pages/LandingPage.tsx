@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card"; // Keep Card import for footer
 import { Calendar, MessageSquare, Phone, Mail, Instagram, Youtube, Twitter, Menu, Book, LayoutGrid, BookOpen, UserCircle } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useInView } from 'react-intersection-observer';
 import AnimatedStatCard from "@/components/AnimatedStatCard";
+import LandingPageCard from "@/components/LandingPageCard"; // Import the new card component
 
 const LandingPage = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
@@ -146,28 +147,17 @@ const LandingPage = () => {
           <div className="relative z-10 container mx-auto">
             <h3 className="text-3xl md:text-4xl font-bold mb-8">INFORMASI PERPUSTAKAAN</h3>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-              <Card className="bg-white/10 backdrop-blur-sm border border-white/20 text-white p-6 rounded-lg shadow-lg">
-                <CardContent className="p-0">
-                  <h4 className="text-2xl font-bold mb-4 flex items-center justify-center"><Calendar className="mr-3 h-6 w-6" /> Waktu Pelayanan</h4>
-                  <p className="text-lg md:text-xl font-semibold">Senin - Sabtu : 07.00 - 16.00</p>
-                  <p className="text-sm text-gray-300 mt-1">Mengikuti waktu kegiatan sekolah</p>
-                </CardContent>
-              </Card>
-              <Card className="bg-white/10 backdrop-blur-sm border border-white/20 text-white p-6 rounded-lg shadow-lg">
-                <CardContent className="p-0">
-                  <h4 className="text-2xl font-bold mb-4 flex items-center justify-center"><BookOpen className="mr-3 h-6 w-6" /> Tata Cara Peminjaman</h4>
-                  <ul className="list-disc list-inside text-left space-y-2 text-gray-300 text-base">
-                    <li>Login ke Website Perpustakaan SMPN 1 Sedati menggunakan akun yang telah terdaftar.</li>
-                    <li>Siswa dapat meminjam maksimal 2 buku dan guru maksimal 5 buku dengan masa pinjam selama 7 hari.</li>
-                    <li>Perpanjangan masa pinjam dapat dilakukan satu kali selama 7 hari tambahan.</li>
-                    <li>Proses peminjaman dilakukan dengan memilih buku dari katalog online dan mengajukan peminjaman.</li>
-                    <li>Pengambilan buku fisik dilakukan di meja petugas perpustakaan setelah peminjaman disetujui.</li>
-                    <li>Keterlambatan pengembalian dikenakan denda Rp500 per buku per hari.</li>
-                    <li>Buku yang rusak atau hilang wajib diganti dengan buku yang sama atau membayar sesuai harga buku.</li>
-                  </ul>
-                </CardContent>
-              </Card>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 justify-items-center"> {/* Added justify-items-center */}
+              <LandingPageCard
+                icon={Calendar}
+                title="Waktu Pelayanan"
+                description="Senin - Sabtu: 07.00 - 16.00. Mengikuti waktu kegiatan sekolah."
+              />
+              <LandingPageCard
+                icon={BookOpen}
+                title="Tata Cara Peminjaman"
+                description="Login, pinjam maksimal 2 buku (siswa) / 5 buku (guru) selama 7 hari. Perpanjangan 1x. Denda Rp500/hari. Ganti buku rusak/hilang."
+              />
             </div>
           </div>
         </section>
