@@ -22,6 +22,10 @@ export default {
         '3': '3px',
         '4': '4px',
       },
+      fontFamily: { // Menambahkan konfigurasi font family kustom
+        'guncen': ['Guncen', 'sans-serif'], // Pastikan ini sesuai dengan globals.css
+        'playfair': ['"Playfair Display"', 'serif'], // Font untuk kutipan
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
