@@ -181,7 +181,7 @@ const LandingPage = () => {
           <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-8">
             <div>
               <div className="flex items-center mb-2"><Phone size={20} className="mr-3" /><p className="font-bold">Telephone/Whatsapp</p></div>
-              <p className="text-gray-400">0812-3456-7890</p>
+              <p className="text-gray-400">031-8667427</p>
             </div>
             <div>
               <div className="flex items-center mb-2"><Mail size={20} className="mr-3" /><p className="font-bold">Email</p></div>
