@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Calendar, MessageSquare, Phone, Mail, Instagram, Youtube, Twitter, Menu, Book, LayoutGrid, BookOpen, UserCircle } from 'lucide-react'; // Added UserCircle
+import { Calendar, MessageSquare, Phone, Mail, Instagram, Youtube, Twitter, Menu, Book, LayoutGrid, BookOpen, UserCircle } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useInView } from 'react-intersection-observer';
@@ -11,7 +11,7 @@ import AnimatedStatCard from "@/components/AnimatedStatCard";
 const LandingPage = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const { scrollY } = useScroll();
-  const heroParallax = useTransform(scrollY, [0, 500], [0, -100]); // Keep for potential future use or subtle effect
+  const heroParallax = useTransform(scrollY, [0, 500], [0, -100]);
 
   const handleScrollToSection = (id: string) => {
     const element = document.getElementById(id);
