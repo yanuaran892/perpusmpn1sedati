@@ -1,17 +1,39 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+/* Hapus import Poppins yang lama */
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap'); */
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  /* Deklarasi @font-face untuk font 'Guncen' */
+  /* Anda perlu mengunggah file font 'Guncen' (misalnya, Guncen.woff, Guncen.ttf) ke folder public/fonts/ */
+  @font-face {
+    font-family: 'Guncen';
+    src: url('/fonts/Guncen-Regular.woff2') format('woff2'),
+         url('/fonts/Guncen-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  /* Tambahkan varian bold jika tersedia */
+  @font-face {
+    font-family: 'Guncen';
+    src: url('/fonts/Guncen-Bold.woff2') format('woff2'),
+         url('/fonts/Guncen-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+  }
+
   html {
     @apply scroll-smooth;
     scroll-padding-top: 7rem; /* Provides offset for fixed header */
   }
 
   body {
-    font-family: 'Poppins', sans-serif; /* Apply Poppins font */
+    font-family: 'Guncen', sans-serif; /* Terapkan font Guncen */
   }
 
   :root {
