@@ -41,11 +41,9 @@ const LandingPage = () => {
         initial={{ opacity: 0, y: 50 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.8 }}
-        className={`py-16 md:py-24 px-4 ${className}`} // Removed container mx-auto
+        className={`container mx-auto py-16 md:py-24 px-4 ${className}`} // Applied container mx-auto px-4 directly
       >
-        <div className="container mx-auto"> {/* Added container mx-auto here */}
-          {children}
-        </div>
+        {children}
       </motion.section>
     );
   };
@@ -137,7 +135,7 @@ const LandingPage = () => {
         <AboutSection />
 
         {/* Pustakawan Section */}
-        <SectionWrapper id="librarians" className="py-16 md:py-24 px-4 bg-gradient-to-b from-gray-100 to-gray-200"> {/* Removed container mx-auto */}
+        <SectionWrapper id="librarians" className="bg-gradient-to-b from-gray-100 to-gray-200"> {/* Removed container mx-auto */}
           <motion.h3
             className="text-3xl md:text-4xl font-bold text-center mb-12 tracking-widest text-gray-900 font-guncen"
             initial={{ opacity: 0, y: -20 }}
@@ -320,71 +318,69 @@ const AboutSection = () => {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.2 });
 
   return (
-    <section id="about" ref={ref} className="py-16 md:py-24 px-4 bg-gradient-to-b from-white to-blue-50 overflow-hidden"> {/* Removed container mx-auto */}
-      <div className="container mx-auto"> {/* Added container mx-auto here */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
-          {/* Left Column: Text Content */}
-          <div className="space-y-6">
-            <motion.p
-              className="text-lg font-semibold text-primary tracking-wider uppercase"
-              initial={{ opacity: 0, x: -30 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-            >
-              Selamat Datang di
-            </motion.p>
-            <motion.h3
-              className="text-4xl md:text-5xl font-extrabold text-gray-900 font-guncen leading-tight"
-              initial={{ opacity: 0, x: -30 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
-            >
-              Perpustakaan SMPN 1 SEDATI
-            </motion.h3>
-            <motion.div
-              className="w-24 h-1.5 bg-accent rounded-full"
-              initial={{ width: 0 }}
-              animate={inView ? { width: '6rem' } : {}}
-              transition={{ duration: 1, delay: 0.5, ease: [0.2, 1, 0.2, 1] }}
-            />
-            <motion.p
-              className="text-lg text-gray-600 leading-relaxed"
-              initial={{ opacity: 0, x: -30 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.6, ease: "easeOut" }}
-            >
-              Halo, Sobat Literasi! Perpustakaan kami hadir sebagai pusat belajar dan sumber inspirasi. Temukan berbagai koleksi buku, majalah, dan referensi pembelajaran untuk memperluas wawasan dan meningkatkan prestasi Anda.
-            </motion.p>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.8, ease: "easeOut" }}
-            >
-              <Link to="/login">
-                <GSAPButton className="mt-4 bg-primary hover:bg-primary/90 text-white rounded-full px-8 py-3 text-lg font-semibold shadow-lg transition-all duration-300 transform hover:scale-105">
-                  Lihat Koleksi
-                </GSAPButton>
-              </Link>
-            </motion.div>
-          </div>
-
-          {/* Right Column: Image */}
-          <motion.div
-            className="relative h-full flex items-center justify-center min-h-[400px] overflow-hidden rounded-2xl" // Added overflow-hidden and rounded-2xl
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={inView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.9, delay: 0.4, ease: [0.2, 1, 0.2, 1] }}
+    <section id="about" ref={ref} className="container mx-auto py-16 md:py-24 px-4 bg-gradient-to-b from-white to-blue-50 overflow-hidden"> {/* Applied container mx-auto px-4 directly */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
+        {/* Left Column: Text Content */}
+        <div className="space-y-6">
+          <motion.p
+            className="text-lg font-semibold text-primary tracking-wider uppercase"
+            initial={{ opacity: 0, x: -30 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
           >
-            {/* Decorative background elements, slightly larger and rotated, clipped by parent's overflow-hidden */}
-            <div className="absolute inset-[-10%] bg-blue-200 rounded-3xl transform -rotate-6 z-0"></div> {/* inset-[-10%] makes it 10% larger on all sides */}
-            <div className="absolute inset-[-10%] bg-accent/20 rounded-3xl transform rotate-6 z-0"></div>
-            <img
-              src="/foto (1).jpg"
-              alt="Suasana Perpustakaan"
-              className="relative w-full h-auto object-cover rounded-2xl shadow-2xl z-10"
-            />
+            Selamat Datang di
+          </motion.p>
+          <motion.h3
+            className="text-4xl md:text-5xl font-extrabold text-gray-900 font-guncen leading-tight"
+            initial={{ opacity: 0, x: -30 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
+          >
+            Perpustakaan SMPN 1 SEDATI
+          </motion.h3>
+          <motion.div
+            className="w-24 h-1.5 bg-accent rounded-full"
+            initial={{ width: 0 }}
+            animate={inView ? { width: '6rem' } : {}}
+            transition={{ duration: 1, delay: 0.5, ease: [0.2, 1, 0.2, 1] }}
+          />
+          <motion.p
+            className="text-lg text-gray-600 leading-relaxed"
+            initial={{ opacity: 0, x: -30 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.6, ease: "easeOut" }}
+          >
+            Halo, Sobat Literasi! Perpustakaan kami hadir sebagai pusat belajar dan sumber inspirasi. Temukan berbagai koleksi buku, majalah, dan referensi pembelajaran untuk memperluas wawasan dan meningkatkan prestasi Anda.
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.8, ease: "easeOut" }}
+          >
+            <Link to="/login">
+              <GSAPButton className="mt-4 bg-primary hover:bg-primary/90 text-white rounded-full px-8 py-3 text-lg font-semibold shadow-lg transition-all duration-300 transform hover:scale-105">
+                Lihat Koleksi
+              </GSAPButton>
+            </Link>
           </motion.div>
         </div>
+
+        {/* Right Column: Image */}
+        <motion.div
+          className="relative h-full flex items-center justify-center min-h-[400px] overflow-hidden rounded-2xl" // Added overflow-hidden and rounded-2xl
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={inView ? { opacity: 1, scale: 1 } : {}}
+          transition={{ duration: 0.9, delay: 0.4, ease: [0.2, 1, 0.2, 1] }}
+        >
+          {/* Decorative background elements, slightly larger and rotated, clipped by parent's overflow-hidden */}
+          <div className="absolute inset-[-10%] bg-blue-200 rounded-3xl transform -rotate-6 z-0"></div> {/* inset-[-10%] makes it 10% larger on all sides */}
+          <div className="absolute inset-[-10%] bg-accent/20 rounded-3xl transform rotate-6 z-0"></div>
+          <img
+            src="/foto (1).jpg"
+            alt="Suasana Perpustakaan"
+            className="relative w-full h-auto object-cover rounded-2xl shadow-2xl z-10"
+          />
+        </motion.div>
       </div>
     </section>
   );
@@ -402,27 +398,26 @@ const GallerySection = () => {
   ];
 
   return (
-    <section id="gallery" ref={ref} className="bg-gradient-to-br from-blue-50 to-indigo-100 py-16 md:py-24 px-4"> {/* Removed container mx-auto */}
-      <div className="container mx-auto"> {/* Added container mx-auto here */}
-        <h3 className="text-3xl md:text-4xl font-bold text-center mb-12 tracking-widest text-gray-900 font-guncen">GALERI PERPUSTAKAAN</h3>
-        <p className="text-lg text-gray-700 text-center mb-16 max-w-3xl mx-auto">
-          Jelajahi suasana dan fasilitas perpustakaan kami melalui koleksi foto-foto inspiratif ini.
-        </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6 max-w-4xl mx-auto"> {/* Adjusted grid for 4 items */}
-          {galleryImages.map((image, index) => (
-            <motion.div
-              key={index}
-              className="relative group overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
-              initial={{ opacity: 0, y: 50 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: index * 0.08 }}
-            >
-              <img
-                src={image.src}
-                alt={image.alt}
-                className="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+    <section id="gallery" ref={ref} className="container mx-auto py-16 md:py-24 px-4"> {/* Applied container mx-auto px-4 directly */}
+      <h3 className="text-3xl md:text-4xl font-bold text-center mb-12 tracking-widest text-gray-900 font-guncen">GALERI PERPUSTAKAAN</h3>
+      <p className="text-lg text-gray-700 text-center mb-16 max-w-3xl mx-auto">
+        Jelajahi suasana dan fasilitas perpustakaan kami melalui koleksi foto-foto inspiratif ini.
+      </p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6 max-w-4xl mx-auto"> {/* Adjusted grid for 4 items */}
+        {galleryImages.map((image, index) => (
+          <motion.div
+            key={index}
+            className="relative group overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
+            initial={{ opacity: 0, y: 50 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: index * 0.08 }}
+          >
+            <img
+              src={image.src}
+              alt={image.alt}
+              className="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-110"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <h4 className="text-white text-xl font-bold mb-2">{image.title}</h4>
                 <p className="text-gray-200 text-sm">{image.description}</p>
               </div>
@@ -434,8 +429,7 @@ const GallerySection = () => {
             <ImageIcon className="mr-2 h-5 w-5" /> Lihat Lebih Banyak Foto
           </GSAPButton>
         </div>
-      </div>
-    </section>
+      </section>
   );
 };
 
