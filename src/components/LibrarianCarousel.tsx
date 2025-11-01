@@ -17,7 +17,17 @@ interface LibrarianCarouselProps {
 }
 
 const LibrarianCarousel: React.FC<LibrarianCarouselProps> = ({ librarians }) => {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: 'center' }, [Autoplay({ delay: 5000, stopOnInteraction: false })]);
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    {
+      loop: true,
+      align: 'center',
+      slidesToScroll: 1,
+      containScroll: 'trimSnaps',
+      dragFree: false, // Disable free dragging for a more controlled snap
+    },
+    [Autoplay({ delay: 5000, stopOnInteraction: false })]
+  );
+
   const [prevBtnDisabled, setPrevBtnDisabled] = useState(true);
   const [nextBtnDisabled, setNextBtnDisabled] = useState(true);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -47,30 +57,61 @@ const LibrarianCarousel: React.FC<LibrarianCarouselProps> = ({ librarians }) => 
     emblaApi.on('select', onSelect);
   }, [emblaApi, onInit, onSelect]);
 
+  const activeLibrarian = librarians[selectedIndex];
+
   return (
-    <div className="relative">
-      <div className="embla overflow-hidden" ref={emblaRef}>
-        <div className="embla__container flex touch-pan-y -ml-4">
-          {librarians.map((librarian, index) => (
-            <div className="embla__slide flex-none min-w-0 pl-4" key={index}>
-              <motion.div
-                className="flex flex-col items-center p-6 bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-200 h-full"
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
+    <div className="relative flex flex-col items-center">
+      <div className="embla overflow-hidden w-full max-w-3xl" ref={emblaRef}>
+        <div className="embla__container flex touch-pan-y justify-center items-center h-[400px]"> {/* Increased height for cards */}
+          {librarians.map((librarian, index) => {
+            const distance = Math.abs(index - selectedIndex);
+            const isSelected = index === selectedIndex;
+
+            // Adjust these values for desired visual effect
+            const scale = isSelected ? 1.1 : 0.8; // Active card slightly larger
+            const opacity = isSelected ? 1 : 0.4; // Active card fully opaque
+            const grayscale = isSelected ? 0 : 100; // Active card in color
+            
+            // Horizontal offset for overlapping effect
+            let translateX = 0;
+            if (index < selectedIndex) {
+              translateX = -50 * distance; // Shift left for cards before active
+            } else if (index > selectedIndex) {
+              translateX = 50 * distance; // Shift right for cards after active
+            }
+
+            return (
+              <div
+                className="embla__slide flex-none relative flex justify-center items-center"
+                key={index}
+                style={{
+                  flex: '0 0 100%', // Each slide takes full width of the container
+                  paddingLeft: '0',
+                  // Apply transforms to the inner card for better control
+                }}
               >
-                <div className="w-32 h-32 rounded-full bg-gradient-to-br from-blue-100 to-indigo-200 flex items-center justify-center mb-4 overflow-hidden border-4 border-white shadow-md">
-                  {librarian.image ? (
-                    <img src={librarian.image} alt={librarian.name} className="w-full h-full object-cover" />
-                  ) : (
-                    <UserCircle className="h-24 w-24 text-blue-500/50" />
-                  )}
-                </div>
-                <p className="font-bold text-xl text-gray-900 mb-1">{librarian.name}</p>
-                <p className="text-sm text-primary">{librarian.title}</p>
-              </motion.div>
-            </div>
-          ))}
+                <motion.div
+                  className="relative flex flex-col items-center p-6 bg-white rounded-xl shadow-lg border-4 border-gray-200 w-[250px] h-[300px] justify-center transition-all duration-500 ease-out"
+                  style={{
+                    transform: `translateX(${translateX}px) scale(${scale})`,
+                    filter: `grayscale(${grayscale}%)`,
+                    opacity: opacity,
+                    zIndex: isSelected ? 10 : 1, // Bring active card to front
+                  }}
+                >
+                  <div className="w-24 h-24 rounded-full bg-gradient-to-br from-blue-100 to-indigo-200 flex items-center justify-center mb-4 overflow-hidden border-4 border-white shadow-md">
+                    {librarian.image ? (
+                      <img src={librarian.image} alt={librarian.name} className="w-full h-full object-cover" />
+                    ) : (
+                      <UserCircle className="h-20 w-20 text-blue-500/50" />
+                    )}
+                  </div>
+                  <p className="font-bold text-lg text-gray-900 mb-1">{librarian.name}</p>
+                  <p className="text-sm text-primary">{librarian.title}</p>
+                </motion.div>
+              </div>
+            );
+          })}
         </div>
       </div>
 
@@ -95,18 +136,40 @@ const LibrarianCarousel: React.FC<LibrarianCarouselProps> = ({ librarians }) => 
       </GSAPButton>
 
       {/* Dots Pagination */}
-      <div className="embla__dots flex justify-center mt-8 space-x-2 z-10"> {/* Added z-10 for good measure */}
+      <div className="embla__dots flex justify-center mt-8 space-x-2 z-10">
         {scrollSnaps.map((_, index) => (
           <button
             key={index}
             className={cn(
-              'embla__dot w-4 h-4 rounded-full bg-gray-500 transition-colors duration-200', // Changed to w-4 h-4 and bg-gray-500
+              'embla__dot w-4 h-4 rounded-full bg-gray-500 transition-colors duration-200',
               index === selectedIndex && 'bg-primary'
             )}
             onClick={() => scrollTo(index)}
           />
         ))}
       </div>
+
+      {/* Active Librarian Details */}
+      {activeLibrarian && (
+        <motion.div
+          key={selectedIndex} // Key for re-animating on index change
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="mt-12 text-center"
+        >
+          <div className="flex items-center justify-center mb-2">
+            <div className="h-px w-16 bg-gray-300 mr-4" />
+            <p className="font-bold text-3xl text-gray-900 font-guncen">{activeLibrarian.name}</p>
+            <div className="h-px w-16 bg-gray-300 ml-4" />
+          </div>
+          <div className="flex items-center justify-center">
+            <div className="h-px w-10 bg-gray-300 mr-3" />
+            <p className="text-xl text-primary font-semibold">{activeLibrarian.title}</p>
+            <div className="h-px w-10 bg-gray-300 ml-3" />
+          </div>
+        </motion.div>
+      )}
     </div>
   );
 };
