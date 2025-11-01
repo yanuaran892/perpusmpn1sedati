@@ -1,5 +1,4 @@
-/* Hapus import Poppins yang lama */
-/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap'); /* Import Poppins */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap'); /* Import Playfair Display */
 
 @tailwind base;
@@ -34,7 +33,7 @@
   }
 
   body {
-    font-family: 'Guncen', sans-serif; /* Terapkan font Guncen */
+    font-family: 'Poppins', sans-serif; /* Terapkan font Poppins sebagai default */
   }
 
   :root {

@@ -23,6 +23,7 @@ export default {
         '4': '4px',
       },
       fontFamily: { // Menambahkan konfigurasi font family kustom
+        'poppins': ['Poppins', 'sans-serif'], // New: Poppins font
         'guncen': ['Guncen', 'sans-serif'], // Pastikan ini sesuai dengan globals.css
         'playfair': ['"Playfair Display"', 'serif'], // Font untuk kutipan
       },
