@@ -321,7 +321,7 @@ const AboutSection = () => {
     <section
       id="about"
       ref={ref}
-      className="container mx-auto py-16 md:py-24 px-4 bg-gradient-to-b from-white to-blue-50 overflow-hidden relative bg-[url('/subtle-dots.svg')] bg-repeat" // Re-added px-4
+      className="container mx-auto py-16 md:py-24 bg-gradient-to-b from-white to-blue-50 overflow-hidden relative bg-[url('/subtle-dots.svg')] bg-repeat" // Removed px-4
     >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         {/* Left Column: Text Content */}
