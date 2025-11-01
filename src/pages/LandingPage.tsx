@@ -107,7 +107,6 @@ const LandingPage = () => {
               backgroundImage: "url('/foto (3).png')", // Original image source
             }}
           ></motion.div>
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/70 to-indigo-700/70"></div>
           <div className="relative z-10 flex flex-col items-center justify-center h-full text-white text-center p-4">
             <motion.img src="/smpn1sedati_logo.png" alt="Logo SMPN 1 Sedati" className="h-28 w-28 md:h-40 md:w-40 mb-6 drop-shadow-lg" initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, ease: [0.2, 1, 0.2, 1] }} />
             <motion.h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-wider drop-shadow-lg leading-tight mb-4 font-guncen" initial="hidden" animate="visible" variants={textVariants}>PERPUSTAKAAN</motion.h1>
