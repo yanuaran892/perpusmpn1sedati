@@ -42,6 +42,11 @@
     scroll-padding-top: 7rem; /* Provides offset for fixed header */
   }
 
+  /* IMPORTANT: Apply border-box globally for consistent sizing */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
   body {
     font-family: 'Poppins', sans-serif; /* Terapkan font Poppins sebagai default */
   }

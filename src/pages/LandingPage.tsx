@@ -108,11 +108,11 @@ const LandingPage = () => {
         </div>
       </header>
 
-      <main className="pt-16"> {/* Added pt-16 here to offset the fixed header */}
+      <main className="pt-16"> {/* Now that box-sizing is border-box, h-16 (4rem) is the correct height */}
         {/* Hero Section */}
         <section
           id="home"
-          className="relative min-h-[calc(100vh-4rem)] w-full overflow-hidden flex items-center justify-center" // Changed h-screen to min-h-[calc(100vh-4rem)]
+          className="relative min-h-[calc(100vh-4rem)] w-full overflow-hidden flex items-center justify-center" // Adjusted min-h to match header height
         >
           <motion.div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
