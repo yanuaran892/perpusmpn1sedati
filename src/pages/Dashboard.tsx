@@ -51,7 +51,7 @@ const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const pageSize = 12;
+  const pageSize = 6; // Diubah dari 12 menjadi 6
   const [categories, setCategories] = useState<CategoryItem[]>([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>('all');
   const [totalBooksCount, setTotalBooksCount] = useState(0);
@@ -311,7 +311,7 @@ const Dashboard = () => {
               <p className="text-center text-gray-600 py-12 text-lg">Tidak ada buku ditemukan.</p>
             ) : (
               <>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8"> {/* Adjusted to 3 columns for 6 items */}
                   {books.map((book, index) => (
                     <div key={book.id_buku} className="animate-fade-in-up" style={{ animationDelay: `${index * 50}ms`, animationFillMode: 'backwards' }}>
                       <BookCard
