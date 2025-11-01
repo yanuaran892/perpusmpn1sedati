@@ -95,12 +95,12 @@ const LibrarianCarousel: React.FC<LibrarianCarouselProps> = ({ librarians }) => 
       </GSAPButton>
 
       {/* Dots Pagination */}
-      <div className="embla__dots flex justify-center mt-8 space-x-2">
+      <div className="embla__dots flex justify-center mt-8 space-x-2 z-10"> {/* Added z-10 for good measure */}
         {scrollSnaps.map((_, index) => (
           <button
             key={index}
             className={cn(
-              'embla__dot w-3 h-3 rounded-full bg-gray-300 transition-colors duration-200',
+              'embla__dot w-4 h-4 rounded-full bg-gray-500 transition-colors duration-200', // Changed to w-4 h-4 and bg-gray-500
               index === selectedIndex && 'bg-primary'
             )}
             onClick={() => scrollTo(index)}
