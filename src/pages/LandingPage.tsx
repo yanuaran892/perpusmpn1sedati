@@ -106,7 +106,6 @@ const LandingPage = () => {
             style={{
               backgroundImage: "url('/foto (3).png')", // Original image source
               y: heroBackgroundParallax,
-              scale: useTransform(scrollY, [0, 500], [1, 1.1]), // Subtle zoom on scroll
             }}
           ></motion.div>
           {/* Overlay hitam transparan */}
