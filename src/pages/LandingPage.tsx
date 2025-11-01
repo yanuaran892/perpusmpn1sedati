@@ -108,17 +108,16 @@ const LandingPage = () => {
         </div>
       </header>
 
-      <main>
+      <main className="pt-16"> {/* Added pt-16 here to offset the fixed header */}
         {/* Hero Section */}
         <section
           id="home"
-          className="relative h-screen w-full overflow-hidden flex items-center justify-center pt-24" // Increased pt-16 to pt-24
+          className="relative h-screen w-full overflow-hidden flex items-center justify-center" // Removed pt-24
         >
           <motion.div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{
-              backgroundImage: "url('/foto (3).png')", // Original image source
-             
+              backgroundImage: "url('/foto (3).png')", 
             }}
           ></motion.div>
           {/* Overlay hitam transparan */}
