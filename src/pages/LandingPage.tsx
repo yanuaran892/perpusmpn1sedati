@@ -335,7 +335,7 @@ const AboutSection = () => {
             Selamat Datang di
           </motion.p>
           <motion.h3
-            className="text-4xl md:text-5xl font-extrabold text-gray-900 font-guncen leading-tight"
+            className="text-4xl md:text-5xl font-extrabold text-gray-900 font-guncen leading-tight mb-4" // Added mb-4
             initial={{ opacity: 0, x: -30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
@@ -343,13 +343,13 @@ const AboutSection = () => {
             Perpustakaan SMPN 1 SEDATI
           </motion.h3>
           <motion.div
-            className="w-24 h-1.5 bg-accent rounded-full"
+            className="w-24 h-1.5 bg-accent rounded-full mb-6" // Added mb-6
             initial={{ width: 0 }}
             animate={inView ? { width: '6rem' } : {}}
             transition={{ duration: 1, delay: 0.5, ease: [0.2, 1, 0.2, 1] }}
           />
           <motion.p
-            className="text-lg text-gray-700 leading-relaxed mt-4" // Changed text-gray-600 to text-gray-700, added mt-4
+            className="text-lg text-gray-700 leading-relaxed" // Removed mt-4
             initial={{ opacity: 0, x: -30 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.6, ease: "easeOut" }}
