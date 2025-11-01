@@ -318,8 +318,12 @@ const AboutSection = () => {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.2 });
 
   return (
-    <section id="about" ref={ref} className="container mx-auto py-16 md:py-24 px-4 bg-gradient-to-b from-white to-blue-50 overflow-hidden"> {/* Applied container mx-auto px-4 directly */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
+    <section
+      id="about"
+      ref={ref}
+      className="container mx-auto py-16 md:py-24 px-4 bg-gradient-to-b from-white to-blue-50 overflow-hidden relative bg-[url('/subtle-dots.svg')] bg-repeat" // Added subtle-dots background
+    >
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center"> {/* Removed max-w-6xl mx-auto */}
         {/* Left Column: Text Content */}
         <div className="space-y-6">
           <motion.p
@@ -345,7 +349,7 @@ const AboutSection = () => {
             transition={{ duration: 1, delay: 0.5, ease: [0.2, 1, 0.2, 1] }}
           />
           <motion.p
-            className="text-lg text-gray-600 leading-relaxed"
+            className="text-lg text-gray-700 leading-relaxed mt-4" // Changed text-gray-600 to text-gray-700, added mt-4
             initial={{ opacity: 0, x: -30 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.6, ease: "easeOut" }}
@@ -358,7 +362,7 @@ const AboutSection = () => {
             transition={{ duration: 0.7, delay: 0.8, ease: "easeOut" }}
           >
             <Link to="/login">
-              <GSAPButton className="mt-4 bg-primary hover:bg-primary/90 text-white rounded-full px-8 py-3 text-lg font-semibold shadow-lg transition-all duration-300 transform hover:scale-105">
+              <GSAPButton className="mt-6 bg-primary hover:bg-primary/90 text-white rounded-full px-8 py-3 text-lg font-semibold shadow-lg transition-all duration-300 transform hover:scale-105">
                 Lihat Koleksi
               </GSAPButton>
             </Link>
@@ -367,18 +371,18 @@ const AboutSection = () => {
 
         {/* Right Column: Image */}
         <motion.div
-          className="relative h-full flex items-center justify-center min-h-[400px] overflow-hidden rounded-2xl" // Added overflow-hidden and rounded-2xl
+          className="relative h-full flex items-center justify-center min-h-[400px] overflow-hidden rounded-2xl p-4 bg-white shadow-2xl" // Added padding, white background, and shadow to the image container
           initial={{ opacity: 0, scale: 0.8 }}
           animate={inView ? { opacity: 1, scale: 1 } : {}}
           transition={{ duration: 0.9, delay: 0.4, ease: [0.2, 1, 0.2, 1] }}
         >
           {/* Decorative background elements, slightly larger and rotated, clipped by parent's overflow-hidden */}
-          <div className="absolute inset-[-10%] bg-blue-200 rounded-3xl transform -rotate-6 z-0"></div> {/* inset-[-10%] makes it 10% larger on all sides */}
+          <div className="absolute inset-[-10%] bg-blue-200 rounded-3xl transform -rotate-6 z-0"></div>
           <div className="absolute inset-[-10%] bg-accent/20 rounded-3xl transform rotate-6 z-0"></div>
           <img
             src="/foto (1).jpg"
             alt="Suasana Perpustakaan"
-            className="relative w-full h-auto object-cover rounded-2xl shadow-2xl z-10"
+            className="relative w-full h-auto object-cover rounded-xl shadow-xl z-10" // Adjusted rounded-xl and shadow
           />
         </motion.div>
       </div>
