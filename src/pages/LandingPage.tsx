@@ -32,7 +32,8 @@ const LandingPage = () => {
     { id: 'contact', label: 'Kontak' },
   ];
 
-  const SectionWrapper = ({ children, id, className = "" }: { children: React.ReactNode, id: string, className?: string }) => {
+  // Modified SectionWrapper to accept a 'noContainer' prop
+  const SectionWrapper = ({ children, id, className = "", noContainer = false }: { children: React.ReactNode, id: string, className?: string, noContainer?: boolean }) => {
     const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
     return (
       <motion.section
@@ -41,7 +42,7 @@ const LandingPage = () => {
         initial={{ opacity: 0, y: 50 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.8 }}
-        className={`container mx-auto py-16 md:py-24 ${className}`} // Removed px-4 here
+        className={`${noContainer ? '' : 'container mx-auto'} py-16 md:py-24 ${className}`}
       >
         {children}
       </motion.section>
@@ -135,7 +136,7 @@ const LandingPage = () => {
         <AboutSection />
 
         {/* Pustakawan Section */}
-        <SectionWrapper id="librarians" className="bg-gradient-to-b from-gray-100 to-gray-200"> {/* Removed container mx-auto */}
+        <SectionWrapper id="librarians" className="bg-gradient-to-b from-gray-100 to-gray-200" noContainer> {/* Added noContainer prop */}
           <motion.h3
             className="text-3xl md:text-4xl font-bold text-center mb-12 tracking-widest text-gray-900 font-guncen"
             initial={{ opacity: 0, y: -20 }}
@@ -144,7 +145,7 @@ const LandingPage = () => {
           >
             TIM PUSTAKAWAN KAMI
           </motion.h3>
-          <div className="max-w-6xl mx-auto overflow-x-hidden"> {/* Added overflow-x-hidden here */}
+          <div className="overflow-x-hidden"> {/* Removed max-w-6xl mx-auto */}
             <LibrarianCarousel librarians={librariansData} />
           </div>
         </SectionWrapper>
