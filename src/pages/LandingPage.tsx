@@ -321,11 +321,11 @@ const AboutSection = () => {
     <section
       id="about"
       ref={ref}
-      className="container mx-auto py-16 md:py-24 px-4 bg-gradient-to-b from-white to-blue-50 overflow-hidden relative bg-[url('/subtle-dots.svg')] bg-repeat" // Added subtle-dots background
+      className="container mx-auto py-16 md:py-24 bg-gradient-to-b from-white to-blue-50 overflow-hidden relative bg-[url('/subtle-dots.svg')] bg-repeat" // Removed px-4 here
     >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         {/* Left Column: Text Content */}
-        <div className="py-4"> {/* Added py-4 here */}
+        <div className="py-4">
           <motion.p
             className="text-lg font-semibold text-primary tracking-wider uppercase mb-2"
             initial={{ opacity: 0, x: -30 }}
@@ -371,7 +371,7 @@ const AboutSection = () => {
 
         {/* Right Column: Image */}
         <motion.div
-          className="relative h-full flex items-center justify-center min-h-[400px] overflow-hidden rounded-2xl p-4 bg-white shadow-2xl" // Added padding, white background, and shadow to the image container
+          className="relative h-full flex items-center justify-center overflow-hidden rounded-2xl p-4 bg-white shadow-2xl" // Removed min-h-[400px]
           initial={{ opacity: 0, scale: 0.8 }}
           animate={inView ? { opacity: 1, scale: 1 } : {}}
           transition={{ duration: 0.9, delay: 0.4, ease: [0.2, 1, 0.2, 1] }}
