@@ -41,7 +41,7 @@ const LandingPage = () => {
         initial={{ opacity: 0, y: 50 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.8 }}
-        className={`container mx-auto py-16 md:py-24 px-4 ${className}`} // Applied container mx-auto px-4 directly
+        className={`container mx-auto py-16 md:py-24 ${className}`} // Removed px-4 here
       >
         {children}
       </motion.section>
@@ -144,7 +144,7 @@ const LandingPage = () => {
           >
             TIM PUSTAKAWAN KAMI
           </motion.h3>
-          <div className="max-w-6xl mx-auto">
+          <div className="max-w-6xl mx-auto overflow-x-hidden"> {/* Added overflow-x-hidden here */}
             <LibrarianCarousel librarians={librariansData} />
           </div>
         </SectionWrapper>
@@ -429,7 +429,7 @@ const GallerySection = () => {
             <ImageIcon className="mr-2 h-5 w-5" /> Lihat Lebih Banyak Foto
           </GSAPButton>
         </div>
-      </section>
+    </section>
   );
 };
 

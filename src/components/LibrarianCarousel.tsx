@@ -62,7 +62,7 @@ const LibrarianCarousel: React.FC<LibrarianCarouselProps> = ({ librarians }) => 
   return (
     <div className="relative flex flex-col items-center">
       <div className="embla overflow-hidden w-full max-w-3xl" ref={emblaRef}>
-        <div className="embla__container flex touch-pan-y items-center h-[400px] gap-x-8">
+        <div className="embla__container flex touch-pan-y items-center h-[400px] gap-x-8 overflow-x-hidden"> {/* Added overflow-x-hidden here */}
           {librarians.map((librarian, index) => {
             const isSelected = index === selectedIndex;
 
