@@ -323,11 +323,11 @@ const AboutSection = () => {
       ref={ref}
       className="container mx-auto py-16 md:py-24 px-4 bg-gradient-to-b from-white to-blue-50 overflow-hidden relative bg-[url('/subtle-dots.svg')] bg-repeat" // Added subtle-dots background
     >
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center"> {/* Removed max-w-6xl mx-auto */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         {/* Left Column: Text Content */}
-        <div className="space-y-6">
+        <div className=""> {/* Removed space-y-6 */}
           <motion.p
-            className="text-lg font-semibold text-primary tracking-wider uppercase"
+            className="text-lg font-semibold text-primary tracking-wider uppercase mb-2" // Added mb-2
             initial={{ opacity: 0, x: -30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
@@ -335,7 +335,7 @@ const AboutSection = () => {
             Selamat Datang di
           </motion.p>
           <motion.h3
-            className="text-4xl md:text-5xl font-extrabold text-gray-900 font-guncen leading-tight mb-4" // Added mb-4
+            className="text-4xl md:text-5xl font-extrabold text-gray-900 font-guncen leading-tight mb-4"
             initial={{ opacity: 0, x: -30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
@@ -343,7 +343,7 @@ const AboutSection = () => {
             Perpustakaan SMPN 1 SEDATI
           </motion.h3>
           <motion.div
-            className="w-24 h-1.5 bg-accent rounded-full mb-6" // Added mb-6
+            className="w-24 h-1.5 bg-accent rounded-full mb-8" // Increased mb-6 to mb-8
             initial={{ width: 0 }}
             animate={inView ? { width: '6rem' } : {}}
             transition={{ duration: 1, delay: 0.5, ease: [0.2, 1, 0.2, 1] }}
@@ -362,7 +362,7 @@ const AboutSection = () => {
             transition={{ duration: 0.7, delay: 0.8, ease: "easeOut" }}
           >
             <Link to="/login">
-              <GSAPButton className="mt-6 bg-primary hover:bg-primary/90 text-white rounded-full px-8 py-3 text-lg font-semibold shadow-lg transition-all duration-300 transform hover:scale-105">
+              <GSAPButton className="mt-8 bg-primary hover:bg-primary/90 text-white rounded-full px-8 py-3 text-lg font-semibold shadow-lg transition-all duration-300 transform hover:scale-105">
                 Lihat Koleksi
               </GSAPButton>
             </Link>
