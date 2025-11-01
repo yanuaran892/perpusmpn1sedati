@@ -60,12 +60,12 @@ const LandingPage = () => {
 
   // Data for librarians
   const librariansData = [
-    { name: "Bapak Budi Santoso", title: "Pustakawan Senior", image: "/foto (1).png" },
-    { name: "Ibu Ani Wijaya", title: "Pustakawan Digital", image: "/foto (2).png" },
-    { name: "Bapak Cahyo Nugroho", title: "Pustakawan Koleksi", image: "/foto (3).png" },
-    { name: "Ibu Dewi Lestari", title: "Pustakawan Anak", image: "/foto (1).png" }, // Reusing images
-    { name: "Bapak Eko Prasetyo", title: "Pustakawan Arsip", image: "/foto (2).png" }, // Reusing images
-    { name: "Ibu Fitri Handayani", title: "Pustakawan Referensi", image: "/foto (3).png" }, // Reusing images
+    { name: "", title: "Pustakawan Senior", image: "/foto (1).png" },
+    { name: "", title: "Pustakawan Digital", image: "/foto (2).png" },
+    { name: "", title: "Pustakawan Koleksi", image: "/foto (3).png" },
+    { name: "", title: "Pustakawan Anak", image: "/foto (1).png" }, // Reusing images
+    { name: "", title: "Pustakawan Arsip", image: "/foto (2).png" }, // Reusing images
+    { name: "", title: "Pustakawan Referensi", image: "/foto (3).png" }, // Reusing images
   ];
 
   return (
