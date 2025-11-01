@@ -122,16 +122,6 @@ const LandingPage = () => {
           </div>
         </section>
 
-        {/* Stats Section */}
-        <SectionWrapper id="stats" className="bg-gradient-to-br from-gray-100 to-white">
-          <h3 className="text-3xl md:text-4xl font-bold text-center mb-12 tracking-widest text-gray-900 font-guncen">Sekilas Angka</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center max-w-6xl mx-auto">
-            <AnimatedStatCard icon={Book} label="Total Buku" value={10000} animationDelay={0} />
-            <AnimatedStatCard icon={LayoutGrid} label="Kategori Buku" value={12} animationDelay={0.2} />
-            <AnimatedStatCard icon={BookOpen} label="Akses Online" value="24/7" isNumeric={false} animationDelay={0.4} />
-          </div>
-        </SectionWrapper>
-
         {/* Tentang Section */}
         <SectionWrapper id="about" className="bg-white">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
