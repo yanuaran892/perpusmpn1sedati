@@ -85,16 +85,13 @@ const LibrarianCarousel: React.FC<LibrarianCarouselProps> = ({ librarians }) => 
                   }}
                 >
                   {librarian.image ? (
-                    <img src={librarian.image} alt={librarian.name} className="w-full h-40 object-cover rounded-t-lg" />
+                    <img src={librarian.image} alt={librarian.name} className="w-full h-full object-cover rounded-lg" />
                   ) : (
-                    <div className="w-full h-40 bg-gradient-to-br from-blue-100 to-indigo-200 flex items-center justify-center rounded-t-lg">
+                    <div className="w-full h-full bg-gradient-to-br from-blue-100 to-indigo-200 flex items-center justify-center rounded-lg">
                       <UserCircle className="h-24 w-24 text-blue-500/50" />
                     </div>
                   )}
-                  <div className="p-4 text-center flex-grow flex flex-col justify-center">
-                    <p className="font-bold text-lg text-gray-900 mb-1">{librarian.name}</p>
-                    <p className="text-sm text-primary">{librarian.title}</p>
-                  </div>
+                  {/* Removed text from inside the card */}
                 </motion.div>
               </div>
             );
@@ -136,7 +133,7 @@ const LibrarianCarousel: React.FC<LibrarianCarouselProps> = ({ librarians }) => 
         ))}
       </div>
 
-      {/* Active Librarian Details */}
+      {/* Active Librarian Details (kept as requested) */}
       {activeLibrarian && (
         <motion.div
           key={selectedIndex}
