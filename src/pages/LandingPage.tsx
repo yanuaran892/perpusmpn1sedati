@@ -325,7 +325,7 @@ const AboutSection = () => {
     >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         {/* Left Column: Text Content */}
-        <div className=""> {/* Removed space-y-6 */}
+        <div className="py-4"> {/* Added py-4 here */}
           <motion.p
             className="text-lg font-semibold text-primary tracking-wider uppercase mb-2"
             initial={{ opacity: 0, x: -30 }}
@@ -348,8 +348,8 @@ const AboutSection = () => {
             animate={inView ? { width: '6rem' } : {}}
             transition={{ duration: 1, delay: 0.5, ease: [0.2, 1, 0.2, 1] }}
           />
-          <motion.p
-            className="text-lg text-gray-700 leading-relaxed mb-8" // Added mb-8
+          <motion.p // This is the problematic text
+            className="text-lg text-gray-700 leading-relaxed mb-12" // Changed mb-8 to mb-12
             initial={{ opacity: 0, x: -30 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.6, ease: "easeOut" }}
@@ -362,7 +362,7 @@ const AboutSection = () => {
             transition={{ duration: 0.7, delay: 0.8, ease: "easeOut" }}
           >
             <Link to="/login">
-              <GSAPButton className="mt-6 bg-primary hover:bg-primary/90 text-white rounded-full px-8 py-3 text-lg font-semibold shadow-lg transition-all duration-300 transform hover:scale-105">
+              <GSAPButton className="mt-8 bg-primary hover:bg-primary/90 text-white rounded-full px-8 py-3 text-lg font-semibold shadow-lg transition-all duration-300 transform hover:scale-105"> {/* Changed mt-6 to mt-8 */}
                 Lihat Koleksi
               </GSAPButton>
             </Link>
