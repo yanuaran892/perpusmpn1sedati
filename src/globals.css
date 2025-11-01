@@ -27,6 +27,16 @@
     font-display: swap;
   }
 
+  /* New: @font-face for 'CCSpaghettiWestern' */
+  @font-face {
+    font-family: 'CCSpaghettiWestern';
+    src: url('/fonts/CCSpaghettiWestern.woff2') format('woff2'),
+         url('/fonts/CCSpaghettiWestern.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+
   html {
     @apply scroll-smooth;
     scroll-padding-top: 7rem; /* Provides offset for fixed header */

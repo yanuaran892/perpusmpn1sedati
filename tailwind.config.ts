@@ -26,6 +26,7 @@ export default {
         'poppins': ['Poppins', 'sans-serif'], // New: Poppins font
         'guncen': ['Guncen', 'sans-serif'], // Pastikan ini sesuai dengan globals.css
         'playfair': ['"Playfair Display"', 'serif'], // Font untuk kutipan
+        'ccspaghettiwestern': ['CCSpaghettiWestern', 'cursive'], // New: CCSpaghettiWestern font
       },
       colors: {
         border: "hsl(var(--border))",
