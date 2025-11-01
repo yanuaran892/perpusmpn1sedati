@@ -321,11 +321,11 @@ const AboutSection = () => {
     <section
       id="about"
       ref={ref}
-      className="container mx-auto py-16 md:py-24 bg-gradient-to-b from-white to-blue-50 overflow-hidden relative bg-[url('/subtle-dots.svg')] bg-repeat" // Removed px-4
+      className="container mx-auto py-16 md:py-24 bg-gradient-to-b from-white to-blue-50 overflow-hidden relative bg-[url('/subtle-dots.svg')] bg-repeat"
     >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         {/* Left Column: Text Content */}
-        <div className="py-4">
+        <div className="py-4 px-4"> {/* Added px-4 here */}
           <motion.p
             className="text-lg font-semibold text-primary tracking-wider uppercase mb-2"
             initial={{ opacity: 0, x: -30 }}
