@@ -134,7 +134,8 @@ const StudentDashboardHeader: React.FC<StudentDashboardHeaderProps> = ({
         </motion.div>
       </div>
 
-      {/* Stat Cards - positioned absolutely at the bottom, slightly overlapping */}
+      {/* Stat Cards - Removed from here as they are now rendered directly in Dashboard.tsx */}
+      {/*
       <div className="absolute bottom-0 left-0 right-0 z-20 translate-y-1/2">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center max-w-7xl mx-auto px-4">
           <AnimatedStatCard icon={Book} label="Total Buku" value={totalBooksCount} animationDelay={0.3} />
@@ -142,6 +143,7 @@ const StudentDashboardHeader: React.FC<StudentDashboardHeaderProps> = ({
           <AnimatedStatCard icon={BookOpen} label="Akses Online" value="24/7" isNumeric={false} animationDelay={0.5} />
         </div>
       </div>
+      */}
     </motion.header>
   );
 };
