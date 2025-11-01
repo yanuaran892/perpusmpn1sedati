@@ -20,10 +20,10 @@ const LibrarianCarousel: React.FC<LibrarianCarouselProps> = ({ librarians }) => 
   const [emblaRef, emblaApi] = useEmblaCarousel(
     {
       loop: true,
-      align: 'center',
+      align: 'center', // Centers the selected slide
       slidesToScroll: 1,
       containScroll: 'trimSnaps',
-      dragFree: false, // Disable free dragging for a more controlled snap
+      dragFree: false,
     },
     [Autoplay({ delay: 5000, stopOnInteraction: false })]
   );
@@ -62,9 +62,8 @@ const LibrarianCarousel: React.FC<LibrarianCarouselProps> = ({ librarians }) => 
   return (
     <div className="relative flex flex-col items-center">
       <div className="embla overflow-hidden w-full max-w-3xl" ref={emblaRef}>
-        <div className="embla__container flex touch-pan-y justify-center items-center h-[400px]"> {/* Increased height for cards */}
+        <div className="embla__container flex touch-pan-y items-center h-[400px] gap-x-8"> {/* Removed justify-center, added gap-x-8 */}
           {librarians.map((librarian, index) => {
-            const distance = Math.abs(index - selectedIndex);
             const isSelected = index === selectedIndex;
 
             // Adjust these values for desired visual effect
@@ -72,28 +71,15 @@ const LibrarianCarousel: React.FC<LibrarianCarouselProps> = ({ librarians }) => 
             const opacity = isSelected ? 1 : 0.4; // Active card fully opaque
             const grayscale = isSelected ? 0 : 100; // Active card in color
             
-            // Horizontal offset for overlapping effect
-            let translateX = 0;
-            if (index < selectedIndex) {
-              translateX = -50 * distance; // Shift left for cards before active
-            } else if (index > selectedIndex) {
-              translateX = 50 * distance; // Shift right for cards after active
-            }
-
             return (
               <div
-                className="embla__slide flex-none relative flex justify-center items-center"
+                className="embla__slide flex-none relative flex justify-center items-center w-full sm:w-1/2 md:w-1/3 lg:w-1/4" // Responsive width for slides
                 key={index}
-                style={{
-                  flex: '0 0 100%', // Each slide takes full width of the container
-                  paddingLeft: '0',
-                  // Apply transforms to the inner card for better control
-                }}
               >
                 <motion.div
-                  className="relative flex flex-col items-center p-6 bg-white rounded-xl shadow-lg border-4 border-gray-200 w-[250px] h-[300px] justify-center transition-all duration-500 ease-out"
+                  className="relative flex flex-col items-center p-6 bg-white rounded-xl shadow-lg border-4 border-gray-200 w-full h-[300px] justify-center transition-all duration-500 ease-out" // Changed w-[250px] to w-full
                   style={{
-                    transform: `translateX(${translateX}px) scale(${scale})`,
+                    scale: scale,
                     filter: `grayscale(${grayscale}%)`,
                     opacity: opacity,
                     zIndex: isSelected ? 10 : 1, // Bring active card to front
