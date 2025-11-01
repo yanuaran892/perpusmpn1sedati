@@ -434,8 +434,7 @@ const GallerySection = () => {
     { src: "/public/hero_landing.png", alt: "Siswa Membaca", title: "Siswa Berliterasi", description: "Mendorong minat baca dan budaya literasi di sekolah." },
     { src: "/foto (2).jpg", alt: "Kegiatan Kelompok", title: "Ruang Diskusi", description: "Fasilitas untuk belajar kelompok dan kolaborasi." },
     { src: "/foto (1).png", alt: "Pustakawan Melayani", title: "Pelayanan Ramah", description: "Pustakawan siap membantu Anda menemukan buku." },
-    { src: "/foto (3).png", alt: "Sudut Komputer", title: "Akses Digital", description: "Komputer dengan akses internet untuk riset." },
-    { src: "/public/placeholder.svg", alt: "Acara Literasi", title: "Event Literasi", description: "Mengadakan berbagai acara untuk meningkatkan minat baca." }, // Placeholder for more images
+    // Removed extra images to limit to 6
   ];
 
   const handleImageClick = (image: { src: string; alt: string; title: string; description: string }) => {
@@ -460,7 +459,7 @@ const GallerySection = () => {
         <p className="text-lg text-gray-700 text-center mb-16 max-w-3xl mx-auto">
           Jelajahi suasana dan fasilitas perpustakaan kami melalui koleksi foto-foto inspiratif ini.
         </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"> {/* Responsive grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6"> {/* Responsive grid, adjusted to 3 columns for 6 images */}
           {galleryImages.map((image, index) => (
             <motion.div
               key={index}
