@@ -13,7 +13,6 @@ import GSAPButton from "@/components/GSAPButton";
 const LandingPage = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const { scrollY } = useScroll();
-  const heroBackgroundParallax = useTransform(scrollY, [0, 500], [0, -100]); // Parallax for hero background
 
   const handleScrollToSection = (id: string) => {
     const element = document.getElementById(id);
