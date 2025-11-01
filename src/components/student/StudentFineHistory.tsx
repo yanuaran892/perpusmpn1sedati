@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import GSAPButton from '@/components/GSAPButton'; // Menggunakan GSAPButton
-import { Loader2, Eye } from 'lucide-react';
+import GSAPButton from '@/components/GSAPButton';
+import { Loader2, Eye, ChevronLeft, ChevronRight } from 'lucide-react'; // Import ChevronLeft, ChevronRight
 import { supabase } from '@/integrations/supabase/client';
 import { showError } from '@/utils/toast';
 import { format } from 'date-fns';
@@ -25,32 +25,52 @@ interface StudentFineHistoryProps {
 const StudentFineHistory: React.FC<StudentFineHistoryProps> = ({ studentNis, onRefreshFineHistory }) => {
   const [finePaymentHistory, setFinePaymentHistory] = useState<FinePaymentHistoryItem[]>([]);
   const [loadingFineHistory, setLoadingFineHistory] = useState(true);
-  // const [isProofDialogOpen, setIsProofDialogOpen] = useState(false); // Removed
-  // const [currentProofUrl, setCurrentProofUrl] = useState<string | null>(null); // Removed
+  
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10); // Number of items per page
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     if (studentNis) {
       fetchFinePaymentHistory();
     }
-  }, [studentNis, onRefreshFineHistory]);
+  }, [studentNis, onRefreshFineHistory, currentPage]); // Re-fetch on page change
 
   const fetchFinePaymentHistory = async () => {
     if (!studentNis) return;
     setLoadingFineHistory(true);
     try {
-      const { data, error } = await supabase.rpc('get_student_fine_payments', {
+      // Fetch paginated fine payment data
+      const { data, error } = await supabase.rpc('get_paginated_student_fine_payments', {
         p_id_nis: studentNis,
+        limit_value: itemsPerPage,
+        offset_value: (currentPage - 1) * itemsPerPage,
       });
 
       if (error) {
         showError(error.message || 'Gagal mengambil riwayat pembayaran denda.');
         setFinePaymentHistory([]);
+        setTotalPages(1);
         return;
       }
 
       if (data) {
         setFinePaymentHistory(data as FinePaymentHistoryItem[]);
       }
+
+      // Fetch total count for pagination
+      const { data: countData, error: countError } = await supabase.rpc('get_total_student_fine_payments_count', {
+        p_id_nis: studentNis,
+      });
+
+      if (countError) {
+        console.error('Error fetching total fine payments count:', countError);
+        setTotalPages(1);
+      } else {
+        setTotalPages(Math.max(1, Math.ceil((countData || 0) / itemsPerPage)));
+      }
+
     } catch (err) {
       console.error('Error fetching fine payment history:', err);
       showError('Terjadi kesalahan tak terduga saat mengambil riwayat pembayaran denda.');
@@ -59,14 +79,13 @@ const StudentFineHistory: React.FC<StudentFineHistoryProps> = ({ studentNis, onR
     }
   };
 
-  // const handleViewProof = (url: string | null) => { // Removed
-  //   if (url) {
-  //     setCurrentProofUrl(url);
-  //     setIsProofDialogOpen(true);
-  //   } else {
-  //     showError('Tidak ada bukti pembayaran yang diunggah.');
-  //   }
-  // };
+  const handlePreviousPage = () => {
+    setCurrentPage(prev => Math.max(1, prev - 1));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage(prev => Math.min(totalPages, prev + 1));
+  };
 
   return (
     <>
@@ -85,14 +104,13 @@ const StudentFineHistory: React.FC<StudentFineHistoryProps> = ({ studentNis, onR
             <p className="text-center text-gray-600 py-4 text-base">Belum ada riwayat pembayaran denda.</p>
           ) : (
             <div className="overflow-x-auto">
-              <Table>
+              <Table className="w-full">
                 <TableHeader>
                   <TableRow>
                     <TableHead className="text-sm">ID Pembayaran</TableHead>
                     <TableHead className="text-sm">Jumlah Bayar</TableHead>
                     <TableHead className="text-sm">Tanggal Permintaan</TableHead>
                     <TableHead className="text-sm">Status</TableHead>
-                    {/* <TableHead className="text-right text-sm">Bukti</TableHead> */} {/* Removed */}
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -110,40 +128,33 @@ const StudentFineHistory: React.FC<StudentFineHistoryProps> = ({ studentNis, onR
                           {item.status_pembayaran}
                         </span>
                       </TableCell>
-                      {/* <TableCell className="text-right"> */} {/* Removed */}
-                        {/* {item.bukti_pembayaran_url ? ( */} {/* Removed */}
-                          {/* <GSAPButton variant="outline" size="sm" onClick={() => handleViewProof(item.bukti_pembayaran_url)}> */} {/* Removed */}
-                            {/* <Eye className="h-4 w-4" /> */} {/* Removed */}
-                          {/* </GSAPButton> */} {/* Removed */}
-                        {/* ) : ( */} {/* Removed */}
-                          {/* <span className="text-gray-500 text-sm">-</span> */} {/* Removed */}
-                        {/* )} */} {/* Removed */}
-                      {/* </TableCell> */} {/* Removed */}
                     </TableRow>
                   ))}
                 </TableBody>
               </Table>
+              <div className="flex justify-end items-center space-x-2 mt-4">
+                <GSAPButton
+                  variant="outline"
+                  size="sm"
+                  onClick={handlePreviousPage}
+                  disabled={currentPage === 1 || loadingFineHistory}
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </GSAPButton>
+                <span className="text-sm text-gray-700">Page {currentPage} of {totalPages}</span>
+                <GSAPButton
+                  variant="outline"
+                  size="sm"
+                  onClick={handleNextPage}
+                  disabled={currentPage === totalPages || loadingFineHistory}
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </GSAPButton>
+              </div>
             </div>
           )}
         </CardContent>
       </Card>
-
-      {/* Proof of Payment Dialog for Student */}
-      {/* <Dialog open={isProofDialogOpen} onOpenChange={setIsProofDialogOpen}> */} {/* Removed */}
-        {/* <DialogContent className="sm:max-w-[600px]"> */} {/* Removed */}
-          {/* <DialogHeader> */} {/* Removed */}
-            {/* <DialogTitle className="text-2xl font-bold text-primary">Bukti Pembayaran</DialogTitle> */} {/* Removed */}
-            {/* <DialogDescription className="text-gray-600">Tampilan bukti pembayaran yang Anda unggah.</DialogDescription> */} {/* Removed */}
-          {/* </DialogHeader> */} {/* Removed */}
-          {/* <div className="py-4"> */} {/* Removed */}
-            {/* {currentProofUrl ? ( */} {/* Removed */}
-              {/* <img src={currentProofUrl} alt="Bukti Pembayaran" className="max-w-full h-auto object-contain rounded-md shadow-md" /> */} {/* Removed */}
-            {/* ) : ( */} {/* Removed */}
-              {/* <p className="text-center text-gray-600 text-base">Tidak ada bukti pembayaran untuk ditampilkan.</p> */} {/* Removed */}
-            {/* )} */} {/* Removed */}
-          {/* </div> */} {/* Removed */}
-        {/* </DialogContent> */} {/* Removed */}
-      {/* </Dialog> */} {/* Removed */}
     </>
   );
 };
