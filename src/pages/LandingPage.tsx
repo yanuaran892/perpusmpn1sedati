@@ -325,7 +325,7 @@ const AboutSection = () => {
     >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         {/* Left Column: Text Content */}
-        <div className="py-4 px-4"> {/* Added px-4 here */}
+        <div className="py-4 px-8"> {/* Changed px-4 to px-8 here */}
           <motion.p
             className="text-lg font-semibold text-primary tracking-wider uppercase mb-2"
             initial={{ opacity: 0, x: -30 }}
