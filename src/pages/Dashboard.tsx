@@ -273,7 +273,7 @@ const Dashboard = () => {
       />
 
       {/* Stat Cards - Now placed directly after the header */}
-      <div className="max-w-7xl mx-auto px-4 -mt-40 relative z-20"> {/* Adjusted -mt-32 to -mt-40 */}
+      <div className="max-w-7xl mx-auto px-4 -mt-48 relative z-20 md:-mt-64"> {/* Adjusted -mt-40 to -mt-48 and added md:-mt-64 */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
           <AnimatedStatCard icon={Book} label="Total Buku" value={totalBooksCount} animationDelay={0.3} />
           <AnimatedStatCard icon={LayoutGrid} label="Kategori Buku" value={totalCategoriesCount} animationDelay={0.4} />
