@@ -105,8 +105,7 @@ const LandingPage = () => {
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{
               backgroundImage: "url('/foto (3).png')", // Original image source
-              y: heroBackgroundParallax, // Apply MotionValue via style prop
-              scale: useTransform(scrollY, [0, 500], [1, 1.1]), // Apply MotionValue via style prop
+             
             }}
           ></motion.div>
           {/* Overlay hitam transparan */}
