@@ -360,10 +360,6 @@ const GallerySection = () => {
     { src: "/foto (2).png", alt: "Rak Buku Modern", title: "Koleksi Buku Lengkap", description: "Ribuan judul buku dari berbagai genre dan kategori." },
     { src: "/foto (3).jpg", alt: "Area Baca Nyaman", title: "Fasilitas Modern", description: "Meja dan kursi ergonomis untuk kenyamanan maksimal." },
     { src: "/public/hero_landing.png", alt: "Siswa Membaca", title: "Siswa Berliterasi", description: "Mendorong minat baca dan budaya literasi di sekolah." },
-    { src: "/public/foto (2).jpg", alt: "Pustakawan Melayani", title: "Pelayanan Ramah", description: "Pustakawan siap membantu menemukan buku impian Anda." },
-    { src: "/public/subtle-dots.svg", alt: "Kegiatan Perpustakaan", title: "Acara Edukatif", description: "Workshop dan kegiatan literasi rutin." },
-    { src: "/foto (1).jpg", alt: "Pojok Diskusi", title: "Ruang Diskusi", description: "Area kolaborasi untuk belajar kelompok." },
-    { src: "/foto (3).png", alt: "Teknologi Perpustakaan", title: "Akses Digital", description: "Komputer dan internet untuk riset." },
   ];
 
   return (
@@ -372,19 +368,19 @@ const GallerySection = () => {
       <p className="text-lg text-gray-700 text-center mb-16 max-w-3xl mx-auto">
         Jelajahi suasana dan fasilitas perpustakaan kami melalui koleksi foto-foto inspiratif ini.
       </p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6 max-w-4xl mx-auto"> {/* Adjusted grid for 4 items */}
         {galleryImages.map((image, index) => (
           <motion.div
             key={index}
             className="relative group overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
             initial={{ opacity: 0, y: 50 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: index * 0.08 }} // Slightly reduced delay for more items
+            transition={{ duration: 0.6, delay: index * 0.08 }}
           >
             <img
               src={image.src}
               alt={image.alt}
-              className="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-110" // Fixed height for smaller images
+              className="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-110"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               <h4 className="text-white text-xl font-bold mb-2">{image.title}</h4>
