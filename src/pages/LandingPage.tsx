@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Calendar, MessageSquare, Phone, Mail, Instagram, Youtube, Twitter, Menu, Book, LayoutGrid, BookOpen, UserCircle } from 'lucide-react';
+import { Calendar, MessageSquare, Phone, Mail, Instagram, Youtube, Twitter, Menu, Book, LayoutGrid, BookOpen, UserCircle, Image as ImageIcon } from 'lucide-react'; // Added ImageIcon
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { motion, useScroll, useTransform, Variants } from "framer-motion";
 import { useInView } from 'react-intersection-observer';
@@ -13,6 +13,7 @@ import GSAPButton from "@/components/GSAPButton";
 const LandingPage = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const { scrollY } = useScroll();
+  const heroBackgroundParallax = useTransform(scrollY, [0, 500], [0, -100]); // Parallax for hero background
 
   const handleScrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -25,6 +26,7 @@ const LandingPage = () => {
   const navLinks = [
     { id: 'about', label: 'Tentang' },
     { id: 'librarians', label: 'Pustakawan' },
+    { id: 'gallery', label: 'Galeri' }, // New: Gallery link
     { id: 'information', label: 'Informasi' },
     { id: 'contact', label: 'Kontak' },
   ];
@@ -97,9 +99,16 @@ const LandingPage = () => {
         {/* Hero Section */}
         <section
           id="home"
-          className="relative h-screen w-full bg-cover bg-center bg-no-repeat flex items-center justify-center"
-          style={{ backgroundImage: "url('/hero_landing.png')" }}
+          className="relative h-screen w-full overflow-hidden flex items-center justify-center"
         >
+          <motion.div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage: "url('/hero_landing.png')", // Use a high-quality library image here
+              y: heroBackgroundParallax,
+              scale: useTransform(scrollY, [0, 500], [1, 1.1]), // Subtle zoom on scroll
+            }}
+          ></motion.div>
           <div className="absolute inset-0 bg-gradient-to-br from-primary/70 to-indigo-700/70"></div>
           <div className="relative z-10 flex flex-col items-center justify-center h-full text-white text-center p-4">
             <motion.img src="/smpn1sedati_logo.png" alt="Logo SMPN 1 Sedati" className="h-28 w-28 md:h-40 md:w-40 mb-6 drop-shadow-lg" initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, ease: [0.2, 1, 0.2, 1] }} />
@@ -126,7 +135,7 @@ const LandingPage = () => {
         <SectionWrapper id="about" className="bg-white">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
             <motion.div initial="hidden" animate="visible" variants={imageVariants}>
-              <img src="/foto (3).png" alt="Perpustakaan Modern" className="w-full h-auto object-cover rounded-xl shadow-2xl" />
+              <img src="/foto (3).png" alt="Perpustakaan Modern" className="w-full h-auto object-cover rounded-xl shadow-2xl" /> {/* Use a relevant library image here */}
             </motion.div>
             <div className="p-6 md:p-8 bg-card rounded-xl shadow-lg border border-gray-100">
               <motion.p className="text-sm tracking-widest text-primary mb-2" initial="hidden" animate="visible" variants={textVariants}>SELAMAT DATANG DI</motion.p>
@@ -139,6 +148,36 @@ const LandingPage = () => {
 
         {/* Pustakawan Section */}
         <LibrariansSection />
+
+        {/* New: Galeri Perpustakaan Section */}
+        <SectionWrapper id="gallery" className="bg-gray-100">
+          <h3 className="text-3xl md:text-4xl font-bold text-center mb-12 tracking-widest text-gray-900 font-guncen">GALERI PERPUSTAKAAN</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {[
+              { src: "/foto (1).jpg", alt: "Interior Perpustakaan" },
+              { src: "/foto (2).png", alt: "Rak Buku Modern" },
+              { src: "/foto (3).jpg", alt: "Area Baca Nyaman" },
+              { src: "/placeholder.svg", alt: "Sudut Belajar" }, // Placeholder for more images
+            ].map((image, index) => (
+              <motion.div
+                key={index}
+                className="relative group overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
+                initial={{ opacity: 0, y: 50 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+              >
+                <img
+                  src={image.src}
+                  alt={image.alt}
+                  className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <p className="text-white text-lg font-semibold">{image.alt}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </SectionWrapper>
 
         {/* Informasi Section */}
         <SectionWrapper id="information" className="relative bg-gradient-to-br from-primary to-indigo-700 text-white">
@@ -212,6 +251,7 @@ const LandingPage = () => {
               <p className="font-semibold text-lg mb-3">Tautan Cepat</p>
               <ul className="space-y-2">
                 <li><button onClick={() => handleScrollToSection('about')} className="text-gray-400 hover:text-white transition-colors">Tentang Kami</button></li>
+                <li><button onClick={() => handleScrollToSection('gallery')} className="text-gray-400 hover:text-white transition-colors">Galeri</button></li>
                 <li><button onClick={() => handleScrollToSection('information')} className="text-gray-400 hover:text-white transition-colors">Informasi</button></li>
                 <li><Link to="/login" className="text-gray-400 hover:text-white transition-colors">Masuk Siswa</Link></li>
                 <li><Link to="/admin/login" className="text-gray-400 hover:text-white transition-colors">Masuk Admin</Link></li>
@@ -242,6 +282,7 @@ const LibrariansSection = () => {
             transition={{ duration: 0.6, delay: index * 0.1 }}
           >
             <div className="w-32 h-32 rounded-full bg-gradient-to-br from-blue-200 to-indigo-300 flex items-center justify-center mb-4 overflow-hidden border-4 border-white shadow-md">
+              {/* Placeholder for actual image */}
               <UserCircle className="h-24 w-24 text-blue-600/50" />
             </div>
             <p className="font-bold text-xl text-gray-900 mb-1">{name}</p>
