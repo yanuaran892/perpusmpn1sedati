@@ -105,8 +105,6 @@ const LandingPage = () => {
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{
               backgroundImage: "url('/foto (3).png')", // Original image source
-              y: heroBackgroundParallax,
-              scale: useTransform(scrollY, [0, 500], [1, 1.1]), // Subtle zoom on scroll
             }}
           ></motion.div>
           <div className="absolute inset-0 bg-gradient-to-br from-primary/70 to-indigo-700/70"></div>
