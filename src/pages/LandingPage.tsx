@@ -112,7 +112,7 @@ const LandingPage = () => {
         {/* Hero Section */}
         <section
           id="home"
-          className="relative h-screen w-full overflow-hidden flex items-center justify-center"
+          className="relative h-screen w-full overflow-hidden flex items-center justify-center pt-16" // Added pt-16 here
         >
           <motion.div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
