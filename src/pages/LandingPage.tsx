@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button"; // Keep original Button for other uses if needed
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, MessageSquare, Phone, Mail, Instagram, Youtube, Twitter, Menu, Book, LayoutGrid, BookOpen, UserCircle } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -8,7 +8,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useInView } from 'react-intersection-observer';
 import AnimatedStatCard from "@/components/AnimatedStatCard";
 import LandingPageCard from "@/components/LandingPageCard";
-import GSAPButton from "@/components/GSAPButton"; // Import the new GSAPButton
+import GSAPButton from "@/components/GSAPButton";
 
 const LandingPage = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
@@ -27,6 +27,7 @@ const LandingPage = () => {
     { id: 'about', label: 'Tentang' },
     { id: 'librarians', label: 'Pustakawan' },
     { id: 'information', label: 'Informasi' },
+    { id: 'contact', label: 'Kontak' }, // Added Contact link
   ];
 
   const SectionWrapper = ({ children, id, className = "" }: { children: React.ReactNode, id: string, className?: string }) => {
@@ -162,6 +163,32 @@ const LandingPage = () => {
             </div>
           </div>
         </section>
+
+        {/* Contact Section */}
+        <SectionWrapper id="contact" className="bg-gray-50">
+          <div className="text-center">
+            <h3 className="text-3xl md:text-4xl font-bold mb-8 tracking-widest text-gray-900">HUBUNGI KAMI</h3>
+            <p className="text-lg text-gray-600 mb-12 max-w-2xl mx-auto">
+              Kami siap membantu Anda. Jangan ragu untuk menghubungi kami melalui informasi di bawah ini.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+              <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <CardContent className="p-6 flex flex-col items-center text-center">
+                  <Phone className="h-12 w-12 text-primary mb-4" />
+                  <h4 className="text-xl font-semibold mb-2">Telepon / WhatsApp</h4>
+                  <p className="text-gray-700 text-lg">031-8667427</p>
+                </CardContent>
+              </Card>
+              <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <CardContent className="p-6 flex flex-col items-center text-center">
+                  <Mail className="h-12 w-12 text-primary mb-4" />
+                  <h4 className="text-xl font-semibold mb-2">Email</h4>
+                  <p className="text-gray-700 text-lg">perpustakaan@smpn1sedati.sch.id</p>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </SectionWrapper>
       </main>
 
       {/* Footer */}
