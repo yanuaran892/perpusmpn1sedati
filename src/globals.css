@@ -40,6 +40,8 @@
   html {
     @apply scroll-smooth;
     scroll-padding-top: 7rem; /* Provides offset for fixed header */
+    width: 100%; /* Ensure html takes full width */
+    overflow-x: hidden; /* Force hide horizontal overflow */
   }
 
   /* IMPORTANT: Apply border-box globally for consistent sizing */
@@ -49,6 +51,8 @@
 
   body {
     font-family: 'Poppins', sans-serif; /* Terapkan font Poppins sebagai default */
+    width: 100%; /* Ensure body takes full width */
+    overflow-x: hidden; /* Force hide horizontal overflow */
   }
 
   :root {

@@ -62,7 +62,7 @@ const LibrarianCarousel: React.FC<LibrarianCarouselProps> = ({ librarians }) => 
   return (
     <div className="relative flex flex-col items-center">
       <div className="embla overflow-hidden w-full max-w-3xl" ref={emblaRef}>
-        <div className="embla__container flex touch-pan-y items-center h-[400px] gap-x-8 overflow-x-hidden"> {/* Added overflow-x-hidden here */}
+        <div className="embla__container flex touch-pan-y items-center h-[400px] overflow-x-hidden"> {/* Removed gap-x-8 */}
           {librarians.map((librarian, index) => {
             const isSelected = index === selectedIndex;
 
@@ -72,7 +72,10 @@ const LibrarianCarousel: React.FC<LibrarianCarouselProps> = ({ librarians }) => 
             
             return (
               <div
-                className="embla__slide flex-none relative flex justify-center items-center w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
+                className={cn(
+                  "embla__slide flex-none relative flex justify-center items-center w-full sm:w-1/2 md:w-1/3 lg:w-1/4",
+                  index < librarians.length - 1 ? "mr-8" : "" // Add margin-right to all but the last slide
+                )}
                 key={index}
               >
                 <motion.div
@@ -99,9 +102,9 @@ const LibrarianCarousel: React.FC<LibrarianCarouselProps> = ({ librarians }) => 
         </div>
       </div>
 
-      {/* Navigation Buttons */}
+      {/* Navigation Buttons - Positioned relative to the embla container */}
       <GSAPButton
-        className="embla__button embla__button--prev absolute top-1/2 -translate-y-1/2 left-0 md:-left-12 bg-primary text-white rounded-full p-2 shadow-md hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="embla__button embla__button--prev absolute top-1/2 -translate-y-1/2 left-4 bg-primary text-white rounded-full p-2 shadow-md hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed z-20"
         onClick={scrollPrev}
         disabled={prevBtnDisabled}
         variant="ghost"
@@ -110,7 +113,7 @@ const LibrarianCarousel: React.FC<LibrarianCarouselProps> = ({ librarians }) => 
         <ChevronLeft className="h-6 w-6" />
       </GSAPButton>
       <GSAPButton
-        className="embla__button embla__button--next absolute top-1/2 -translate-y-1/2 right-0 md:-right-12 bg-primary text-white rounded-full p-2 shadow-md hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="embla__button embla__button--next absolute top-1/2 -translate-y-1/2 right-4 bg-primary text-white rounded-full p-2 shadow-md hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed z-20"
         onClick={scrollNext}
         disabled={nextBtnDisabled}
         variant="ghost"
