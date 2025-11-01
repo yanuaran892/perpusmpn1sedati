@@ -293,20 +293,27 @@ const LibrariansSection = () => {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
 
   return (
-    <section id="librarians" ref={ref} className="py-16 md:py-24 px-4 container mx-auto bg-gray-100">
-      <h3 className="text-3xl md:text-4xl font-bold text-center mb-12 tracking-widest text-gray-900 font-guncen">TIM PUSTAKAWAN KAMI</h3>
+    <section id="librarians" ref={ref} className="py-16 md:py-24 px-4 container mx-auto bg-gradient-to-b from-gray-100 to-gray-200">
+      <motion.h3
+        className="text-3xl md:text-4xl font-bold text-center mb-12 tracking-widest text-gray-900 font-guncen"
+        initial={{ opacity: 0, y: -20 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+      >
+        TIM PUSTAKAWAN KAMI
+      </motion.h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
         {["Bapak Budi Santoso", "Ibu Ani Wijaya", "Bapak Cahyo Nugroho", "Ibu Dewi Lestari"].map((name, index) => (
           <motion.div
             key={index}
-            className="flex flex-col items-center p-6 bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
+            className="flex flex-col items-center p-6 bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-200"
             initial={{ opacity: 0, y: 50 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: index * 0.1 }}
+            transition={{ duration: 0.6, delay: index * 0.1 + 0.2 }} // Added delay for sequential animation
           >
-            <div className="w-32 h-32 rounded-full bg-gradient-to-br from-blue-200 to-indigo-300 flex items-center justify-center mb-4 overflow-hidden border-4 border-white shadow-md">
-              {/* Placeholder for actual image */}
-              <UserCircle className="h-24 w-24 text-blue-600/50" />
+            <div className="w-32 h-32 rounded-full bg-gradient-to-br from-blue-100 to-indigo-200 flex items-center justify-center mb-4 overflow-hidden border-4 border-white shadow-md">
+              {/* Placeholder for actual image - can be replaced with <img src="..." /> */}
+              <UserCircle className="h-24 w-24 text-blue-500/50" />
             </div>
             <p className="font-bold text-xl text-gray-900 mb-1">{name}</p>
             <p className="text-sm text-primary">Pustakawan Senior</p>
