@@ -139,7 +139,11 @@ const LandingPage = () => {
         </SectionWrapper>
 
         {/* Pustakawan Section */}
-        <SectionWrapper id="librarians" className="bg-blue-50" noContainer> {/* Changed background to bg-blue-50 */}
+        <SectionWrapper 
+          id="librarians" 
+          className="bg-gradient-to-b from-blue-50 to-blue-50 overflow-hidden relative" // Changed to gradient and added overflow-hidden, relative
+          noContainer
+        >
           <div className="max-w-7xl mx-auto px-4"> {/* New wrapper for content */}
             <motion.h3
               className="text-3xl md:text-4xl font-bold text-center mb-12 tracking-widest text-gray-900 font-guncen"
