@@ -20,7 +20,7 @@ const LibrarianCarousel: React.FC<LibrarianCarouselProps> = ({ librarians }) => 
   const [emblaRef, emblaApi] = useEmblaCarousel(
     {
       loop: true,
-      align: 'center', // Centers the selected slide
+      align: 'center',
       slidesToScroll: 1,
       containScroll: 'trimSnaps',
       dragFree: false,
@@ -62,20 +62,17 @@ const LibrarianCarousel: React.FC<LibrarianCarouselProps> = ({ librarians }) => 
   return (
     <div className="relative flex flex-col items-center">
       <div className="embla overflow-hidden w-full max-w-3xl" ref={emblaRef}>
-        <div className="embla__container flex touch-pan-y items-center h-[400px] overflow-x-hidden"> {/* Removed gap-x-8 */}
+        <div className="embla__container flex touch-pan-y items-center h-[350px] gap-x-8"> {/* Adjusted height and added gap-x-8 */}
           {librarians.map((librarian, index) => {
             const isSelected = index === selectedIndex;
 
-            const scale = isSelected ? 1.1 : 0.8;
-            const opacity = isSelected ? 1 : 0.4;
-            const grayscale = isSelected ? 0 : 100;
+            const scale = isSelected ? 1.1 : 0.9; // Adjusted scale for non-selected items
+            const opacity = isSelected ? 1 : 0.6; // Adjusted opacity for non-selected items
+            const grayscale = isSelected ? 0 : 80; // Adjusted grayscale for non-selected items
             
             return (
               <div
-                className={cn(
-                  "embla__slide flex-none relative flex justify-center items-center w-full sm:w-1/2 md:w-1/3 lg:w-1/4",
-                  index < librarians.length - 1 ? "mr-8" : "" // Add margin-right to all but the last slide
-                )}
+                className="embla__slide flex-none min-w-0 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4" // Adjusted width using basis
                 key={index}
               >
                 <motion.div
@@ -94,7 +91,6 @@ const LibrarianCarousel: React.FC<LibrarianCarouselProps> = ({ librarians }) => 
                       <UserCircle className="h-24 w-24 text-blue-500/50" />
                     </div>
                   )}
-                  {/* Removed text from inside the card */}
                 </motion.div>
               </div>
             );
