@@ -13,6 +13,7 @@ import GSAPButton from "@/components/GSAPButton";
 const LandingPage = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const { scrollY } = useScroll();
+  const heroBackgroundParallax = useTransform(scrollY, [0, 500], [0, -100]); // Parallax for hero background
 
   const handleScrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -104,8 +105,9 @@ const LandingPage = () => {
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{
               backgroundImage: "url('/foto (3).png')", // Original image source
-              y: heroBackgroundParallax,
             }}
+            y={heroBackgroundParallax} // Moved to direct prop
+            scale={useTransform(scrollY, [0, 500], [1, 1.1])} // Moved to direct prop
           ></motion.div>
           {/* Overlay hitam transparan */}
           <div className="absolute inset-0 bg-black/40"></div> 
