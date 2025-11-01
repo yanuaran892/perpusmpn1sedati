@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, MessageSquare, Phone, Mail, Instagram, Youtube, Twitter, Menu, Book, LayoutGrid, BookOpen, UserCircle } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, Variants } from "framer-motion"; // Import Variants
 import { useInView } from 'react-intersection-observer';
 import AnimatedStatCard from "@/components/AnimatedStatCard";
 import LandingPageCard from "@/components/LandingPageCard";
@@ -13,7 +13,7 @@ import GSAPButton from "@/components/GSAPButton";
 const LandingPage = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const { scrollY } = useScroll();
-  const heroParallax = useTransform(scrollY, [0, 500], [0, -100]);
+  // Removed heroParallax as it was not used in the previous version and might conflict with new animations.
 
   const handleScrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -27,7 +27,7 @@ const LandingPage = () => {
     { id: 'about', label: 'Tentang' },
     { id: 'librarians', label: 'Pustakawan' },
     { id: 'information', label: 'Informasi' },
-    { id: 'contact', label: 'Kontak' }, // Added Contact link
+    { id: 'contact', label: 'Kontak' },
   ];
 
   const SectionWrapper = ({ children, id, className = "" }: { children: React.ReactNode, id: string, className?: string }) => {
@@ -44,6 +44,17 @@ const LandingPage = () => {
         {children}
       </motion.section>
     );
+  };
+
+  // Animation variants for text elements
+  const textVariants: Variants = { // Explicitly type as Variants
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.2, 1, 0.2, 1] } }, // Changed ease
+  };
+
+  const imageVariants: Variants = { // Explicitly type as Variants
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: { opacity: 1, scale: 1, transition: { duration: 0.8, ease: [0.2, 1, 0.2, 1] } }, // Changed ease
   };
 
   return (
@@ -88,135 +99,149 @@ const LandingPage = () => {
         {/* Hero Section */}
         <section
           id="home"
-          className="relative h-screen w-full bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/foto (1).jpg')" }}
+          className="relative h-screen w-full bg-cover bg-center bg-no-repeat flex items-center justify-center"
+          style={{ backgroundImage: "url('/hero_landing.png')" }} // Using a different, potentially more modern hero image
         >
-          <div className="absolute inset-0 bg-black/50"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/70 to-indigo-700/70"></div> {/* More vibrant overlay */}
           <div className="relative z-10 flex flex-col items-center justify-center h-full text-white text-center p-4">
-            <motion.img src="/smpn1sedati_logo.png" alt="Logo SMPN 1 Sedati" className="h-24 w-24 md:h-32 md:w-32 mb-4 drop-shadow-lg" initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5 }} />
-            <motion.h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-wider drop-shadow-lg leading-tight" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }}>PERPUSTAKAAN</motion.h1>
-            <motion.h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold drop-shadow-lg mb-6 leading-tight" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }}>SMP NEGERI 1 SEDATI</motion.h2>
-            <motion.p className="text-base md:text-lg italic max-w-xs sm:max-w-sm md:max-w-3xl drop-shadow-lg mb-8 font-playfair" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }}>"Kalau engkau hanya membaca buku yang dibaca semua orang, engkau hanya bisa berpikir sama seperti semua orang."<br />(Haruki Murakami).</motion.p>
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.4 }}>
-              <Link to="/login"><GSAPButton className="bg-blue-500 hover:bg-blue-600 text-white rounded-full px-8 py-3 text-xl font-semibold shadow-lg transition-all duration-300 transform hover:scale-105">Mari Membaca</GSAPButton></Link>
+            <motion.img src="/smpn1sedati_logo.png" alt="Logo SMPN 1 Sedati" className="h-28 w-28 md:h-40 md:w-40 mb-6 drop-shadow-lg" initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, ease: [0.2, 1, 0.2, 1] }} />
+            <motion.h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-wider drop-shadow-lg leading-tight mb-4 font-guncen" initial="hidden" animate="visible" variants={textVariants}>PERPUSTAKAAN</motion.h1>
+            <motion.h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold drop-shadow-lg mb-8 leading-tight font-guncen" initial="hidden" animate="visible" variants={textVariants} transition={{ delay: 0.2 }}>SMP NEGERI 1 SEDATI</motion.h2>
+            <motion.p className="text-lg md:text-xl italic max-w-xs sm:max-w-md md:max-w-4xl drop-shadow-lg mb-10 font-playfair" initial="hidden" animate="visible" variants={textVariants} transition={{ delay: 0.4 }}>"Kalau engkau hanya membaca buku yang dibaca semua orang, engkau hanya bisa berpikir sama seperti semua orang."<br />(Haruki Murakami).</motion.p>
+            <motion.div initial="hidden" animate="visible" variants={textVariants} transition={{ delay: 0.6 }}>
+              <Link to="/login"><GSAPButton className="bg-accent hover:bg-accent/90 text-white rounded-full px-10 py-4 text-xl font-semibold shadow-xl transition-all duration-300 transform hover:scale-105">Mulai Jelajahi</GSAPButton></Link>
             </motion.div>
           </div>
         </section>
 
         {/* Stats Section */}
-        <section className="py-16 bg-gray-100">
-          <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 text-center max-w-5xl">
+        <SectionWrapper id="stats" className="bg-gradient-to-br from-gray-100 to-white"> {/* Added id="stats" */}
+          <h3 className="text-3xl md:text-4xl font-bold text-center mb-12 tracking-widest text-gray-900 font-guncen">Sekilas Angka</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center max-w-6xl mx-auto">
             <AnimatedStatCard icon={Book} label="Total Buku" value={10000} animationDelay={0} />
             <AnimatedStatCard icon={LayoutGrid} label="Kategori Buku" value={12} animationDelay={0.2} />
             <AnimatedStatCard icon={BookOpen} label="Akses Online" value="24/7" isNumeric={false} animationDelay={0.4} />
           </div>
-        </section>
+        </SectionWrapper>
 
         {/* Tentang Section */}
-        <section id="about" className="relative py-16 md:py-24 px-4 bg-cover bg-center bg-fixed" style={{ backgroundImage: "url('/foto (3).jpg')" }}>
-          <div className="absolute inset-0 bg-black/60"></div>
-          <div className="relative container mx-auto grid md:grid-cols-2 items-center">
-            <div className="md:col-start-2 text-white p-6 md:p-8 bg-black/30 backdrop-blur-sm rounded-lg border border-white/20">
-              <p className="text-sm tracking-widest">SELAMAT DATANG DI</p>
-              <h3 className="text-3xl md:text-4xl font-bold my-2">Perpustakaan SMPN 1 SEDATI</h3>
-              <p className="text-lg font-semibold mb-4">Halo, Sobat Literasi!</p>
-              <p className="text-gray-300 leading-relaxed">Perpustakaan SMPN 1 Sedati hadir sebagai pusat belajar dan sumber inspirasi bagi seluruh warga sekolah. Di sini, kamu dapat menemukan berbagai koleksi buku, majalah, e-book, dan referensi pembelajaran yang akan membantumu memperluas wawasan dan meningkatkan prestasi.</p>
-            </div>
-          </div>
-        </section>
-
-        {/* Pustakawan Section */}
-        <SectionWrapper id="librarians">
-          <div className="text-center">
-            <h3 className="text-3xl md:text-4xl font-bold mb-12 tracking-widest text-gray-900">TIM KAMI</h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
-              {["Nama Pustakawan 1", "Nama Pustakawan 2", "Nama Pustakawan 3", "Nama Pustakawan 4"].map((name, index) => (
-                <div key={index} className="flex flex-col items-center">
-                  <div className="w-32 h-44 md:w-40 md:h-52 bg-gray-200 rounded-2xl shadow-md mb-4 flex items-center justify-center text-gray-500 text-sm">
-                    <UserCircle className="h-20 w-20 text-gray-400" />
-                  </div>
-                  <p className="font-semibold text-lg text-gray-800">{name}</p>
-                  <p className="text-sm text-gray-600">Pustakawan</p>
-                </div>
-              ))}
+        <SectionWrapper id="about" className="bg-white">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+            <motion.div initial="hidden" animate="visible" variants={imageVariants}>
+              <img src="/foto (3).png" alt="Perpustakaan Modern" className="w-full h-auto object-cover rounded-xl shadow-2xl" />
+            </motion.div>
+            <div className="p-6 md:p-8 bg-card rounded-xl shadow-lg border border-gray-100">
+              <motion.p className="text-sm tracking-widest text-primary mb-2" initial="hidden" animate="visible" variants={textVariants}>SELAMAT DATANG DI</motion.p>
+              <motion.h3 className="text-3xl md:text-4xl font-bold mb-4 text-foreground font-guncen" initial="hidden" animate="visible" variants={textVariants} transition={{ delay: 0.1 }}>Perpustakaan SMPN 1 SEDATI</motion.h3>
+              <motion.p className="text-lg font-semibold mb-6 text-gray-700" initial="hidden" animate="visible" variants={textVariants} transition={{ delay: 0.2 }}>Halo, Sobat Literasi!</motion.p>
+              <motion.p className="text-gray-600 leading-relaxed" initial="hidden" animate="visible" variants={textVariants} transition={{ delay: 0.3 }}>Perpustakaan SMPN 1 Sedati hadir sebagai pusat belajar dan sumber inspirasi bagi seluruh warga sekolah. Di sini, kamu dapat menemukan berbagai koleksi buku, majalah, e-book, dan referensi pembelajaran yang akan membantumu memperluas wawasan dan meningkatkan prestasi.</motion.p>
             </div>
           </div>
         </SectionWrapper>
 
-        {/* Informasi Section */}
-        <section id="information" className="relative py-16 md:py-24 px-4 bg-cover bg-center bg-fixed text-white text-center" style={{ backgroundImage: "url('/foto (2).jpg')" }}>
-          <div className="absolute inset-0 bg-black/70"></div>
-          <div className="relative z-10 container mx-auto">
-            <h3 className="text-3xl md:text-4xl font-bold mb-8">INFORMASI PERPUSTAKAAN</h3>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 justify-items-center">
-              <LandingPageCard
-                icon={Calendar}
-                title="Waktu Pelayanan"
-                description="Senin - Sabtu: 07.00 - 16.00. Mengikuti waktu kegiatan sekolah."
-              />
-              <LandingPageCard
-                icon={BookOpen}
-                title="Tata Cara Peminjaman"
-                description="Login, pinjam maksimal 2 buku (siswa) / 5 buku (guru) selama 7 hari. Perpanjangan 1x. Denda Rp500/hari. Ganti buku rusak/hilang."
-              />
-            </div>
+        {/* Pustakawan Section */}
+        <SectionWrapper id="librarians" className="bg-gray-100">
+          <h3 className="text-3xl md:text-4xl font-bold text-center mb-12 tracking-widest text-gray-900 font-guncen">TIM PUSTAKAWAN KAMI</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+            {["Bapak Budi Santoso", "Ibu Ani Wijaya", "Bapak Cahyo Nugroho", "Ibu Dewi Lestari"].map((name, index) => (
+              <motion.div
+                key={index}
+                className="flex flex-col items-center p-6 bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
+                initial={{ opacity: 0, y: 50 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+              >
+                <div className="w-32 h-32 rounded-full bg-gradient-to-br from-blue-200 to-indigo-300 flex items-center justify-center mb-4 overflow-hidden border-4 border-white shadow-md">
+                  {/* Placeholder for actual image */}
+                  <UserCircle className="h-24 w-24 text-blue-600/50" />
+                </div>
+                <p className="font-bold text-xl text-gray-900 mb-1">{name}</p>
+                <p className="text-sm text-primary">Pustakawan Senior</p>
+              </motion.div>
+            ))}
           </div>
-        </section>
+        </SectionWrapper>
+
+        {/* Informasi Section */}
+        <SectionWrapper id="information" className="relative bg-gradient-to-br from-primary to-indigo-700 text-white">
+          <h3 className="text-3xl md:text-4xl font-bold text-center mb-12 drop-shadow-lg font-guncen">INFORMASI PENTING</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <LandingPageCard
+              icon={Calendar}
+              title="Waktu Pelayanan"
+              description="Senin - Sabtu: 07.00 - 16.00. Mengikuti waktu kegiatan sekolah."
+            />
+            <LandingPageCard
+              icon={BookOpen}
+              title="Tata Cara Peminjaman"
+              description="Login, pinjam maksimal 2 buku (siswa) / 5 buku (guru) selama 7 hari. Perpanjangan 1x. Denda Rp500/hari. Ganti buku rusak/hilang."
+            />
+          </div>
+        </SectionWrapper>
 
         {/* Contact Section */}
-        <SectionWrapper id="contact" className="bg-gray-50">
-          <div className="text-center">
-            <h3 className="text-3xl md:text-4xl font-bold mb-8 tracking-widest text-gray-900">HUBUNGI KAMI</h3>
-            <p className="text-lg text-gray-600 mb-12 max-w-2xl mx-auto">
-              Kami siap membantu Anda. Jangan ragu untuk menghubungi kami melalui informasi di bawah ini.
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-              <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
-                <CardContent className="p-6 flex flex-col items-center text-center">
-                  <Phone className="h-12 w-12 text-primary mb-4" />
-                  <h4 className="text-xl font-semibold mb-2">Telepon / WhatsApp</h4>
-                  <p className="text-gray-700 text-lg">031-8667427</p>
-                </CardContent>
-              </Card>
-              <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
-                <CardContent className="p-6 flex flex-col items-center text-center">
-                  <Mail className="h-12 w-12 text-primary mb-4" />
-                  <h4 className="text-xl font-semibold mb-2">Email</h4>
-                  <p className="text-gray-700 text-lg">perpustakaan@smpn1sedati.sch.id</p>
-                </CardContent>
-              </Card>
-            </div>
+        <SectionWrapper id="contact" className="bg-white">
+          <h3 className="text-3xl md:text-4xl font-bold text-center mb-12 tracking-widest text-gray-900 font-guncen">HUBUNGI KAMI</h3>
+          <p className="text-lg text-gray-600 text-center mb-12 max-w-2xl mx-auto">
+            Kami siap membantu Anda. Jangan ragu untuk menghubungi kami melalui informasi di bawah ini.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 border-l-4 border-primary">
+              <CardContent className="p-6 flex flex-col items-center text-center">
+                <Phone className="h-12 w-12 text-primary mb-4" />
+                <h4 className="text-xl font-semibold mb-2">Telepon / WhatsApp</h4>
+                <p className="text-gray-700 text-lg">031-8667427</p>
+              </CardContent>
+            </Card>
+            <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 border-l-4 border-accent">
+              <CardContent className="p-6 flex flex-col items-center text-center">
+                <Mail className="h-12 w-12 text-accent mb-4" />
+                <h4 className="text-xl font-semibold mb-2">Email</h4>
+                <p className="text-gray-700 text-lg">perpustakaan@smpn1sedati.sch.id</p>
+              </CardContent>
+            </Card>
           </div>
         </SectionWrapper>
       </main>
 
       {/* Footer */}
-      <footer className="bg-gray-800 text-white py-16 px-4">
-        <div className="container mx-auto grid md:grid-cols-3 gap-8 items-start">
+      <footer className="bg-gray-900 text-white py-16 px-4">
+        <div className="container mx-auto grid md:grid-cols-3 gap-12 items-start">
           <div>
-            <div className="flex items-center mb-4"><img src="/smpn1sedati_logo.png" alt="Logo" className="h-12 w-12 mr-3" /><div><p className="font-bold">SMP NEGERI 1</p><p className="font-bold text-lg">SEDATI</p></div></div>
-            <p className="font-bold mb-2">Alamat Perpustakaan SMPN 1 Sedati</p>
-            <p className="text-gray-400">Jl. Brantas No. 1, Jalan Juanda, Jl. Raya Bandara Juanda, Kepuh, Betro, Kec. Sedati, Kabupaten Sidoarjo, Jawa Timur 61253</p>
-            <div className="flex gap-4 mt-4">
-              <a href="#" aria-label="Instagram" className="text-gray-400 hover:text-blue-400 cursor-pointer transition-colors"><Instagram size={20} /></a>
-              <a href="#" aria-label="Youtube" className="text-gray-400 hover:text-blue-400 cursor-pointer transition-colors"><Youtube size={20} /></a>
-              <a href="#" aria-label="Email" className="text-gray-400 hover:text-blue-400 cursor-pointer transition-colors"><Mail size={20} /></a>
-              <a href="#" aria-label="Twitter" className="text-gray-400 hover:text-blue-400 cursor-pointer transition-colors"><Twitter size={20} /></a>
+            <div className="flex items-center mb-6">
+              <img src="/smpn1sedati_logo.png" alt="Logo" className="h-14 w-14 mr-4" />
+              <div>
+                <p className="font-bold text-xl">SMP NEGERI 1</p>
+                <p className="font-bold text-2xl text-primary">SEDATI</p>
+              </div>
+            </div>
+            <p className="font-semibold text-lg mb-3">Alamat Perpustakaan</p>
+            <p className="text-gray-400 leading-relaxed">Jl. Brantas No. 1, Jalan Juanda, Jl. Raya Bandara Juanda, Kepuh, Betro, Kec. Sedati, Kabupaten Sidoarjo, Jawa Timur 61253</p>
+            <div className="flex gap-6 mt-6">
+              <a href="#" aria-label="Instagram" className="text-gray-400 hover:text-pink-500 transition-colors"><Instagram size={24} /></a>
+              <a href="#" aria-label="Youtube" className="text-gray-400 hover:text-red-500 transition-colors"><Youtube size={24} /></a>
+              <a href="#" aria-label="Email" className="text-gray-400 hover:text-blue-400 transition-colors"><Mail size={24} /></a>
+              <a href="#" aria-label="Twitter" className="text-gray-400 hover:text-blue-300 transition-colors"><Twitter size={24} /></a>
             </div>
           </div>
           <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-8">
             <div>
-              <div className="flex items-center mb-2"><Phone size={20} className="mr-3" /><p className="font-bold">Telephone/Whatsapp</p></div>
-              <p className="text-gray-400">031-8667427</p>
+              <p className="font-semibold text-lg mb-3">Kontak Cepat</p>
+              <div className="flex items-center mb-2"><Phone size={20} className="mr-3 text-primary" /><p className="text-gray-300">031-8667427</p></div>
+              <div className="flex items-center"><Mail size={20} className="mr-3 text-primary" /><p className="text-gray-300">perpustakaan@smpn1sedati.sch.id</p></div>
             </div>
             <div>
-              <div className="flex items-center mb-2"><Mail size={20} className="mr-3" /><p className="font-bold">Email</p></div>
-              <p className="text-gray-400">perpustakaan@smpn1sedati.sch.id</p>
+              <p className="font-semibold text-lg mb-3">Tautan Cepat</p>
+              <ul className="space-y-2">
+                <li><button onClick={() => handleScrollToSection('about')} className="text-gray-400 hover:text-white transition-colors">Tentang Kami</button></li>
+                <li><button onClick={() => handleScrollToSection('information')} className="text-gray-400 hover:text-white transition-colors">Informasi</button></li>
+                <li><Link to="/login" className="text-gray-400 hover:text-white transition-colors">Masuk Siswa</Link></li>
+                <li><Link to="/admin/login" className="text-gray-400 hover:text-white transition-colors">Masuk Admin</Link></li>
+              </ul>
             </div>
           </div>
         </div>
-        <div className="container mx-auto text-center border-t border-gray-700 mt-12 pt-8"><p className="text-gray-500">&copy; 2025 Perpustakaan SMPN 1 Sedati. All rights reserved.</p></div>
+        <div className="container mx-auto text-center border-t border-gray-700 mt-16 pt-8"><p className="text-gray-500 text-sm">&copy; {new Date().getFullYear()} Perpustakaan SMPN 1 Sedati. All rights reserved.</p></div>
       </footer>
     </div>
   );
