@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, MessageSquare, Phone, Mail, Instagram, Youtube, Twitter, Menu, Book, LayoutGrid, BookOpen, UserCircle } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { motion, useScroll, useTransform, Variants } from "framer-motion"; // Import Variants
+import { motion, useScroll, useTransform, Variants } from "framer-motion";
 import { useInView } from 'react-intersection-observer';
 import AnimatedStatCard from "@/components/AnimatedStatCard";
 import LandingPageCard from "@/components/LandingPageCard";
@@ -13,7 +13,6 @@ import GSAPButton from "@/components/GSAPButton";
 const LandingPage = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const { scrollY } = useScroll();
-  // Removed heroParallax as it was not used in the previous version and might conflict with new animations.
 
   const handleScrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -46,15 +45,14 @@ const LandingPage = () => {
     );
   };
 
-  // Animation variants for text elements
-  const textVariants: Variants = { // Explicitly type as Variants
+  const textVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.2, 1, 0.2, 1] } }, // Changed ease
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.2, 1, 0.2, 1] } },
   };
 
-  const imageVariants: Variants = { // Explicitly type as Variants
+  const imageVariants: Variants = {
     hidden: { opacity: 0, scale: 0.8 },
-    visible: { opacity: 1, scale: 1, transition: { duration: 0.8, ease: [0.2, 1, 0.2, 1] } }, // Changed ease
+    visible: { opacity: 1, scale: 1, transition: { duration: 0.8, ease: [0.2, 1, 0.2, 1] } },
   };
 
   return (
@@ -100,9 +98,9 @@ const LandingPage = () => {
         <section
           id="home"
           className="relative h-screen w-full bg-cover bg-center bg-no-repeat flex items-center justify-center"
-          style={{ backgroundImage: "url('/hero_landing.png')" }} // Using a different, potentially more modern hero image
+          style={{ backgroundImage: "url('/hero_landing.png')" }}
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/70 to-indigo-700/70"></div> {/* More vibrant overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/70 to-indigo-700/70"></div>
           <div className="relative z-10 flex flex-col items-center justify-center h-full text-white text-center p-4">
             <motion.img src="/smpn1sedati_logo.png" alt="Logo SMPN 1 Sedati" className="h-28 w-28 md:h-40 md:w-40 mb-6 drop-shadow-lg" initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, ease: [0.2, 1, 0.2, 1] }} />
             <motion.h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-wider drop-shadow-lg leading-tight mb-4 font-guncen" initial="hidden" animate="visible" variants={textVariants}>PERPUSTAKAAN</motion.h1>
@@ -115,7 +113,7 @@ const LandingPage = () => {
         </section>
 
         {/* Stats Section */}
-        <SectionWrapper id="stats" className="bg-gradient-to-br from-gray-100 to-white"> {/* Added id="stats" */}
+        <SectionWrapper id="stats" className="bg-gradient-to-br from-gray-100 to-white">
           <h3 className="text-3xl md:text-4xl font-bold text-center mb-12 tracking-widest text-gray-900 font-guncen">Sekilas Angka</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center max-w-6xl mx-auto">
             <AnimatedStatCard icon={Book} label="Total Buku" value={10000} animationDelay={0} />
@@ -140,27 +138,7 @@ const LandingPage = () => {
         </SectionWrapper>
 
         {/* Pustakawan Section */}
-        <SectionWrapper id="librarians" className="bg-gray-100">
-          <h3 className="text-3xl md:text-4xl font-bold text-center mb-12 tracking-widest text-gray-900 font-guncen">TIM PUSTAKAWAN KAMI</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-            {["Bapak Budi Santoso", "Ibu Ani Wijaya", "Bapak Cahyo Nugroho", "Ibu Dewi Lestari"].map((name, index) => (
-              <motion.div
-                key={index}
-                className="flex flex-col items-center p-6 bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
-                initial={{ opacity: 0, y: 50 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-              >
-                <div className="w-32 h-32 rounded-full bg-gradient-to-br from-blue-200 to-indigo-300 flex items-center justify-center mb-4 overflow-hidden border-4 border-white shadow-md">
-                  {/* Placeholder for actual image */}
-                  <UserCircle className="h-24 w-24 text-blue-600/50" />
-                </div>
-                <p className="font-bold text-xl text-gray-900 mb-1">{name}</p>
-                <p className="text-sm text-primary">Pustakawan Senior</p>
-              </motion.div>
-            ))}
-          </div>
-        </SectionWrapper>
+        <LibrariansSection />
 
         {/* Informasi Section */}
         <SectionWrapper id="information" className="relative bg-gradient-to-br from-primary to-indigo-700 text-white">
@@ -244,6 +222,34 @@ const LandingPage = () => {
         <div className="container mx-auto text-center border-t border-gray-700 mt-16 pt-8"><p className="text-gray-500 text-sm">&copy; {new Date().getFullYear()} Perpustakaan SMPN 1 Sedati. All rights reserved.</p></div>
       </footer>
     </div>
+  );
+};
+
+// Separate component for Librarians Section to use its own useInView hook
+const LibrariansSection = () => {
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
+
+  return (
+    <section id="librarians" ref={ref} className="py-16 md:py-24 px-4 container mx-auto bg-gray-100">
+      <h3 className="text-3xl md:text-4xl font-bold text-center mb-12 tracking-widest text-gray-900 font-guncen">TIM PUSTAKAWAN KAMI</h3>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+        {["Bapak Budi Santoso", "Ibu Ani Wijaya", "Bapak Cahyo Nugroho", "Ibu Dewi Lestari"].map((name, index) => (
+          <motion.div
+            key={index}
+            className="flex flex-col items-center p-6 bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
+            initial={{ opacity: 0, y: 50 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: index * 0.1 }}
+          >
+            <div className="w-32 h-32 rounded-full bg-gradient-to-br from-blue-200 to-indigo-300 flex items-center justify-center mb-4 overflow-hidden border-4 border-white shadow-md">
+              <UserCircle className="h-24 w-24 text-blue-600/50" />
+            </div>
+            <p className="font-bold text-xl text-gray-900 mb-1">{name}</p>
+            <p className="text-sm text-primary">Pustakawan Senior</p>
+          </motion.div>
+        ))}
+      </div>
+    </section>
   );
 };
 
