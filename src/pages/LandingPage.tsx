@@ -10,6 +10,7 @@ import AnimatedStatCard from "@/components/AnimatedStatCard";
 import LandingPageCard from "@/components/LandingPageCard";
 import GSAPButton from "@/components/GSAPButton";
 import LibrarianCarousel from "@/components/LibrarianCarousel"; // Import the new carousel component
+import ModernInfoCard from "@/components/ModernInfoCard"; // Import the new ModernInfoCard
 
 const LandingPage = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
@@ -153,19 +154,21 @@ const LandingPage = () => {
         {/* New: Galeri Perpustakaan Section */}
         <GallerySection />
 
-        {/* Informasi Section */}
-        <SectionWrapper id="information" className="relative bg-gradient-to-br from-primary to-indigo-700 text-white">
+        {/* Informasi Section - Updated to use ModernInfoCard */}
+        <SectionWrapper id="information" className="relative bg-gradient-to-br from-blue-500 to-indigo-700 text-white">
           <h3 className="text-3xl md:text-4xl font-bold text-center mb-12 drop-shadow-lg font-guncen">INFORMASI PENTING</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <LandingPageCard
+            <ModernInfoCard
               icon={Calendar}
               title="Waktu Pelayanan"
               description="Senin - Sabtu: 07.00 - 16.00. Mengikuti waktu kegiatan sekolah."
+              delay={0.1}
             />
-            <LandingPageCard
+            <ModernInfoCard
               icon={BookOpen}
               title="Tata Cara Peminjaman"
               description="Login, pinjam maksimal 2 buku (siswa) / 5 buku (guru) selama 7 hari. Perpanjangan 1x. Denda Rp500/hari. Ganti buku rusak/hilang."
+              delay={0.3}
             />
           </div>
         </SectionWrapper>
