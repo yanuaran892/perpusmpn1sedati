@@ -139,6 +139,25 @@ export default {
             transform: "translateX(100%)",
           },
         },
+        // New blob animations
+        "blob-1": {
+          "0%": { transform: "translate(0px, 0px) scale(1)" },
+          "33%": { transform: "translate(30px, -50px) scale(1.1)" },
+          "66%": { transform: "translate(-20px, 20px) scale(0.9)" },
+          "100%": { transform: "translate(0px, 0px) scale(1)" },
+        },
+        "blob-2": {
+          "0%": { transform: "translate(0px, 0px) scale(1)" },
+          "40%": { transform: "translate(-40px, 40px) scale(1.2)" },
+          "70%": { transform: "translate(10px, -30px) scale(0.95)" },
+          "100%": { transform: "translate(0px, 0px) scale(1)" },
+        },
+        "blob-3": {
+          "0%": { transform: "translate(0px, 0px) scale(1)" },
+          "50%": { transform: "translate(50px, 10px) scale(0.8)" },
+          "80%": { transform: "translate(-10px, -40px) scale(1.1)" },
+          "100%": { transform: "translate(0px, 0px) scale(1)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -148,6 +167,10 @@ export default {
         "slide-in-right": "slide-in-right 0.6s ease-out forwards",
         "scale-in": "scale-in 0.5s ease-out forwards",
         "shimmer": "shimmer 2s infinite",
+        // New blob animations
+        "blob-1": "blob-1 10s infinite alternate ease-in-out",
+        "blob-2": "blob-2 12s infinite alternate-reverse ease-in-out",
+        "blob-3": "blob-3 11s infinite alternate ease-in-out",
       },
     },
   },
