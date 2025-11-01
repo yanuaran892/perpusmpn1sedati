@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Calendar, MessageSquare, Phone, Mail, Instagram, Youtube, Twitter, Menu, Book, LayoutGrid, BookOpen, UserCircle, Image as ImageIcon } from 'lucide-react'; // Added ImageIcon
+import { Calendar, MessageSquare, Phone, Mail, Instagram, Youtube, Twitter, Menu, Book, LayoutGrid, BookOpen, UserCircle, Image as ImageIcon } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { motion, useScroll, useTransform, Variants } from "framer-motion";
 import { useInView } from 'react-intersection-observer';
@@ -150,34 +150,7 @@ const LandingPage = () => {
         <LibrariansSection />
 
         {/* New: Galeri Perpustakaan Section */}
-        <SectionWrapper id="gallery" className="bg-gray-100">
-          <h3 className="text-3xl md:text-4xl font-bold text-center mb-12 tracking-widest text-gray-900 font-guncen">GALERI PERPUSTAKAAN</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {[
-              { src: "/foto (1).jpg", alt: "Interior Perpustakaan" },
-              { src: "/foto (2).png", alt: "Rak Buku Modern" },
-              { src: "/foto (3).jpg", alt: "Area Baca Nyaman" },
-              { src: "/placeholder.svg", alt: "Sudut Belajar" }, // Placeholder for more images
-            ].map((image, index) => (
-              <motion.div
-                key={index}
-                className="relative group overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
-                initial={{ opacity: 0, y: 50 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-              >
-                <img
-                  src={image.src}
-                  alt={image.alt}
-                  className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <p className="text-white text-lg font-semibold">{image.alt}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </SectionWrapper>
+        <GallerySection />
 
         {/* Informasi Section */}
         <SectionWrapper id="information" className="relative bg-gradient-to-br from-primary to-indigo-700 text-white">
@@ -218,46 +191,6 @@ const LandingPage = () => {
               </CardContent>
             </Card>
           </div>
-        </SectionWrapper>
-      </main>
-
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-16 px-4">
-        <div className="container mx-auto grid md:grid-cols-3 gap-12 items-start">
-          <div>
-            <div className="flex items-center mb-6">
-              <img src="/smpn1sedati_logo.png" alt="Logo" className="h-14 w-14 mr-4" />
-              <div>
-                <p className="font-bold text-xl">SMP NEGERI 1</p>
-                <p className="font-bold text-2xl text-primary">SEDATI</p>
-              </div>
-            </div>
-            <p className="font-semibold text-lg mb-3">Alamat Perpustakaan</p>
-            <p className="text-gray-400 leading-relaxed">Jl. Brantas No. 1, Jalan Juanda, Jl. Raya Bandara Juanda, Kepuh, Betro, Kec. Sedati, Kabupaten Sidoarjo, Jawa Timur 61253</p>
-            <div className="flex gap-6 mt-6">
-              <a href="#" aria-label="Instagram" className="text-gray-400 hover:text-pink-500 transition-colors"><Instagram size={24} /></a>
-              <a href="#" aria-label="Youtube" className="text-gray-400 hover:text-red-500 transition-colors"><Youtube size={24} /></a>
-              <a href="#" aria-label="Email" className="text-gray-400 hover:text-blue-400 transition-colors"><Mail size={24} /></a>
-              <a href="#" aria-label="Twitter" className="text-gray-400 hover:text-blue-300 transition-colors"><Twitter size={24} /></a>
-            </div>
-          </div>
-          <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-8">
-            <div>
-              <p className="font-semibold text-lg mb-3">Kontak Cepat</p>
-              <div className="flex items-center mb-2"><Phone size={20} className="mr-3 text-primary" /><p className="text-gray-300">031-8667427</p></div>
-              <div className="flex items-center"><Mail size={20} className="mr-3 text-primary" /><p className="text-gray-300">perpustakaan@smpn1sedati.sch.id</p></div>
-            </div>
-            <div>
-              <p className="font-semibold text-lg mb-3">Tautan Cepat</p>
-              <ul className="space-y-2">
-                <li><button onClick={() => handleScrollToSection('about')} className="text-gray-400 hover:text-white transition-colors">Tentang Kami</button></li>
-                <li><button onClick={() => handleScrollToSection('gallery')} className="text-gray-400 hover:text-white transition-colors">Galeri</button></li>
-                <li><button onClick={() => handleScrollToSection('information')} className="text-gray-400 hover:text-white transition-colors">Informasi</button></li>
-                <li><Link to="/login" className="text-gray-400 hover:text-white transition-colors">Masuk Siswa</Link></li>
-                <li><Link to="/admin/login" className="text-gray-400 hover:text-white transition-colors">Masuk Admin</Link></li>
-              </ul>
-            </div>
-          </div>
         </div>
         <div className="container mx-auto text-center border-t border-gray-700 mt-16 pt-8"><p className="text-gray-500 text-sm">&copy; {new Date().getFullYear()} Perpustakaan SMPN 1 Sedati. All rights reserved.</p></div>
       </footer>
@@ -287,6 +220,42 @@ const LibrariansSection = () => {
             </div>
             <p className="font-bold text-xl text-gray-900 mb-1">{name}</p>
             <p className="text-sm text-primary">Pustakawan Senior</p>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  );
+};
+
+// New component for Gallery Section
+const GallerySection = () => {
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
+
+  return (
+    <section id="gallery" ref={ref} className="bg-gray-100 py-16 md:py-24 px-4 container mx-auto">
+      <h3 className="text-3xl md:text-4xl font-bold text-center mb-12 tracking-widest text-gray-900 font-guncen">GALERI PERPUSTAKAAN</h3>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        {[
+          { src: "/foto (1).jpg", alt: "Interior Perpustakaan" },
+          { src: "/foto (2).png", alt: "Rak Buku Modern" },
+          { src: "/foto (3).jpg", alt: "Area Baca Nyaman" },
+          { src: "/placeholder.svg", alt: "Sudut Belajar" }, // Placeholder for more images
+        ].map((image, index) => (
+          <motion.div
+            key={index}
+            className="relative group overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
+            initial={{ opacity: 0, y: 50 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: index * 0.1 }}
+          >
+            <img
+              src={image.src}
+              alt={image.alt}
+              className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110"
+            />
+            <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <p className="text-white text-lg font-semibold">{image.alt}</p>
+            </div>
           </motion.div>
         ))}
       </div>
