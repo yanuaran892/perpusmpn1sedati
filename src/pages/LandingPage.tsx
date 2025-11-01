@@ -325,7 +325,7 @@ const AboutSection = () => {
     >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         {/* Left Column: Text Content */}
-        <div className="py-4 px-8"> {/* Changed px-4 to px-8 here */}
+        <div className="py-4 px-8">
           <motion.p
             className="text-lg font-semibold text-primary tracking-wider uppercase mb-2"
             initial={{ opacity: 0, x: -30 }}
@@ -428,11 +428,7 @@ const GallerySection = () => {
             </motion.div>
           ))}
         </div>
-        <div className="text-center mt-16">
-          <GSAPButton variant="outline" className="bg-primary text-white hover:bg-primary/90 px-8 py-3 text-lg shadow-md">
-            <ImageIcon className="mr-2 h-5 w-5" /> Lihat Lebih Banyak Foto
-          </GSAPButton>
-        </div>
+        {/* Removed the "Lihat Lebih Banyak Foto" button */}
     </section>
   );
 };
