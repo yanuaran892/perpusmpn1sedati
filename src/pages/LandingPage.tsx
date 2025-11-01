@@ -112,7 +112,7 @@ const LandingPage = () => {
         {/* Hero Section */}
         <section
           id="home"
-          className="relative h-screen w-full overflow-hidden flex items-center justify-center" // Removed pt-24
+          className="relative min-h-[calc(100vh-4rem)] w-full overflow-hidden flex items-center justify-center" // Changed h-screen to min-h-[calc(100vh-4rem)]
         >
           <motion.div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
