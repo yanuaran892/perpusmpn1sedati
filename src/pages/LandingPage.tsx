@@ -122,11 +122,11 @@ const LandingPage = () => {
           ></motion.div>
           {/* Overlay hitam transparan */}
           <div className="absolute inset-0 bg-black/40"></div> 
-          <div className="relative z-10 flex flex-col items-center justify-center h-full text-white text-center p-4">
+          <div className="relative z-10 flex flex-col items-center justify-center h-full text-white text-center"> {/* Removed p-4 here */}
             <motion.img src="/smpn1sedati_logo.png" alt="Logo SMPN 1 Sedati" className="h-28 w-28 md:h-40 md:w-40 mb-6 drop-shadow-lg" initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, ease: [0.2, 1, 0.2, 1] }} />
-            <motion.h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-wider drop-shadow-lg leading-tight mb-4 font-guncen" initial="hidden" animate="visible" variants={textVariants}>PERPUSTAKAAN</motion.h1> {/* Changed text-5xl to text-4xl */}
-            <motion.h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold drop-shadow-lg mb-8 leading-tight font-guncen" initial="hidden" animate="visible" variants={textVariants} transition={{ delay: 0.2 }}>SMP NEGERI 1 SEDATI</motion.h2> {/* Changed text-4xl to text-3xl */}
-            <motion.p className="text-lg md:text-xl italic max-w-sm sm:max-w-md md:max-w-4xl drop-shadow-lg mb-10 font-ccspaghettiwestern" initial="hidden" animate="visible" variants={textVariants} transition={{ delay: 0.4 }}>"Kalau engkau hanya membaca buku yang dibaca semua orang, engkau hanya bisa berpikir sama seperti semua orang."<br />(Haruki Murakami).</motion.p> {/* Changed max-w-xs to max-w-sm */}
+            <motion.h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-wider drop-shadow-lg leading-tight mb-4 font-guncen" initial="hidden" animate="visible" variants={textVariants}>PERPUSTAKAAN</motion.h1>
+            <motion.h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold drop-shadow-lg mb-8 leading-tight font-guncen" initial="hidden" animate="visible" variants={textVariants} transition={{ delay: 0.2 }}>SMP NEGERI 1 SEDATI</motion.h2>
+            <motion.p className="text-lg md:text-xl italic px-4 drop-shadow-lg mb-10 font-ccspaghettiwestern" initial="hidden" animate="visible" variants={textVariants} transition={{ delay: 0.4 }}>"Kalau engkau hanya membaca buku yang dibaca semua orang, engkau hanya bisa berpikir sama seperti semua orang."<br />(Haruki Murakami).</motion.p> {/* Added px-4 here */}
             <motion.div initial="hidden" animate="visible" variants={textVariants} transition={{ delay: 0.6 }}>
               <Link to="/login"><GSAPButton className="bg-accent hover:bg-accent/90 text-white rounded-full px-10 py-4 text-xl font-semibold shadow-xl transition-all duration-300 transform hover:scale-105">Mulai Jelajahi</GSAPButton></Link>
             </motion.div>
@@ -350,7 +350,7 @@ const AboutSection = () => {
             <motion.p
               className="text-lg text-gray-600 leading-relaxed"
               initial={{ opacity: 0, x: -30 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7, delay: 0.6, ease: "easeOut" }}
             >
               Halo, Sobat Literasi! Perpustakaan kami hadir sebagai pusat belajar dan sumber inspirasi. Temukan berbagai koleksi buku, majalah, dan referensi pembelajaran untuk memperluas wawasan dan meningkatkan prestasi Anda.
