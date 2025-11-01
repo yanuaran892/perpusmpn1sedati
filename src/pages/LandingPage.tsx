@@ -100,7 +100,7 @@ const LandingPage = () => {
                     <button onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); setIsSheetOpen(false); }} className="text-left py-2 hover:text-accent transition-colors">Beranda</button>
                     {navLinks.map(link => (<button key={link.id} onClick={() => handleScrollToSection(link.id)} className="text-left py-2 hover:text-accent transition-colors">{link.label}</button>))}
                   </nav>
-                  <div className="mt-auto"><Link to="/login"><GSAPButton className="w-full bg-accent hover:bg-accent/90 text-white rounded-full px-6">Masuk</GSAPButton></Link></div>
+                  <div className="mt-auto"><Link to="/login"><GSAPButton className="w-full bg-accent hover:bg-accent/90 text-white rounded-full px-6 btn-shiny">Masuk</GSAPButton></Link></div>
                 </div>
               </SheetContent>
             </Sheet>
