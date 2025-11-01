@@ -51,7 +51,7 @@ const StudentDashboardHeader: React.FC<StudentDashboardHeaderProps> = ({
       animate="visible"
       variants={headerVariants}
       // Increased padding-bottom significantly to ensure stat cards are fully visible
-      className="relative w-full min-h-[70vh] md:min-h-[80vh] bg-gradient-to-br from-blue-600 to-indigo-800 text-white overflow-hidden flex flex-col justify-between pb-56 md:pb-72 shadow-2xl" // Adjusted pb-64 to pb-56 and pb-80 to pb-72
+      className="relative w-full min-h-[70vh] md:min-h-[80vh] bg-gradient-to-br from-blue-600 to-indigo-800 text-white overflow-hidden flex flex-col justify-between pb-48 md:pb-64 shadow-2xl" // Adjusted pb-56 to pb-48 and pb-72 to pb-64
     >
       {/* Background Blobs and Pattern */}
       <div className="absolute inset-0 z-0 opacity-10 bg-[url('/subtle-dots.svg')] bg-repeat">
