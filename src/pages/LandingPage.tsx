@@ -139,16 +139,16 @@ const LandingPage = () => {
         </SectionWrapper>
 
         {/* Pustakawan Section */}
-        <SectionWrapper id="librarians" className="bg-gradient-to-b from-gray-100 to-gray-200" noContainer> {/* Added noContainer prop */}
-          <motion.h3
-            className="text-3xl md:text-4xl font-bold text-center mb-12 tracking-widest text-gray-900 font-guncen"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-          >
-            TIM PUSTAKAWAN KAMI
-          </motion.h3>
-          <div className="overflow-x-hidden"> {/* Removed max-w-6xl mx-auto */}
+        <SectionWrapper id="librarians" className="bg-gradient-to-b from-gray-100 to-gray-200" noContainer>
+          <div className="max-w-7xl mx-auto px-4"> {/* New wrapper for content */}
+            <motion.h3
+              className="text-3xl md:text-4xl font-bold text-center mb-12 tracking-widest text-gray-900 font-guncen"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+            >
+              TIM PUSTAKAWAN KAMI
+            </motion.h3>
             <LibrarianCarousel librarians={librariansData} />
           </div>
         </SectionWrapper>

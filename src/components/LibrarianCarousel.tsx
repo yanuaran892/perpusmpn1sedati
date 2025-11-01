@@ -100,7 +100,7 @@ const LibrarianCarousel: React.FC<LibrarianCarouselProps> = ({ librarians }) => 
 
       {/* Navigation Buttons - Positioned relative to the embla container */}
       <GSAPButton
-        className="embla__button embla__button--prev absolute top-1/2 -translate-y-1/2 left-4 md:-left-12 bg-primary text-white rounded-full p-2 shadow-md hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed z-20"
+        className="embla__button embla__button--prev absolute top-1/2 -translate-y-1/2 left-4 md:left-4 bg-primary text-white rounded-full p-2 shadow-md hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed z-20" // Adjusted md:-left-12 to md:left-4
         onClick={scrollPrev}
         disabled={prevBtnDisabled}
         variant="ghost"
@@ -109,7 +109,7 @@ const LibrarianCarousel: React.FC<LibrarianCarouselProps> = ({ librarians }) => 
         <ChevronLeft className="h-6 w-6" />
       </GSAPButton>
       <GSAPButton
-        className="embla__button embla__button--next absolute top-1/2 -translate-y-1/2 right-4 md:-right-12 bg-primary text-white rounded-full p-2 shadow-md hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed z-20"
+        className="embla__button embla__button--next absolute top-1/2 -translate-y-1/2 right-4 md:right-4 bg-primary text-white rounded-full p-2 shadow-md hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed z-20" // Adjusted md:-right-12 to md:right-4
         onClick={scrollNext}
         disabled={nextBtnDisabled}
         variant="ghost"
