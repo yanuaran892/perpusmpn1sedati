@@ -333,13 +333,14 @@ const AboutSection = () => {
 
         {/* Right Column: Image */}
         <motion.div
-          className="relative h-full flex items-center justify-center min-h-[400px]"
+          className="relative h-full flex items-center justify-center min-h-[400px] overflow-hidden rounded-2xl" // Added overflow-hidden and rounded-2xl
           initial={{ opacity: 0, scale: 0.8 }}
           animate={inView ? { opacity: 1, scale: 1 } : {}}
           transition={{ duration: 0.9, delay: 0.4, ease: [0.2, 1, 0.2, 1] }}
         >
-          <div className="absolute -top-8 -left-8 w-full h-full bg-blue-200 rounded-3xl transform -rotate-6"></div>
-          <div className="absolute -bottom-8 -right-8 w-full h-full bg-accent/20 rounded-3xl transform rotate-6"></div>
+          {/* Decorative background elements, slightly larger and rotated, clipped by parent's overflow-hidden */}
+          <div className="absolute inset-[-10%] bg-blue-200 rounded-3xl transform -rotate-6 z-0"></div> {/* inset-[-10%] makes it 10% larger on all sides */}
+          <div className="absolute inset-[-10%] bg-accent/20 rounded-3xl transform rotate-6 z-0"></div>
           <img
             src="/foto (1).jpg"
             alt="Suasana Perpustakaan"
