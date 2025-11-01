@@ -327,7 +327,7 @@ const AboutSection = () => {
         {/* Left Column: Text Content */}
         <div className=""> {/* Removed space-y-6 */}
           <motion.p
-            className="text-lg font-semibold text-primary tracking-wider uppercase mb-2" // Added mb-2
+            className="text-lg font-semibold text-primary tracking-wider uppercase mb-2"
             initial={{ opacity: 0, x: -30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
@@ -335,7 +335,7 @@ const AboutSection = () => {
             Selamat Datang di
           </motion.p>
           <motion.h3
-            className="text-4xl md:text-5xl font-extrabold text-gray-900 font-guncen leading-tight mb-4"
+            className="text-4xl md:text-5xl font-extrabold text-gray-900 font-guncen leading-tight mb-6" // Increased mb-4 to mb-6
             initial={{ opacity: 0, x: -30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
@@ -343,13 +343,13 @@ const AboutSection = () => {
             Perpustakaan SMPN 1 SEDATI
           </motion.h3>
           <motion.div
-            className="w-24 h-1.5 bg-accent rounded-full mb-8" // Increased mb-6 to mb-8
+            className="w-24 h-1.5 bg-accent rounded-full mb-10" // Increased mb-8 to mb-10
             initial={{ width: 0 }}
             animate={inView ? { width: '6rem' } : {}}
             transition={{ duration: 1, delay: 0.5, ease: [0.2, 1, 0.2, 1] }}
           />
           <motion.p
-            className="text-lg text-gray-700 leading-relaxed" // Removed mt-4
+            className="text-lg text-gray-700 leading-relaxed mb-8" // Added mb-8
             initial={{ opacity: 0, x: -30 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.6, ease: "easeOut" }}
@@ -362,7 +362,7 @@ const AboutSection = () => {
             transition={{ duration: 0.7, delay: 0.8, ease: "easeOut" }}
           >
             <Link to="/login">
-              <GSAPButton className="mt-8 bg-primary hover:bg-primary/90 text-white rounded-full px-8 py-3 text-lg font-semibold shadow-lg transition-all duration-300 transform hover:scale-105">
+              <GSAPButton className="mt-6 bg-primary hover:bg-primary/90 text-white rounded-full px-8 py-3 text-lg font-semibold shadow-lg transition-all duration-300 transform hover:scale-105">
                 Lihat Koleksi
               </GSAPButton>
             </Link>
