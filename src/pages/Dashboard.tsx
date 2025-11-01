@@ -272,7 +272,7 @@ const Dashboard = () => {
       />
 
       {/* Main content area, adjusted for header height and overlapping cards */}
-      <div className="p-4 md:p-8 max-w-7xl mx-auto mt-10 md:mt-16 relative z-30"> {/* Adjusted margin-top to be positive */}
+      <div className="p-4 md:p-8 max-w-7xl mx-auto mt-20 relative z-30"> {/* Adjusted margin-top to be positive */}
         <Card className="shadow-xl border-none animate-fade-in-up">
           <CardHeader className="flex flex-col md:flex-row items-start md:items-center justify-between space-y-4 md:space-y-0 pb-4">
             <CardTitle className="text-3xl font-bold text-foreground">Koleksi Buku</CardTitle>
