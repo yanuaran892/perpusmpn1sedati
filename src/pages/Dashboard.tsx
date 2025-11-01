@@ -5,7 +5,7 @@ import { supabase } from '@/integrations/supabase/client';
 import GSAPButton from '@/components/GSAPButton';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Loader2, ChevronLeft, ChevronRight, Book, LayoutGrid, BookOpen } from 'lucide-react'; // Added Book, LayoutGrid, BookOpen
 import { showError, showSuccess } from '@/utils/toast';
 import { isPast } from 'date-fns';
 import BookCard from '@/components/BookCard';
