@@ -213,7 +213,7 @@ const LandingPage = () => {
         {/* Contact Section */}
         <SectionWrapper id="contact" className="relative bg-gradient-to-br from-blue-900 to-indigo-950 text-white overflow-hidden">
           {/* Background blobs for visual interest */}
-          <div className="absolute inset-0 z-0 opacity-10">
+          <div className="absolute inset-[-50px] z-0 opacity-10">
             <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-400 rounded-full mix-blend-screen filter blur-3xl animate-blob-1"></div>
             <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-indigo-500 rounded-full mix-blend-screen filter blur-3xl animate-blob-2"></div>
             <div className="absolute top-1/2 left-1/2 w-72 h-72 bg-purple-400 rounded-full mix-blend-screen filter blur-3xl animate-blob-3"></div>
