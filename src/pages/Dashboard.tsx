@@ -2,16 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStudentAuth } from '@/context/StudentAuthContext';
 import { supabase } from '@/integrations/supabase/client';
-import GSAPButton from '@/components/GSAPButton'; // Menggunakan GSAPButton
+import GSAPButton from '@/components/GSAPButton';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'; // Added import for Card components
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Loader2, ChevronLeft, ChevronRight } from 'lucide-react';
 import { showError, showSuccess } from '@/utils/toast';
 import { isPast } from 'date-fns';
 import BookCard from '@/components/BookCard';
 import BookDetailDialog from '@/components/BookDetailDialog';
 import BookCardSkeleton from '@/components/BookCardSkeleton';
-import StudentDashboardHeader from '@/components/student/StudentDashboardHeader'; // Import the new header component
+import StudentDashboardHeader from '@/components/student/StudentDashboardHeader';
 
 interface BookItem {
   id_buku: number;
@@ -212,7 +212,7 @@ const Dashboard = () => {
         p_id_nis: student.id_nis,
         p_id_buku: bookId,
         p_tanggal_pinjam: new Date(),
-        p_tanggal_kembali: selectedReturnDate, // Pass the Date object directly
+        p_tanggal_kembali: selectedReturnDate,
       });
 
       if (error) {
@@ -272,7 +272,7 @@ const Dashboard = () => {
       />
 
       {/* Main content area, adjusted for header height and overlapping cards */}
-      <div className="p-4 md:p-8 max-w-7xl mx-auto pt-10 md:pt-12"> {/* Adjusted padding-top */}
+      <div className="p-4 md:p-8 max-w-7xl mx-auto -mt-10 md:-mt-20 relative z-30"> {/* Adjusted negative margin-top to overlap with header's stat cards */}
         <Card className="shadow-xl border-none animate-fade-in-up">
           <CardHeader className="flex flex-col md:flex-row items-start md:items-center justify-between space-y-4 md:space-y-0 pb-4">
             <CardTitle className="text-3xl font-bold text-foreground">Koleksi Buku</CardTitle>

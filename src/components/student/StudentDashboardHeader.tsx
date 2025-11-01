@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import GSAPButton from '@/components/GSAPButton'; // Menggunakan GSAPButton
+import GSAPButton from '@/components/GSAPButton';
 import { Input } from '@/components/ui/input';
 import { LibraryBig, User, LogOut, Search, Book, LayoutGrid, BookOpen, Menu } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -50,21 +50,27 @@ const StudentDashboardHeader: React.FC<StudentDashboardHeaderProps> = ({
       initial="hidden"
       animate="visible"
       variants={headerVariants}
-      // Adjusted padding-bottom for mobile to make more space for stat cards
-      className="relative bg-gradient-to-r from-primary to-indigo-700 text-white p-4 md:p-8 shadow-lg pb-10 md:pb-24" // Reduced pb-10 for mobile
+      className="relative w-full min-h-[70vh] md:min-h-[80vh] bg-gradient-to-br from-blue-600 to-indigo-800 text-white overflow-hidden flex flex-col justify-between pb-20 md:pb-32 shadow-2xl"
     >
-      <div className="max-w-7xl mx-auto">
+      {/* Background Blobs and Pattern */}
+      <div className="absolute inset-0 z-0 opacity-10 bg-[url('/subtle-dots.svg')] bg-repeat">
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-400 rounded-full mix-blend-screen filter blur-3xl animate-blob-1"></div>
+        <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-indigo-500 rounded-full mix-blend-screen filter blur-3xl animate-blob-2"></div>
+        <div className="absolute top-1/2 left-1/2 w-72 h-72 bg-purple-400 rounded-full mix-blend-screen filter blur-3xl animate-blob-3"></div>
+      </div>
+
+      <div className="relative z-10 max-w-7xl mx-auto w-full p-4 md:p-8 flex flex-col flex-grow">
         {/* Top Bar */}
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex justify-between items-center mb-10">
           <div className="flex items-center">
-            <LibraryBig className="h-8 w-8 md:h-10 md:w-10 mr-2 md:mr-3" />
-            <h1 className="text-xl md:text-2xl font-bold">PERPUS SMPN 1 SEDATI</h1>
+            <LibraryBig className="h-8 w-8 md:h-10 md:w-10 mr-2 md:mr-3 drop-shadow-md" />
+            <h1 className="text-xl md:text-2xl font-bold drop-shadow-md">PERPUS SMPN 1 SEDATI</h1>
           </div>
 
           {isMobile ? (
             <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
               <SheetTrigger asChild>
-                <GSAPButton variant="ghost" size="icon" className="text-white hover:bg-blue-700">
+                <GSAPButton variant="ghost" size="icon" className="text-white hover:bg-white/20">
                   <Menu className="h-6 w-6" />
                 </GSAPButton>
               </SheetTrigger>
@@ -85,52 +91,51 @@ const StudentDashboardHeader: React.FC<StudentDashboardHeaderProps> = ({
             </Sheet>
           ) : (
             <div className="flex items-center space-x-4">
-              <GSAPButton onClick={onProfileClick} variant="ghost" className="text-white hover:bg-blue-700 transition-colors duration-300">
+              <GSAPButton onClick={onProfileClick} variant="ghost" className="text-white hover:bg-white/20 transition-colors duration-300">
                 <User className="mr-2 h-5 w-5" /> Profil Siswa
               </GSAPButton>
-              <GSAPButton onClick={onLogout} variant="ghost" className="text-white hover:bg-blue-700 transition-colors duration-300">
+              <GSAPButton onClick={onLogout} variant="ghost" className="text-white hover:bg-white/20 transition-colors duration-300">
                 <LogOut className="mr-2 h-5 w-5" /> Logout
               </GSAPButton>
             </div>
           )}
         </div>
 
-        <p className="text-center text-sm mb-8 opacity-90">© Copyright {new Date().getFullYear()} SMPN 1 SEDATI</p>
-
         {/* Hero Content */}
-        <div className="flex justify-center mb-10">
+        <div className="flex flex-col items-center justify-center flex-grow text-center mb-10">
           <motion.img
             src="/smpn1sedati_logo.png"
             alt="Logo Sekolah"
-            className="h-28 w-28 object-contain animate-pulse"
+            className="h-28 w-28 md:h-36 md:w-36 object-contain animate-pulse drop-shadow-lg mb-6"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.3 }}
           />
+          <motion.h2 variants={heroTextVariants} className="text-4xl md:text-6xl font-extrabold mb-3 font-guncen drop-shadow-lg">
+            Selamat Datang, {studentName}!
+          </motion.h2>
+          <motion.p variants={heroTextVariants} className="text-lg md:text-xl opacity-90 max-w-3xl mx-auto drop-shadow-md" style={{ animationDelay: '0.4s' }}>
+            Jelajahi ribuan koleksi buku digital dan fisik kami.
+          </motion.p>
         </div>
 
-        <motion.div variants={heroTextVariants} className="text-center mb-10">
-          <h2 className="text-4xl md:text-5xl font-extrabold mb-3">Jelajahi Koleksi Buku Kami</h2>
-          <p className="text-lg md:text-xl opacity-90 max-w-3xl mx-auto">
-            Temukan buku favorit Anda dari berbagai kategori dan tingkatkan pengetahuan Anda.
-          </p>
-        </motion.div>
-
         {/* Search Bar */}
-        <motion.div variants={searchBarVariants} className="flex justify-center mb-10">
+        <motion.div variants={searchBarVariants} className="flex justify-center mt-auto mb-10">
           <div className="relative w-full max-w-xl">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500" />
             <Input
-              placeholder="Cari buku berdasarkan judul..."
+              placeholder="Cari buku berdasarkan judul, penulis, atau ISBN..."
               value={searchTerm}
               onChange={onSearchChange}
-              className="w-full pl-12 pr-4 py-3 bg-white text-gray-800 border-none rounded-full shadow-lg focus:ring-2 focus:ring-blue-300 focus:border-blue-300 text-lg"
+              className="w-full pl-12 pr-4 py-3 bg-white text-gray-800 border-none rounded-full shadow-xl focus:ring-2 focus:ring-blue-300 focus:border-blue-300 text-lg"
             />
           </div>
         </motion.div>
+      </div>
 
-        {/* Stat Cards (now inline, not absolutely positioned) */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center mt-10 max-w-7xl mx-auto px-4">
+      {/* Stat Cards - positioned absolutely at the bottom, slightly overlapping */}
+      <div className="absolute bottom-0 left-0 right-0 z-20 translate-y-1/2">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center max-w-7xl mx-auto px-4">
           <AnimatedStatCard icon={Book} label="Total Buku" value={totalBooksCount} animationDelay={0.3} />
           <AnimatedStatCard icon={LayoutGrid} label="Kategori Buku" value={totalCategoriesCount} animationDelay={0.4} />
           <AnimatedStatCard icon={BookOpen} label="Akses Online" value="24/7" isNumeric={false} animationDelay={0.5} />
