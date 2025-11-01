@@ -12,6 +12,7 @@ import BookCard from '@/components/BookCard';
 import BookDetailDialog from '@/components/BookDetailDialog';
 import BookCardSkeleton from '@/components/BookCardSkeleton';
 import StudentDashboardHeader from '@/components/student/StudentDashboardHeader';
+import AnimatedStatCard from '@/components/AnimatedStatCard'; // Import AnimatedStatCard
 
 interface BookItem {
   id_buku: number;
@@ -271,8 +272,17 @@ const Dashboard = () => {
         totalCategoriesCount={totalCategoriesCount}
       />
 
+      {/* Stat Cards - Now placed directly after the header */}
+      <div className="max-w-7xl mx-auto px-4 -mt-20 relative z-20"> {/* Negative margin-top to pull it up, z-20 for visibility */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+          <AnimatedStatCard icon={Book} label="Total Buku" value={totalBooksCount} animationDelay={0.3} />
+          <AnimatedStatCard icon={LayoutGrid} label="Kategori Buku" value={totalCategoriesCount} animationDelay={0.4} />
+          <AnimatedStatCard icon={BookOpen} label="Akses Online" value="24/7" isNumeric={false} animationDelay={0.5} />
+        </div>
+      </div>
+
       {/* Main content area, adjusted for header height and overlapping cards */}
-      <div className="p-4 md:p-8 max-w-7xl mx-auto mt-40 relative z-10"> {/* Adjusted margin-top and z-index */}
+      <div className="p-4 md:p-8 max-w-7xl mx-auto mt-10 relative z-10"> {/* Adjusted margin-top to clear stat cards */}
         <Card className="shadow-xl border-none animate-fade-in-up">
           <CardHeader className="flex flex-col md:flex-row items-start md:items-center justify-between space-y-4 md:space-y-0 pb-4">
             <CardTitle className="text-3xl font-bold text-foreground">Koleksi Buku</CardTitle>
