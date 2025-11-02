@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion, Variants } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { UserCircle } from 'lucide-react'; // Import UserCircle icon
+import LibrarianCard from './LibrarianCard'; // Import the new LibrarianCard component
 
 const librariansData = [
   { name: "Titik Darmayu S, S.Pd.", title: "Pustakawan Senior", image: "/foto (1).png" },
@@ -13,7 +13,7 @@ const LibrarianSection: React.FC = () => {
 
   const cardVariants: Variants = {
     hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeInOut" as any } }, // Menggunakan 'as any' untuk mengatasi masalah tipe
+    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeInOut" as any } },
   };
 
   return (
@@ -30,31 +30,21 @@ const LibrarianSection: React.FC = () => {
           className="text-3xl md:text-4xl font-bold text-center mb-12 tracking-widest text-gray-900 font-guncen"
           initial={{ opacity: 0, y: -20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, ease: "easeInOut" as any }} // Menggunakan 'as any' untuk mengatasi masalah tipe
+          transition={{ duration: 0.7, ease: "easeInOut" as any }}
         >
           TIM PUSTAKAWAN KAMI
         </motion.h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 justify-items-center">
           {librariansData.map((librarian, index) => (
-            <motion.div
+            <LibrarianCard
               key={index}
+              name={librarian.name}
+              title={librarian.title}
+              image={librarian.image}
               variants={cardVariants}
-              initial="hidden"
-              animate={inView ? "visible" : "hidden"}
-              transition={{ delay: index * 0.2 }}
-              className="relative flex flex-col items-center bg-gradient-to-br from-white to-blue-50 rounded-2xl shadow-xl border border-blue-200/50 w-full max-w-sm p-6 text-center transition-all duration-500 ease-out overflow-hidden hover:shadow-2xl hover:scale-105"
-            >
-              <div className="w-64 aspect-[9/16] overflow-hidden bg-gray-100 flex items-center justify-center mb-6 rounded-lg border-b-4 border-primary/30 mx-auto">
-                {librarian.image ? (
-                  <img src={librarian.image} alt={librarian.name} className="w-full h-full object-cover" />
-                ) : (
-                  <UserCircle className="h-32 w-32 text-blue-500/50" />
-                )}
-              </div>
-              <h4 className="font-bold text-3xl text-gray-900 mb-1 font-guncen">{librarian.name}</h4>
-              <p className="text-xl text-primary font-semibold">{librarian.title}</p>
-            </motion.div>
+              delay={index * 0.2}
+            />
           ))}
         </div>
       </div>

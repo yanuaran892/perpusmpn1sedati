@@ -71,14 +71,20 @@
     --secondary: 210 40% 96.1%; /* Light Gray */
     --secondary-foreground: 220 13% 20%;
 
+    --destructive: 0 84.2% 60.2%; /* Red */
+    --destructive-foreground: 210 40% 98%;
+
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%; /* Medium Gray */
 
     --accent: 142.1 76.2% 36.3%; /* Emerald Green */
     --accent-foreground: 0 0% 100%; /* White */
 
-    --destructive: 0 84.2% 60.2%; /* Red */
-    --destructive-foreground: 210 40% 98%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 13% 20%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 13% 20%;
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
@@ -94,6 +100,12 @@
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Custom colors for glowing card effect */
+    --card-glow-gradient-1-start: 270 80% 60%; /* Vibrant Purple */
+    --card-glow-gradient-1-end: 200 90% 60%;   /* Vibrant Cyan-Blue */
+    --card-glow-gradient-2-start: 300 90% 60%; /* Vibrant Pink-Purple */
+    --card-glow-gradient-2-end: 180 90% 60%;   /* Vibrant Teal-Blue */
   }
 
   .dark {
@@ -133,6 +145,12 @@
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Custom colors for glowing card effect in dark mode */
+    --card-glow-gradient-1-start: 270 80% 60%; /* Vibrant Purple */
+    --card-glow-gradient-1-end: 200 90% 60%;   /* Vibrant Cyan-Blue */
+    --card-glow-gradient-2-start: 300 90% 60%; /* Vibrant Pink-Purple */
+    --card-glow-gradient-2-end: 180 90% 60%;   /* Vibrant Teal-Blue */
   }
 }
 
@@ -188,5 +206,55 @@
   .btn-shiny:active {
     box-shadow: 0 0 0 0 transparent;
     transition: box-shadow 0.2s ease-in;
+  }
+
+  /* Custom glowing card styles */
+  .glowing-card {
+    position: relative;
+    width: 190px;
+    height: 254px;
+    background-color: hsl(var(--card)); /* Use card background */
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    padding: 12px;
+    gap: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: hsl(var(--foreground)); /* Use foreground color */
+    overflow: hidden; /* Ensure pseudo-elements don't overflow */
+  }
+
+  .glowing-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    left: -5px;
+    margin: auto;
+    width: 200px;
+    height: 264px;
+    border-radius: 10px;
+    background: linear-gradient(-45deg, hsl(var(--card-glow-gradient-1-start)) 0%, hsl(var(--card-glow-gradient-1-end)) 100%);
+    z-index: -10;
+    pointer-events: none;
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .glowing-card::after {
+    content: "";
+    z-index: -1;
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(-45deg, hsl(var(--card-glow-gradient-2-start)) 0%, hsl(var(--card-glow-gradient-2-end)) 100%);
+    transform: translate3d(0, 0, 0) scale(0.95);
+    filter: blur(20px);
+  }
+
+  .glowing-card:hover::after {
+    filter: blur(30px);
+  }
+
+  .glowing-card:hover::before {
+    transform: rotate(-90deg) scaleX(1.34) scaleY(0.77);
   }
 }
