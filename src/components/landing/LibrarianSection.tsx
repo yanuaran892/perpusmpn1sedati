@@ -37,14 +37,21 @@ const LibrarianSection: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 justify-items-center">
           {librariansData.map((librarian, index) => (
-            <LibrarianCard
+            <motion.div
               key={index}
-              name={librarian.name}
-              title={librarian.title}
-              image={librarian.image}
               variants={cardVariants}
-              delay={index * 0.2}
-            />
+              initial="hidden"
+              animate={inView ? "visible" : "hidden"}
+              transition={{ delay: index * 0.2 }}
+              className="relative w-full max-w-sm p-0 text-center transition-all duration-500 ease-out overflow-hidden hover:shadow-2xl hover:scale-105
+                         bg-card text-card-foreground rounded-2xl shadow-xl border border-blue-200/50 glowing-effect-wrapper"
+            >
+              <LibrarianCard
+                name={librarian.name}
+                title={librarian.title}
+                image={librarian.image}
+              />
+            </motion.div>
           ))}
         </div>
       </div>
