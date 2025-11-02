@@ -109,13 +109,13 @@ const StudentFormDialog: React.FC<StudentFormDialogProps> = ({ isOpen, onClose, 
           p_id_nis: formData.id_nis,
           p_nama: formData.nama,
           p_kelas: formData.kelas,
+          p_password: formData.password, // Urutan parameter yang diperbarui
+          p_admin_id: admin.id,         // Urutan parameter yang diperbarui
+          p_admin_username: admin.username, // Urutan parameter yang diperbarui
           p_email: formData.email,
-          p_password: formData.password,
           p_max_peminjaman: formData.max_peminjaman,
           p_status_siswa: formData.status_siswa,
           p_status_peminjaman: formData.status_peminjaman,
-          p_admin_id: admin.id,
-          p_admin_username: admin.username,
         });
 
         if (error || !data) {
@@ -130,13 +130,13 @@ const StudentFormDialog: React.FC<StudentFormDialogProps> = ({ isOpen, onClose, 
           p_id_nis: formData.id_nis,
           p_nama: formData.nama,
           p_kelas: formData.kelas,
+          p_admin_id: admin.id,         // Urutan parameter yang diperbarui
+          p_admin_username: admin.username, // Urutan parameter yang diperbarui
           p_email: formData.email,
           p_new_password: formData.password || null, // Pass null if password is not changed
           p_max_peminjaman: formData.max_peminjaman,
           p_status_siswa: formData.status_siswa,
           p_status_peminjaman: formData.status_peminjaman,
-          p_admin_id: admin.id,
-          p_admin_username: admin.username,
         });
 
         if (error || !data) {
