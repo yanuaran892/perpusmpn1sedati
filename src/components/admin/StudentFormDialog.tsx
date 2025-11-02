@@ -9,6 +9,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { showError, showSuccess } from '@/utils/toast';
 import { FloatingLabelInput } from '@/components/FloatingLabelInput'; // Menggunakan FloatingLabelInput
 import { User, Lock, Maximize2, CheckCircle, XCircle } from 'lucide-react'; // Icons for inputs
+import { useAdminAuth } from '@/context/AdminAuthContext'; // Import useAdminAuth
 
 interface StudentItem {
   id_nis: string;
@@ -32,6 +33,7 @@ interface StudentFormDialogProps {
 }
 
 const StudentFormDialog: React.FC<StudentFormDialogProps> = ({ isOpen, onClose, onSave, studentToEdit }) => {
+  const { admin } = useAdminAuth(); // Get admin context
   const [formData, setFormData] = useState<StudentItem>({
     id_nis: '',
     nama: '',
@@ -83,10 +85,15 @@ const StudentFormDialog: React.FC<StudentFormDialogProps> = ({ isOpen, onClose, 
   };
 
   const handleSaveStudent = async () => {
+    if (!admin?.id || !admin?.username) {
+      showError('Admin tidak terautentikasi. Silakan login ulang.');
+      return;
+    }
+
     setLoading(true);
     try {
       if (isNewStudent) {
-        // Insert new student
+        // Insert new student using RPC function
         if (!formData.id_nis || !formData.nama || !formData.kelas || !formData.password) {
           showError('NIS, Nama, Kelas, dan Password harus diisi.');
           setLoading(false);
@@ -98,91 +105,42 @@ const StudentFormDialog: React.FC<StudentFormDialogProps> = ({ isOpen, onClose, 
           return;
         }
 
-        // Hash password before inserting using helper RPC functions
-        const { data: saltData, error: saltError } = await supabase.rpc('get_salt', { p_type: 'bf' });
-        if (saltError) {
-          showError(saltError.message || 'Gagal membuat salt password.');
-          setLoading(false);
-          return;
-        }
-
-        const { data: hashedPasswordData, error: hashError } = await supabase.rpc('get_hashed_password', {
+        const { data, error } = await supabase.rpc('admin_add_student', {
+          p_id_nis: formData.id_nis,
+          p_nama: formData.nama,
+          p_kelas: formData.kelas,
+          p_email: formData.email,
           p_password: formData.password,
-          p_salt: saltData,
+          p_max_peminjaman: formData.max_peminjaman,
+          p_status_siswa: formData.status_siswa,
+          p_status_peminjaman: formData.status_peminjaman,
+          p_admin_id: admin.id,
+          p_admin_username: admin.username,
         });
 
-        if (hashError) {
-          showError(hashError.message || 'Gagal mengenkripsi password.');
-          setLoading(false);
-          return;
-        }
-
-        const { error } = await supabase
-          .from('siswa')
-          .insert({
-            id_nis: formData.id_nis,
-            nama: formData.nama,
-            kelas: formData.kelas,
-            email: formData.email,
-            password: hashedPasswordData, // Use hashed password
-            max_peminjaman: formData.max_peminjaman,
-            status_siswa: formData.status_siswa,
-            status_peminjaman: formData.status_peminjaman,
-            // total_pinjam, sedang_pinjam, total_denda default to 0 in DB
-          });
-
-        if (error) {
-          showError(error.message || 'Gagal menambah siswa.');
+        if (error || !data) {
+          showError(error?.message || 'Gagal menambah siswa.');
           setLoading(false);
           return;
         }
         showSuccess('Siswa berhasil ditambahkan!');
       } else {
-        // Update existing student
-        const updateData: Partial<StudentItem> = {
-          nama: formData.nama,
-          kelas: formData.kelas,
-          email: formData.email,
-          max_peminjaman: formData.max_peminjaman,
-          status_siswa: formData.status_siswa,
-          status_peminjaman: formData.status_peminjaman,
-        };
+        // Update existing student using RPC function
+        const { data, error } = await supabase.rpc('admin_update_student', {
+          p_id_nis: formData.id_nis,
+          p_nama: formData.nama,
+          p_kelas: formData.kelas,
+          p_email: formData.email,
+          p_new_password: formData.password || null, // Pass null if password is not changed
+          p_max_peminjaman: formData.max_peminjaman,
+          p_status_siswa: formData.status_siswa,
+          p_status_peminjaman: formData.status_peminjaman,
+          p_admin_id: admin.id,
+          p_admin_username: admin.username,
+        });
 
-        // Only update password if a new one is provided
-        if (formData.password) {
-          if (formData.password.length < 6) {
-            showError('Password baru minimal 6 karakter.');
-            setLoading(false);
-            return;
-          }
-          // Use the RPC function to update password securely
-          const { data: saltData, error: saltError } = await supabase.rpc('get_salt', { p_type: 'bf' });
-          if (saltError) {
-            showError(saltError.message || 'Gagal membuat salt password baru.');
-            setLoading(false);
-            return;
-          }
-
-          const { data: hashedPasswordData, error: hashError } = await supabase.rpc('get_hashed_password', {
-            p_password: formData.password,
-            p_salt: saltData,
-          });
-
-          if (hashError) {
-            showError(hashError.message || 'Gagal mengenkripsi password baru.');
-            setLoading(false);
-            return;
-          }
-          updateData.password = hashedPasswordData;
-        }
-
-        const { error } = await supabase
-          .from('siswa')
-          .update(updateData)
-          .eq('id_nis', formData.id_nis);
-
-        if (error) {
-          showError(error.message || 'Gagal memperbarui siswa.');
+        if (error || !data) {
+          showError(error?.message || 'Gagal memperbarui siswa.');
           setLoading(false);
           return;
         }

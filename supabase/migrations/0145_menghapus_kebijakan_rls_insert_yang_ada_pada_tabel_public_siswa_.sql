@@ -1,0 +1,1 @@
+DROP POLICY IF EXISTS "Admins can insert new student data" ON public.siswa;
