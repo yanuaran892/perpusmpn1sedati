@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { UserCircle } from 'lucide-react'; // Import UserCircle icon
 
@@ -11,9 +11,9 @@ const librariansData = [
 const LibrarianSection: React.FC = () => {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
 
-  const cardVariants = {
+  const cardVariants: Variants = {
     hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.42, 0, 0.58, 1] } }, // Mengubah ease menjadi array cubic bezier untuk easeInOut
+    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeInOut" as any } }, // Menggunakan 'as any' untuk mengatasi masalah tipe
   };
 
   return (
@@ -30,7 +30,7 @@ const LibrarianSection: React.FC = () => {
           className="text-3xl md:text-4xl font-bold text-center mb-12 tracking-widest text-gray-900 font-guncen"
           initial={{ opacity: 0, y: -20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, ease: [0.42, 0, 0.58, 1] }} // Mengubah ease menjadi array cubic bezier untuk easeInOut
+          transition={{ duration: 0.7, ease: "easeInOut" as any }} // Menggunakan 'as any' untuk mengatasi masalah tipe
         >
           TIM PUSTAKAWAN KAMI
         </motion.h3>
