@@ -99,9 +99,16 @@ const StudentFormDialog: React.FC<StudentFormDialogProps> = ({ isOpen, onClose, 
         }
 
         // Hash password before inserting
-        const { data: hashedPasswordData, error: hashError } = await supabase.rpc('crypt', {
+        const { data: saltData, error: saltError } = await supabase.rpc('extensions.gen_salt', { _type: 'bf' });
+        if (saltError) {
+          showError(saltError.message || 'Gagal membuat salt password.');
+          setLoading(false);
+          return;
+        }
+
+        const { data: hashedPasswordData, error: hashError } = await supabase.rpc('extensions.crypt', {
           _text: formData.password,
-          _salt: await supabase.rpc('gen_salt', { _type: 'bf' }),
+          _salt: saltData,
         });
 
         if (hashError) {
@@ -149,9 +156,16 @@ const StudentFormDialog: React.FC<StudentFormDialogProps> = ({ isOpen, onClose, 
             return;
           }
           // Use the RPC function to update password securely
-          const { data: hashedPasswordData, error: hashError } = await supabase.rpc('crypt', {
+          const { data: saltData, error: saltError } = await supabase.rpc('extensions.gen_salt', { _type: 'bf' });
+          if (saltError) {
+            showError(saltError.message || 'Gagal membuat salt password baru.');
+            setLoading(false);
+            return;
+          }
+
+          const { data: hashedPasswordData, error: hashError } = await supabase.rpc('extensions.crypt', {
             _text: formData.password,
-            _salt: await supabase.rpc('gen_salt', { _type: 'bf' }),
+            _salt: saltData,
           });
 
           if (hashError) {
