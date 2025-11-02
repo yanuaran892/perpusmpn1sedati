@@ -13,7 +13,7 @@ const LibrarianSection: React.FC = () => {
 
   const cardVariants = {
     hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.2, 1, 0.2, 1] } }, // Diperbarui: ease string menjadi array
+    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.2, 1, 0.2, 1] } },
   };
 
   return (
@@ -43,9 +43,9 @@ const LibrarianSection: React.FC = () => {
               initial="hidden"
               animate={inView ? "visible" : "hidden"}
               transition={{ delay: index * 0.2 }}
-              className="relative flex flex-col items-center bg-white rounded-xl shadow-lg border-4 border-gray-200 w-full max-w-sm h-[400px] p-6 text-center transition-all duration-500 ease-out overflow-hidden hover:shadow-xl hover:scale-105"
+              className="relative flex flex-col items-center bg-white rounded-xl shadow-lg border-4 border-gray-200 w-full max-w-sm h-[450px] p-6 text-center transition-all duration-500 ease-out overflow-hidden hover:shadow-xl hover:scale-105"
             >
-              <div className="w-48 h-48 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center mb-6 border-4 border-primary/20">
+              <div className="w-full h-64 overflow-hidden bg-gray-100 flex items-center justify-center mb-6 rounded-lg border-4 border-primary/20">
                 {librarian.image ? (
                   <img src={librarian.image} alt={librarian.name} className="w-full h-full object-cover" />
                 ) : (
