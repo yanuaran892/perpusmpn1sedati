@@ -10,7 +10,7 @@ interface LibrarianCardProps {
 const LibrarianCard: React.FC<LibrarianCardProps> = ({ name, title, image }) => {
   return (
     <div className="relative z-10 flex flex-col items-center p-6 text-center">
-      <div className="w-48 h-48 overflow-hidden bg-gray-100 flex items-center justify-center mb-4 rounded-lg border-b-4 border-primary/30 mx-auto">
+      <div className="w-48 h-64 overflow-hidden bg-gray-100 flex items-center justify-center mb-4 rounded-lg border-b-4 border-primary/30 mx-auto">
         {image ? (
           <img src={image} alt={name} className="w-full h-full object-cover" />
         ) : (
