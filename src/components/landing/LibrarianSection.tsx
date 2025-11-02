@@ -43,17 +43,17 @@ const LibrarianSection: React.FC = () => {
               initial="hidden"
               animate={inView ? "visible" : "hidden"}
               transition={{ delay: index * 0.2 }}
-              className="relative flex flex-col items-center bg-white rounded-xl shadow-lg border-4 border-gray-200 w-full max-w-sm h-[450px] p-6 text-center transition-all duration-500 ease-out overflow-hidden hover:shadow-xl hover:scale-105"
+              className="relative flex flex-col items-center bg-gradient-to-br from-white to-blue-50 rounded-2xl shadow-xl border border-blue-200/50 w-full max-w-sm p-6 text-center transition-all duration-500 ease-out overflow-hidden hover:shadow-2xl hover:scale-105"
             >
-              <div className="w-full h-64 overflow-hidden bg-gray-100 flex items-center justify-center mb-6 rounded-lg border-4 border-primary/20">
+              <div className="w-full aspect-[9/16] overflow-hidden bg-gray-100 flex items-center justify-center mb-6 rounded-lg border-b-4 border-primary/30">
                 {librarian.image ? (
                   <img src={librarian.image} alt={librarian.name} className="w-full h-full object-cover" />
                 ) : (
                   <UserCircle className="h-32 w-32 text-blue-500/50" />
                 )}
               </div>
-              <h4 className="font-bold text-2xl text-gray-900 mb-2 font-guncen">{librarian.name}</h4>
-              <p className="text-lg text-primary font-semibold">{librarian.title}</p>
+              <h4 className="font-bold text-3xl text-gray-900 mb-1 font-guncen">{librarian.name}</h4>
+              <p className="text-xl text-primary font-semibold">{librarian.title}</p>
             </motion.div>
           ))}
         </div>
