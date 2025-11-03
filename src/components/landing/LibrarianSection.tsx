@@ -8,17 +8,13 @@ const librariansData = [
     name: "Titik Darmayu S, S.Pd.",
     title: "Pustakawan Senior",
     image: "/foto (1).png",
-    description: "Berpengalaman dalam manajemen perpustakaan dan kurasi koleksi buku.",
-    booksBorrowed: 1200,
-    studentsHelped: 500,
+    // description, booksBorrowed, studentsHelped dihapus
   },
   {
     name: "Haniifah Roosyidah R, S.Pd.",
     title: "Pustakawan Digital",
     image: "/foto (2).png",
-    description: "Fokus pada pengembangan sumber daya digital dan literasi media.",
-    booksBorrowed: 850,
-    studentsHelped: 320,
+    // description, booksBorrowed, studentsHelped dihapus
   },
 ];
 
@@ -64,9 +60,7 @@ const LibrarianSection: React.FC = () => {
                 name={librarian.name}
                 title={librarian.title}
                 image={librarian.image}
-                description={librarian.description}
-                booksBorrowed={librarian.booksBorrowed}
-                studentsHelped={librarian.studentsHelped}
+                // description, booksBorrowed, studentsHelped tidak lagi diteruskan
               />
             </motion.div>
           ))}
