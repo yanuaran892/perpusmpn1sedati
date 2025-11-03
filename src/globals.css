@@ -221,7 +221,7 @@
     margin: auto;
     width: 100%; /* Fill parent */
     height: 100%; /* Fill parent */
-    border-radius: var(--radius); /* Use Tailwind's border-radius variable */
+    border-radius: 1rem; /* Use 1rem for rounded-2xl consistency */
     background: linear-gradient(-45deg, hsl(var(--card-glow-gradient-1-start)) 0%, hsl(var(--card-glow-gradient-1-end)) 100%);
     z-index: -10;
     pointer-events: none;
@@ -236,7 +236,7 @@
     background: linear-gradient(-45deg, hsl(var(--card-glow-gradient-2-start)) 0%, hsl(var(--card-glow-gradient-2-end)) 100%);
     transform: translate3d(0, 0, 0) scale(0.95);
     filter: blur(20px);
-    border-radius: var(--radius); /* Use Tailwind's border-radius variable */
+    border-radius: 1rem; /* Use 1rem for rounded-2xl consistency */
   }
 
   .glowing-effect-wrapper:hover::after {
