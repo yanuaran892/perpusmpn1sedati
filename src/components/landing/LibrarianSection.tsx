@@ -6,13 +6,13 @@ import LibrarianCard from './LibrarianCard';
 const librariansData = [
   {
     name: "Titik Darmayu S, S.Pd.",
-    title: "Pustakawan Senior",
+    title: "Pustakawan",
     image: "/foto (1).png",
     // description, booksBorrowed, studentsHelped dihapus
   },
   {
     name: "Haniifah Roosyidah R, S.Pd.",
-    title: "Pustakawan Digital",
+    title: "Pustakawan",
     image: "/foto (2).png",
     // description, booksBorrowed, studentsHelped dihapus
   },
