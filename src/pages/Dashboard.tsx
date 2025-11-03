@@ -5,15 +5,23 @@ import { supabase } from '@/integrations/supabase/client';
 import GSAPButton from '@/components/GSAPButton';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2, ChevronLeft, ChevronRight, Book, LayoutGrid, BookOpen, Search, User, LogOut, Bell, Settings, Star, TrendingUp, Clock, AlertCircle } from 'lucide-react';
+import { Loader2, ChevronLeft, ChevronRight, Book, LayoutGrid, BookOpen, Search, User, LogOut, Bell, Settings, Star, TrendingUp, Clock, AlertCircle, Menu } from 'lucide-react';
 import { showError, showSuccess } from '@/utils/toast';
-import { isPast, format, parseISO } from 'date-fns';
+import { isPast } from 'date-fns';
 import BookCard from '@/components/BookCard';
 import BookDetailDialog from '@/components/BookDetailDialog';
 import BookCardSkeleton from '@/components/BookCardSkeleton';
 import AnimatedStatCard from '@/components/AnimatedStatCard';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
 
 interface BookItem {
   id_buku: number;
@@ -62,6 +70,7 @@ const Dashboard = () => {
   const [isBorrowing, setIsBorrowing] = useState(false);
   const [notifications, setNotifications] = useState<{type: string, message: string}[]>([]);
   const [showNotifications, setShowNotifications] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     if (!authLoading && !student) {
@@ -298,38 +307,39 @@ const Dashboard = () => {
               <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-2 rounded-xl shadow-lg">
                 <Book className="h-8 w-8 text-white" />
               </div>
-              <div>
-                <h1 className="text-2xl font-bold text-gray-900">Perpustakaan Digital</h1>
-                <p className="text-sm text-gray-600">SMPN 1 Sedati</p>
+              <div className="hidden sm:block">
+                <h1 className="text-xl font-bold text-gray-900">Perpustakaan Digital</h1>
+                <p className="text-xs text-gray-600">SMPN 1 Sedati</p>
               </div>
             </div>
 
-            {/* Search Bar */}
-            <div className="flex-1 max-w-2xl mx-8">
-              <div className="relative">
+            {/* Search Bar - Hidden on mobile */}
+            <div className="hidden md:flex flex-1 max-w-2xl mx-4">
+              <div className="relative w-full">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <Search className="h-5 w-5 text-gray-400" />
                 </div>
                 <input
                   type="text"
-                  placeholder="Cari buku berdasarkan judul, penulis, atau ISBN..."
+                  placeholder="Cari buku..."
                   value={searchTerm}
                   onChange={handleSearchChange}
-                  className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm transition-all duration-300"
+                  className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-xl leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm transition-all duration-300 text-sm"
                 />
               </div>
             </div>
 
             {/* User Actions */}
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2">
+              {/* Notification Bell */}
               <div className="relative">
                 <button 
                   onClick={() => setShowNotifications(!showNotifications)}
                   className="p-2 rounded-full text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors duration-200 relative"
                 >
-                  <Bell className="h-6 w-6" />
+                  <Bell className="h-5 w-5" />
                   {notifications.length > 0 && (
-                    <span className="absolute top-0 right-0 block h-3 w-3 rounded-full bg-red-500 ring-2 ring-white"></span>
+                    <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white"></span>
                   )}
                 </button>
                 
@@ -340,10 +350,10 @@ const Dashboard = () => {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: -10, scale: 0.95 }}
                       transition={{ duration: 0.2 }}
-                      className="absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-2xl ring-1 ring-black ring-opacity-5 overflow-hidden z-50"
+                      className="absolute right-0 mt-2 w-72 bg-white rounded-xl shadow-2xl ring-1 ring-black ring-opacity-5 overflow-hidden z-50"
                     >
-                      <div className="p-4 bg-gradient-to-r from-blue-500 to-indigo-600">
-                        <h3 className="text-white font-semibold">Notifikasi</h3>
+                      <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-600">
+                        <h3 className="text-white font-semibold text-sm">Notifikasi</h3>
                       </div>
                       <div className="max-h-60 overflow-y-auto">
                         {notifications.length > 0 ? (
@@ -351,30 +361,30 @@ const Dashboard = () => {
                             <div 
                               key={index} 
                               className={cn(
-                                "p-4 border-b border-gray-100",
+                                "p-3 border-b border-gray-100",
                                 notification.type === 'denda' ? 'bg-red-50' : 'bg-yellow-50'
                               )}
                             >
                               <div className="flex items-start">
                                 {notification.type === 'denda' ? (
-                                  <AlertCircle className="h-5 w-5 text-red-500 mt-0.5 mr-2 flex-shrink-0" />
+                                  <AlertCircle className="h-4 w-4 text-red-500 mt-0.5 mr-2 flex-shrink-0" />
                                 ) : (
-                                  <Clock className="h-5 w-5 text-yellow-500 mt-0.5 mr-2 flex-shrink-0" />
+                                  <Clock className="h-4 w-4 text-yellow-500 mt-0.5 mr-2 flex-shrink-0" />
                                 )}
-                                <p className="text-sm text-gray-700">{notification.message}</p>
+                                <p className="text-xs text-gray-700">{notification.message}</p>
                               </div>
                             </div>
                           ))
                         ) : (
                           <div className="p-4 text-center">
-                            <p className="text-gray-500">Tidak ada notifikasi</p>
+                            <p className="text-gray-500 text-sm">Tidak ada notifikasi</p>
                           </div>
                         )}
                       </div>
                       <div className="p-2 bg-gray-50 flex justify-end">
                         <button
                           onClick={handleNotificationClose}
-                          className="text-sm text-blue-600 hover:text-blue-800 font-medium"
+                          className="text-xs text-blue-600 hover:text-blue-800 font-medium"
                         >
                           Tutup
                         </button>
@@ -384,8 +394,73 @@ const Dashboard = () => {
                 </AnimatePresence>
               </div>
 
-              <div className="flex items-center space-x-2">
-                <div className="hidden md:block">
+              {/* Mobile Menu Button */}
+              <div className="md:hidden">
+                <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+                  <SheetTrigger asChild>
+                    <button className="p-2 rounded-full text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors duration-200">
+                      <Menu className="h-5 w-5" />
+                    </button>
+                  </SheetTrigger>
+                  <SheetContent side="right" className="w-[280px] sm:w-[320px]">
+                    <SheetHeader>
+                      <SheetTitle>Menu Pengguna</SheetTitle>
+                      <SheetDescription>
+                        Akses profil dan pengaturan Anda
+                      </SheetDescription>
+                    </SheetHeader>
+                    <div className="flex flex-col space-y-4 mt-6">
+                      <div className="flex items-center p-3 bg-blue-50 rounded-lg">
+                        <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-2 rounded-lg">
+                          <User className="h-6 w-6 text-white" />
+                        </div>
+                        <div className="ml-3">
+                          <p className="font-medium text-gray-900">{student.nama}</p>
+                          <p className="text-sm text-gray-600">{student.kelas}</p>
+                        </div>
+                      </div>
+                      
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="bg-white p-3 rounded-lg shadow">
+                          <p className="text-xs text-gray-600">Dipinjam</p>
+                          <p className="font-bold text-lg">{student.sedang_pinjam}/{student.max_peminjaman}</p>
+                        </div>
+                        <div className="bg-white p-3 rounded-lg shadow">
+                          <p className="text-xs text-gray-600">Total Denda</p>
+                          <p className="font-bold text-lg">Rp {student.total_denda.toLocaleString('id-ID')}</p>
+                        </div>
+                      </div>
+                      
+                      <GSAPButton 
+                        onClick={() => {
+                          handleProfileClick();
+                          setIsMobileMenuOpen(false);
+                        }}
+                        className="w-full justify-start bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white"
+                      >
+                        <User className="h-4 w-4 mr-2" />
+                        Profil Saya
+                      </GSAPButton>
+                      
+                      <GSAPButton 
+                        onClick={() => {
+                          handleLogout();
+                          setIsMobileMenuOpen(false);
+                        }}
+                        variant="destructive"
+                        className="w-full"
+                      >
+                        <LogOut className="h-4 w-4 mr-2" />
+                        Keluar
+                      </GSAPButton>
+                    </div>
+                  </SheetContent>
+                </Sheet>
+              </div>
+
+              {/* Desktop User Info */}
+              <div className="hidden md:flex items-center space-x-3">
+                <div className="text-right hidden lg:block">
                   <p className="text-sm font-medium text-gray-900">{student.nama}</p>
                   <p className="text-xs text-gray-500">{student.kelas}</p>
                 </div>
@@ -393,59 +468,75 @@ const Dashboard = () => {
                   onClick={handleProfileClick}
                   className="p-2 rounded-full text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors duration-200"
                 >
-                  <User className="h-6 w-6" />
+                  <User className="h-5 w-5" />
                 </button>
                 <button 
                   onClick={handleLogout}
                   className="p-2 rounded-full text-gray-600 hover:text-red-600 hover:bg-red-50 transition-colors duration-200"
                 >
-                  <LogOut className="h-6 w-6" />
+                  <LogOut className="h-5 w-5" />
                 </button>
               </div>
+            </div>
+          </div>
+          
+          {/* Search Bar - Visible on mobile */}
+          <div className="md:hidden pb-3">
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Search className="h-5 w-5 text-gray-400" />
+              </div>
+              <input
+                type="text"
+                placeholder="Cari buku..."
+                value={searchTerm}
+                onChange={handleSearchChange}
+                className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-xl leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm transition-all duration-300 text-sm"
+              />
             </div>
           </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Welcome Section */}
+      <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        {/* Welcome Section - Mobile Optimized */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="mb-10"
+          className="mb-6"
         >
-          <div className="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl shadow-xl p-6 md:p-8 text-white">
+          <div className="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl shadow-xl p-5 text-white">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between">
               <div>
-                <h2 className="text-3xl font-bold mb-2">Selamat Datang, {student.nama}!</h2>
-                <p className="text-blue-100 text-lg">Jelajahi ribuan koleksi buku digital dan fisik kami</p>
+                <h2 className="text-xl md:text-2xl font-bold mb-1">Halo, {student.nama}!</h2>
+                <p className="text-blue-100 text-sm md:text-base">Jelajahi koleksi buku kami</p>
               </div>
-              <div className="mt-4 md:mt-0 flex items-center space-x-4">
-                <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4 text-center">
-                  <p className="text-sm text-blue-100">Buku Dipinjam</p>
-                  <p className="text-2xl font-bold">{student.sedang_pinjam}/{student.max_peminjaman}</p>
+              <div className="mt-3 md:mt-0 grid grid-cols-2 gap-2 md:flex md:space-x-3">
+                <div className="bg-white/20 backdrop-blur-sm rounded-lg p-2 text-center">
+                  <p className="text-xs text-blue-100">Dipinjam</p>
+                  <p className="text-sm font-bold">{student.sedang_pinjam}/{student.max_peminjaman}</p>
                 </div>
-                <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4 text-center">
-                  <p className="text-sm text-blue-100">Total Denda</p>
-                  <p className="text-2xl font-bold">Rp {student.total_denda.toLocaleString('id-ID')}</p>
+                <div className="bg-white/20 backdrop-blur-sm rounded-lg p-2 text-center">
+                  <p className="text-xs text-blue-100">Denda</p>
+                  <p className="text-sm font-bold">Rp {student.total_denda.toLocaleString('id-ID')}</p>
                 </div>
               </div>
             </div>
           </div>
         </motion.div>
 
-        {/* Stats Cards */}
+        {/* Stats Cards - Responsive Grid */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10"
+          className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6"
         >
           <AnimatedStatCard icon={Book} label="Total Buku" value={totalBooksCount} animationDelay={0} />
-          <AnimatedStatCard icon={LayoutGrid} label="Kategori Buku" value={totalCategoriesCount} animationDelay={0.1} />
-          <AnimatedStatCard icon={BookOpen} label="Akses Online" value="24/7" isNumeric={false} animationDelay={0.2} />
+          <AnimatedStatCard icon={LayoutGrid} label="Kategori" value={totalCategoriesCount} animationDelay={0.1} />
+          <AnimatedStatCard icon={BookOpen} label="Akses 24/7" value="Online" isNumeric={false} animationDelay={0.2} />
         </motion.div>
 
         {/* Books Section */}
@@ -455,14 +546,14 @@ const Dashboard = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           <Card className="shadow-xl border-none bg-white/80 backdrop-blur-lg rounded-2xl overflow-hidden">
-            <CardHeader className="flex flex-col md:flex-row items-start md:items-center justify-between space-y-4 md:space-y-0 pb-4 bg-gradient-to-r from-blue-50 to-indigo-50 p-6">
+            <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0 pb-4 bg-gradient-to-r from-blue-50 to-indigo-50 p-4">
               <div>
-                <CardTitle className="text-2xl font-bold text-gray-900">Koleksi Buku</CardTitle>
-                <p className="text-gray-600">Temukan buku favoritmu di sini</p>
+                <CardTitle className="text-xl font-bold text-gray-900">Koleksi Buku</CardTitle>
+                <p className="text-gray-600 text-sm">Temukan buku favoritmu</p>
               </div>
-              <div className="w-full md:w-auto">
+              <div className="w-full sm:w-auto">
                 <Select onValueChange={(value) => { setSelectedCategoryId(value); setCurrentPage(1); }} value={selectedCategoryId || ''}>
-                  <SelectTrigger className="w-full md:w-[220px] shadow-sm text-base bg-white">
+                  <SelectTrigger className="w-full sm:w-[180px] shadow-sm text-sm bg-white">
                     <SelectValue placeholder="Filter Kategori" />
                   </SelectTrigger>
                   <SelectContent>
@@ -476,22 +567,22 @@ const Dashboard = () => {
                 </Select>
               </div>
             </CardHeader>
-            <CardContent className="pt-6">
+            <CardContent className="pt-4">
               {loadingBooks ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {Array.from({ length: 6 }).map((_, index) => (
                     <BookCardSkeleton key={index} />
                   ))}
                 </div>
               ) : books.length === 0 ? (
-                <div className="text-center py-12">
-                  <BookOpen className="mx-auto h-16 w-16 text-gray-400" />
-                  <h3 className="mt-4 text-lg font-medium text-gray-900">Tidak ada buku ditemukan</h3>
-                  <p className="mt-2 text-gray-500">Coba ubah kata kunci pencarian atau filter kategori</p>
+                <div className="text-center py-8">
+                  <BookOpen className="mx-auto h-12 w-12 text-gray-400" />
+                  <h3 className="mt-3 text-lg font-medium text-gray-900">Tidak ada buku ditemukan</h3>
+                  <p className="mt-1 text-gray-500 text-sm">Coba ubah kata kunci pencarian</p>
                 </div>
               ) : (
                 <>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {books.map((book, index) => (
                       <motion.div
                         key={book.id_buku}
@@ -509,23 +600,25 @@ const Dashboard = () => {
                       </motion.div>
                     ))}
                   </div>
-                  <div className="flex justify-center items-center space-x-3 mt-10">
+                  <div className="flex justify-center items-center space-x-2 mt-6">
                     <GSAPButton
                       onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
                       disabled={currentPage === 1}
                       variant="outline"
-                      className="bg-white hover:bg-gray-50 text-gray-700 shadow-sm px-4 py-2 rounded-xl"
+                      size="sm"
+                      className="bg-white hover:bg-gray-50 text-gray-700 shadow-sm"
                     >
-                      <ChevronLeft className="h-5 w-5" />
+                      <ChevronLeft className="h-4 w-4" />
                     </GSAPButton>
-                    <span className="text-lg text-gray-700 font-medium">Halaman {currentPage} dari {totalPages}</span>
+                    <span className="text-sm text-gray-700 font-medium">Hal {currentPage} dari {totalPages}</span>
                     <GSAPButton
                       onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
                       disabled={currentPage === totalPages}
                       variant="outline"
-                      className="bg-white hover:bg-gray-50 text-gray-700 shadow-sm px-4 py-2 rounded-xl"
+                      size="sm"
+                      className="bg-white hover:bg-gray-50 text-gray-700 shadow-sm"
                     >
-                      <ChevronRight className="h-5 w-5" />
+                      <ChevronRight className="h-4 w-4" />
                     </GSAPButton>
                   </div>
                 </>
