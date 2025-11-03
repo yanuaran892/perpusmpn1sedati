@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 // Import modular components
@@ -13,6 +13,15 @@ import LandingFooter from "@/components/landing/LandingFooter.tsx";
 
 const LandingPage = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const handleScrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -37,6 +46,7 @@ const LandingPage = () => {
         onScrollToSection={handleScrollToSection}
         isSheetOpen={isSheetOpen}
         setIsSheetOpen={setIsSheetOpen}
+        isScrolled={isScrolled}
       />
 
       <main className="pt-16">

@@ -15,6 +15,7 @@ interface LandingHeaderProps {
   onScrollToSection: (id: string) => void;
   isSheetOpen: boolean;
   setIsSheetOpen: (isOpen: boolean) => void;
+  isScrolled: boolean; // Menambahkan prop isScrolled
 }
 
 const LandingHeader: React.FC<LandingHeaderProps> = ({
@@ -22,9 +23,10 @@ const LandingHeader: React.FC<LandingHeaderProps> = ({
   onScrollToSection,
   isSheetOpen,
   setIsSheetOpen,
+  isScrolled,
 }) => {
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 w-full h-16 flex items-center bg-gradient-to-r from-gray-900/80 to-blue-950/80 backdrop-blur-md shadow-xl border-b border-white/10 transition-colors duration-300 py-3">
+    <header className={`fixed top-0 left-0 right-0 z-50 w-full h-16 flex items-center ${isScrolled ? 'bg-white/90 backdrop-blur-md shadow-md' : 'bg-gradient-to-r from-gray-900/80 to-blue-950/80 backdrop-blur-md'} transition-all duration-300 py-3`}>
       <div className="flex justify-between items-center w-full px-4 max-w-6xl mx-auto">
         <div className="flex items-center gap-2 text-white font-extrabold text-xl tracking-wide">
           <img src="/smpn1sedati_logo.png" alt="Logo" className="h-8 w-8" />
