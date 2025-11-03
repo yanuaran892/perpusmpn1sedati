@@ -116,25 +116,11 @@ const Login = () => {
               </div>
             </form>
 
-            <div className="mt-6 text-center">
-              <p className="text-sm text-gray-600">
-                Belum punya akun?{' '}
-                <a href="/student-visit-entry" className="font-medium text-blue-600 hover:text-blue-500">
-                  Daftar sebagai pengunjung
                 </a>
               </p>
             </div>
           </CardContent>
         </Card>
-
-        <div className="mt-6 text-center">
-          <p className="text-sm text-gray-600">
-            Masuk sebagai{' '}
-            <a 
-              href="/admin/login" 
-              className="font-medium text-indigo-600 hover:text-indigo-500"
-            >
-              Admin
             </a>
           </p>
         </div>
