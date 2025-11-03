@@ -1,11 +1,25 @@
 import React from 'react';
 import { motion, Variants } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import LibrarianCard from './LibrarianCard'; // Import the new LibrarianCard component
+import LibrarianCard from './LibrarianCard';
 
 const librariansData = [
-  { name: "Titik Darmayu S, S.Pd.", title: "Pustakawan Senior", image: "/foto (1).png" },
-  { name: "Haniifah Roosyidah R, S.Pd.", title: "Pustakawan Digital", image: "/foto (2).png" },
+  {
+    name: "Titik Darmayu S, S.Pd.",
+    title: "Pustakawan Senior",
+    image: "/foto (1).png",
+    description: "Berpengalaman dalam manajemen perpustakaan dan kurasi koleksi buku.",
+    booksBorrowed: 1200,
+    studentsHelped: 500,
+  },
+  {
+    name: "Haniifah Roosyidah R, S.Pd.",
+    title: "Pustakawan Digital",
+    image: "/foto (2).png",
+    description: "Fokus pada pengembangan sumber daya digital dan literasi media.",
+    booksBorrowed: 850,
+    studentsHelped: 320,
+  },
 ];
 
 const LibrarianSection: React.FC = () => {
@@ -13,7 +27,7 @@ const LibrarianSection: React.FC = () => {
 
   const cardVariants: Variants = {
     hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeInOut" as any } },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.2, 1, 0.2, 1] } },
   };
 
   return (
@@ -23,14 +37,14 @@ const LibrarianSection: React.FC = () => {
       initial={{ opacity: 0, y: 50 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.8 }}
-      className="py-16 md:py-24 bg-gradient-to-b from-blue-50 to-blue-100 overflow-hidden relative bg-[url('/subtle-dots.svg')] bg-repeat opacity-90"
+      className="py-16 md:py-24 bg-gradient-to-b from-blue-50 to-blue-100 overflow-hidden relative bg-[url('/subtle-dots.svg')] bg-repeat"
     >
       <div className="max-w-7xl mx-auto px-4">
         <motion.h3
           className="text-3xl md:text-4xl font-bold text-center mb-12 tracking-widest text-gray-900 font-guncen"
           initial={{ opacity: 0, y: -20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, ease: "easeInOut" as any }}
+          transition={{ duration: 0.7, ease: [0.2, 1, 0.2, 1] }}
         >
           TIM PUSTAKAWAN KAMI
         </motion.h3>
@@ -44,12 +58,15 @@ const LibrarianSection: React.FC = () => {
               animate={inView ? "visible" : "hidden"}
               transition={{ delay: index * 0.2 }}
               className="group relative p-0 text-center transition-all duration-500 ease-out overflow-hidden hover:shadow-2xl hover:scale-105
-                         bg-card text-card-foreground rounded-2xl shadow-xl border border-blue-200/50 glowing-effect-wrapper"
+                         rounded-2xl shadow-xl"
             >
               <LibrarianCard
                 name={librarian.name}
                 title={librarian.title}
                 image={librarian.image}
+                description={librarian.description}
+                booksBorrowed={librarian.booksBorrowed}
+                studentsHelped={librarian.studentsHelped}
               />
             </motion.div>
           ))}
