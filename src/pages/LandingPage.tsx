@@ -69,9 +69,11 @@ const LandingPage = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-2 rounded-xl shadow-lg">
-                <BookOpen className="h-8 w-8 text-white" />
-              </div>
+              <img 
+                src="/smpn1sedati_logo.png" 
+                alt="Logo SMPN 1 Sedati" 
+                className="h-12 w-12 object-contain"
+              />
               <div>
                 <h1 className="text-xl font-bold text-gray-900">Perpustakaan Digital</h1>
                 <p className="text-xs text-gray-600">SMPN 1 Sedati</p>
@@ -172,7 +174,7 @@ const LandingPage = () => {
               <img 
                 src="/smpn1sedati_logo.png" 
                 alt="Logo Sekolah" 
-                className="h-24 w-24 md:h-32 md:w-32 object-contain drop-shadow-2xl"
+                className="h-32 w-32 md:h-40 md:w-40 object-contain drop-shadow-2xl"
               />
             </div>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 mb-6 leading-tight">
@@ -531,9 +533,11 @@ const LandingPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
             <div className="col-span-1 md:col-span-2">
               <div className="flex items-center space-x-3 mb-6">
-                <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-2 rounded-xl">
-                  <BookOpen className="h-8 w-8 text-white" />
-                </div>
+                <img 
+                  src="/smpn1sedati_logo.png" 
+                  alt="Logo SMPN 1 Sedati" 
+                  className="h-12 w-12 object-contain"
+                />
                 <div>
                   <h3 className="text-2xl font-bold">Perpustakaan Digital</h3>
                   <p className="text-blue-200">SMPN 1 Sedati</p>
