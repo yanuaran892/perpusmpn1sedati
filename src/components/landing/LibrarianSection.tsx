@@ -33,6 +33,8 @@ const LibrarianSection: React.FC = () => {
       initial={{ opacity: 0, y: 50 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.8 }}
+       className="py-16 md:py-24 bg-gradient-to-b from-blue-50 to-blue-100 overflow-hidden relative bg-[url('/subtle-dots.svg')] bg-repeat"
+    >
     >
       <div className="max-w-7xl mx-auto px-4">
         <motion.h3
