@@ -1,3 +1,4 @@
+' yang tidak perlu.">
 import React from 'react';
 import { motion, Variants } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
@@ -6,13 +7,13 @@ import LibrarianCard from './LibrarianCard';
 const librariansData = [
   {
     name: "Titik Darmayu S, S.Pd.",
-    title: "Pustakawan",
+    title: "Pustakawan Senior",
     image: "/foto (1).png",
     // description, booksBorrowed, studentsHelped dihapus
   },
   {
     name: "Haniifah Roosyidah R, S.Pd.",
-    title: "Pustakawan",
+    title: "Pustakawan Digital",
     image: "/foto (2).png",
     // description, booksBorrowed, studentsHelped dihapus
   },
@@ -33,8 +34,7 @@ const LibrarianSection: React.FC = () => {
       initial={{ opacity: 0, y: 50 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.8 }}
-       className="py-16 md:py-24 bg-gradient-to-b from-blue-50 to-blue-100 overflow-hidden relative bg-[url('/subtle-dots.svg')] bg-repeat"
-    >
+      className="py-16 md:py-24 bg-gradient-to-b from-blue-50 to-blue-100 overflow-hidden relative bg-[url('/subtle-dots.svg')] bg-repeat"
     >
       <div className="max-w-7xl mx-auto px-4">
         <motion.h3
@@ -61,7 +61,6 @@ const LibrarianSection: React.FC = () => {
                 name={librarian.name}
                 title={librarian.title}
                 image={librarian.image}
-                // description, booksBorrowed, studentsHelped tidak lagi diteruskan
               />
             </motion.div>
           ))}
