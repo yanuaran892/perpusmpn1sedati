@@ -1,15 +1,15 @@
 import React from 'react';
-import GSAPButton from '@/components/GSAPButton'; // Menggunakan GSAPButton
+import GSAPButton from '@/components/GSAPButton';
 import { CheckCircle, XCircle, LucideIcon } from 'lucide-react';
-import { toast } from 'sonner'; // Import toast untuk menutup notifikasi
+import { toast } from 'sonner';
 
 interface CustomToastContentProps {
-  id: string | number; // ID notifikasi untuk menutupnya
+  id: string | number;
   type: 'success' | 'error';
   title: string;
   description: string;
   buttonText?: string;
-  onButtonClick?: () => void; // Aksi kustom opsional untuk tombol
+  onButtonClick?: () => void;
 }
 
 const CustomToastContent: React.FC<CustomToastContentProps> = ({
@@ -29,18 +29,20 @@ const CustomToastContent: React.FC<CustomToastContentProps> = ({
     if (onButtonClick) {
       onButtonClick();
     }
-    toast.dismiss(id); // Selalu tutup notifikasi saat tombol diklik
+    toast.dismiss(id);
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-xl p-4 sm:p-8 flex flex-col items-center text-center w-full">
-      <Icon className={`h-20 w-20 mb-6 ${iconColorClass}`} />
-      <h3 className="text-3xl font-bold mb-3 text-foreground">{title}</h3>
-      <p className="text-lg text-muted-foreground mb-8">{description}</p>
+    <div className="bg-white rounded-2xl shadow-2xl p-6 flex flex-col items-center text-center w-full max-w-md border border-gray-200">
+      <div className={`p-4 rounded-full bg-${type === 'success' ? 'green' : 'red'}-50 mb-4`}>
+        <Icon className={`h-12 w-12 ${iconColorClass}`} />
+      </div>
+      <h3 className="text-2xl font-bold mb-2 text-gray-900">{title}</h3>
+      <p className="text-gray-600 mb-6 leading-relaxed">{description}</p>
       <GSAPButton
         variant={buttonVariant}
         onClick={handleButtonClick}
-        className="w-full py-4 text-xl font-semibold"
+        className="w-full py-3 text-base font-semibold rounded-xl"
       >
         {buttonText || defaultButtonText}
       </GSAPButton>
