@@ -299,7 +299,7 @@ const Dashboard = () => {
       </div>
 
       {/* Header */}
-      <header className="relative z-10 bg-white/80 backdrop-blur-lg shadow-lg border-b border-gray-200">
+      <header className="relative z-50 bg-white/80 backdrop-blur-lg shadow-lg border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo and Title */}
@@ -350,7 +350,7 @@ const Dashboard = () => {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: -10, scale: 0.95 }}
                       transition={{ duration: 0.2 }}
-                      className="absolute right-0 mt-2 w-72 bg-white rounded-xl shadow-2xl ring-1 ring-black ring-opacity-5 overflow-hidden z-50"
+                      className="absolute right-0 mt-2 w-72 bg-white rounded-xl shadow-2xl ring-1 ring-black ring-opacity-5 overflow-hidden z-[100]"
                     >
                       <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-600">
                         <h3 className="text-white font-semibold text-sm">Notifikasi</h3>
