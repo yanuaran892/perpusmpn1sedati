@@ -36,9 +36,14 @@ const LandingPage = () => {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      // Close mobile menu first
+      setIsMenuOpen(false);
+      
+      // Scroll to the element with smooth behavior
+      setTimeout(() => {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100); // Small delay to ensure menu close animation completes
     }
-    setIsMenuOpen(false); // Close mobile menu when a section is selected
   };
 
   const navItems = [
@@ -141,7 +146,10 @@ const LandingPage = () => {
                   </button>
                 ))}
                 <Link to="/login" className="block">
-                  <GSAPButton className="w-full bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white rounded-full px-6 py-2.5 font-semibold shadow-lg transition-all duration-300">
+                  <GSAPButton 
+                    onClick={() => setIsMenuOpen(false)}
+                    className="w-full bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white rounded-full px-6 py-2.5 font-semibold shadow-lg transition-all duration-300"
+                  >
                     Masuk Siswa
                   </GSAPButton>
                 </Link>
