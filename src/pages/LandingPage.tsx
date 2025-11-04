@@ -14,7 +14,7 @@ const LandingPage = () => {
       setScrollY(window.scrollY);
       
       // Update active section based on scroll position
-      const sections = ['home', 'about', 'features', 'gallery', 'testimonials', 'contact'];
+      const sections = ['home', 'about', 'features', 'gallery', 'contact'];
       const currentSection = sections.find(section => {
         const element = document.getElementById(section);
         if (element) {
@@ -46,7 +46,6 @@ const LandingPage = () => {
     { id: 'about', label: 'Tentang' },
     { id: 'features', label: 'Fitur' },
     { id: 'gallery', label: 'Galeri' },
-    { id: 'testimonials', label: 'Testimoni' },
     { id: 'contact', label: 'Kontak' },
   ];
 
@@ -361,68 +360,8 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section id="testimonials" className="py-20 bg-gradient-to-br from-blue-50 to-indigo-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Apa Kata Pengguna Kami
-            </h2>
-            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
-              Pengalaman dan kesan dari siswa dan guru yang menggunakan perpustakaan kami
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                name: "Ahmad Rifai",
-                role: "Siswa Kelas 9A",
-                content: "Perpustakaan ini sangat membantu dalam belajar saya. Koleksi bukunya lengkap dan mudah diakses."
-              },
-              {
-                name: "Siti Nurhaliza",
-                role: "Guru Bahasa Indonesia",
-                content: "Fasilitas dan suasana perpustakaan sangat mendukung kegiatan belajar mengajar di sekolah."
-              },
-              {
-                name: "Budi Santoso",
-                role: "Siswa Kelas 8B",
-                content: "Saya suka dengan sistem digitalnya. Bisa pinjam buku kapan saja tanpa ribet."
-              }
-            ].map((testimonial, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-white p-8 rounded-3xl shadow-lg"
-              >
-                <div className="flex items-center mb-6">
-                  <div className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-3 rounded-full mr-4">
-                    <Users className="h-6 w-6" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-900">{testimonial.name}</h3>
-                    <p className="text-gray-600">{testimonial.role}</p>
-                  </div>
-                </div>
-                <p className="text-gray-700 leading-relaxed">"{testimonial.content}"</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Contact Section */}
-      <section id="contact" className="py-20 bg-white">
+      <section id="contact" className="py-20 bg-gradient-to-br from-blue-50 to-indigo-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
