@@ -38,7 +38,7 @@ const LandingPage = () => {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
-    setIsMenuOpen(false);
+    setIsMenuOpen(false); // Close mobile menu when a section is selected
   };
 
   const navItems = [
