@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import GSAPButton from '@/components/GSAPButton';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2, User, Mail, Lock, ArrowLeft, Eye, EyeOff } from 'lucide-react';
+import { Loader2, User, Mail, Lock, ArrowLeft, Eye, EyeOff, UserPlus } from 'lucide-react';
 import { FloatingLabelInput } from '@/components/FloatingLabelInput';
 import { motion } from 'framer-motion';
 import { supabase } from '@/integrations/supabase/client';
@@ -35,51 +35,32 @@ const StudentRegister = () => {
     
     setLoading(true);
     try {
-      // Check if student with this NIS already exists
-      const { data: existingStudent, error: fetchError } = await supabase
-        .from('siswa')
-        .select('id_nis')
-        .eq('id_nis', nis)
-        .single();
+      // Use RPC function for secure registration and hashing
+      const { data: rpcResult, error: rpcError } = await supabase.rpc('register_siswa_secure', {
+        p_id_nis: nis,
+        p_nama: name,
+        p_email: email || null,
+        p_password: password,
+      });
       
-      if (existingStudent) {
-        showError('NIS sudah terdaftar. Silakan login atau hubungi admin jika ada masalah.');
+      if (rpcError) {
+        console.error('Registration RPC error:', rpcError);
+        showError(rpcError.message || 'Gagal mendaftar. Silakan coba lagi.');
         setLoading(false);
         return;
       }
-      
-      if (fetchError && fetchError.code !== 'PGRST117') { // PGRST117 means no rows returned, which is expected
-        console.error('Error checking existing student:', fetchError);
+
+      if (rpcResult && rpcResult.success) {
+        showSuccess(rpcResult.message);
+        setTimeout(() => {
+          navigate('/login');
+        }, 3000);
+      } else if (rpcResult && !rpcResult.success) {
+        showError(rpcResult.message);
+      } else {
+        showError('Gagal mendaftar. Respon tidak terduga.');
       }
-      
-      // Insert new student with pending status
-      const { error: insertError } = await supabase
-        .from('siswa')
-        .insert({
-          id_nis: nis,
-          nama: name,
-          kelas: '', // Will be filled by admin
-          email: email || null,
-          password: password, // This will be hashed by the database trigger
-          total_pinjam: 0,
-          sedang_pinjam: 0,
-          max_peminjaman: 3, // Default value, can be changed by admin
-          total_denda: 0,
-          status_siswa: 'pending', // Pending approval
-          status_peminjaman: 'nonaktif' // Inactive until approved
-        });
-      
-      if (insertError) {
-        console.error('Registration error:', insertError);
-        showError(insertError.message || 'Gagal mendaftar. Silakan coba lagi.');
-        setLoading(false);
-        return;
-      }
-      
-      showSuccess('Pendaftaran berhasil! Akun Anda sedang menunggu persetujuan admin.');
-      setTimeout(() => {
-        navigate('/login');
-      }, 3000);
+
     } catch (err) {
       console.error('Registration error:', err);
       showError('Terjadi kesalahan saat mendaftar. Silakan coba lagi.');
