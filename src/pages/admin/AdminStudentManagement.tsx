@@ -44,6 +44,9 @@ const AdminStudentManagement = () => {
   const [studentsPerPage] = useState(10); // Number of students per page
   const [totalPages, setTotalPages] = useState(1);
   const [isRecalculating, setIsRecalculating] = useState(false); // New state for recalculation loading
+  const [isApproving, setIsApproving] = useState<string | null>(null); // New state to track approval loading
+  const [isRejecting, setIsRejecting] = useState<string | null>(null); // New state to track rejection loading
+
 
   useEffect(() => {
     fetchStudents();
@@ -148,6 +151,8 @@ const AdminStudentManagement = () => {
     if (!window.confirm(`Apakah Anda yakin ingin MENYETUJUI akun siswa "${student.nama}" (NIS: ${student.id_nis})?`)) {
       return;
     }
+    
+    setIsApproving(student.id_nis);
     try {
       const { error } = await supabase
         .from('siswa')
@@ -162,11 +167,13 @@ const AdminStudentManagement = () => {
         return;
       }
 
-      showSuccess(`Akun siswa "${student.nama}" berhasil disetujui!`);
+      await showSuccess(`Akun siswa "${student.nama}" berhasil disetujui!`);
       fetchStudents(); // Refresh list
     } catch (err) {
       console.error('Error approving student:', err);
       showError('Terjadi kesalahan tak terduga saat menyetujui akun siswa.');
+    } finally {
+      setIsApproving(null);
     }
   };
 
@@ -174,6 +181,8 @@ const AdminStudentManagement = () => {
     if (!window.confirm(`Apakah Anda yakin ingin MENOLAK akun siswa "${student.nama}" (NIS: ${student.id_nis})? Ini akan menolak permintaan pendaftaran.`)) {
       return;
     }
+    
+    setIsRejecting(student.id_nis);
     try {
       const { error } = await supabase
         .from('siswa')
@@ -188,11 +197,13 @@ const AdminStudentManagement = () => {
         return;
       }
 
-      showSuccess(`Akun siswa "${student.nama}" berhasil ditolak.`);
+      await showSuccess(`Akun siswa "${student.nama}" berhasil ditolak.`);
       fetchStudents(); // Refresh list
     } catch (err) {
       console.error('Error rejecting student:', err);
       showError('Terjadi kesalahan tak terduga saat menolak akun siswa.');
+    } finally {
+      setIsRejecting(null);
     }
   };
 
@@ -385,17 +396,27 @@ const AdminStudentManagement = () => {
                               variant="outline"
                               size="sm"
                               onClick={() => handleApproveStudent(student)}
+                              disabled={isApproving === student.id_nis}
                               className="text-accent hover:bg-accent/5"
                             >
-                              <CheckCircle className="h-4 w-4 mr-1" />
+                              {isApproving === student.id_nis ? (
+                                <Loader2 className="h-4 w-4 animate-spin" />
+                              ) : (
+                                <CheckCircle className="h-4 w-4 mr-1" />
+                              )}
                               Setujui
                             </GSAPButton>
                             <GSAPButton
                               variant="destructive"
                               size="sm"
                               onClick={() => handleRejectStudent(student)}
+                              disabled={isRejecting === student.id_nis}
                             >
-                              <XCircle className="h-4 w-4 mr-1" />
+                              {isRejecting === student.id_nis ? (
+                                <Loader2 className="h-4 w-4 animate-spin" />
+                              ) : (
+                                <XCircle className="h-4 w-4 mr-1" />
+                              )}
                               Tolak
                             </GSAPButton>
                           </div>
