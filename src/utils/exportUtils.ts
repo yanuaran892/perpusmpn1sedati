@@ -14,9 +14,9 @@ export const exportToCsv = (data: any[], filename: string, columns?: string[]) =
   for (const row of data) {
     const values = headers.map(header => {
       const value = row[header];
-      // Handle null/undefined values and escape double quotes
+      // Handle null/undefined values and escape double quotes by replacing " with ""
       const stringValue = value === null || value === undefined ? '' : String(value).replace(/"/g, '""');
-      return `"${stringValue}"`;
+      return `"${stringValue}"`; // Quote every value
     });
     csvRows.push(values.join(','));
   }
@@ -51,19 +51,23 @@ export const exportToExcel = (data: any[], filename: string, columns?: string[])
   for (const row of data) {
     const values = headers.map(header => {
       const value = row[header];
+      // Handle null/undefined values and escape double quotes by replacing " with ""
       const stringValue = value === null || value === undefined ? '' : String(value).replace(/"/g, '""');
-      return `"${stringValue}"`;
+      return `"${stringValue}"`; // Quote every value
     });
     csvRows.push(values.join(','));
   }
 
   const csvString = csvRows.join('\n');
-  const blob = new Blob([csvString], { type: 'application/vnd.ms-excel;charset=utf-8;' });
+  // Use a BOM (Byte Order Mark) for better compatibility with Excel, especially for non-ASCII characters
+  const BOM = "\uFEFF"; 
+  const blob = new Blob([BOM + csvString], { type: 'text/csv;charset=utf-8;' });
+  
   const link = document.createElement('a');
   if (link.download !== undefined) {
     const url = URL.createObjectURL(blob);
     link.setAttribute('href', url);
-    link.setAttribute('download', `${filename}.xls`); // Use .xls extension
+    link.setAttribute('download', `${filename}.csv`); // Change extension to .csv for better Excel handling
     link.style.visibility = 'hidden';
     document.body.appendChild(link);
     link.click();
