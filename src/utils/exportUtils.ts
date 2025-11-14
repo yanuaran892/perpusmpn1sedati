@@ -6,9 +6,10 @@ export const exportToCsv = (data: any[], filename: string, columns?: string[]) =
 
   const headers = columns || Object.keys(data[0]);
   const csvRows = [];
+  const separator = ';'; // Menggunakan titik koma sebagai pemisah
 
   // Add headers
-  csvRows.push(headers.map(header => `"${header}"`).join(','));
+  csvRows.push(headers.map(header => `"${header}"`).join(separator));
 
   // Add data rows
   for (const row of data) {
@@ -18,7 +19,7 @@ export const exportToCsv = (data: any[], filename: string, columns?: string[]) =
       const stringValue = value === null || value === undefined ? '' : String(value).replace(/"/g, '""');
       return `"${stringValue}"`; // Quote every value
     });
-    csvRows.push(values.join(','));
+    csvRows.push(values.join(separator));
   }
 
   const csvString = csvRows.join('\n');
@@ -43,9 +44,10 @@ export const exportToExcel = (data: any[], filename: string, columns?: string[])
 
   const headers = columns || Object.keys(data[0]);
   const csvRows = [];
+  const separator = ';'; // Menggunakan titik koma sebagai pemisah
 
   // Add headers
-  csvRows.push(headers.map(header => `"${header}"`).join(','));
+  csvRows.push(headers.map(header => `"${header}"`).join(separator));
 
   // Add data rows
   for (const row of data) {
@@ -55,7 +57,7 @@ export const exportToExcel = (data: any[], filename: string, columns?: string[])
       const stringValue = value === null || value === undefined ? '' : String(value).replace(/"/g, '""');
       return `"${stringValue}"`; // Quote every value
     });
-    csvRows.push(values.join(','));
+    csvRows.push(values.join(separator));
   }
 
   const csvString = csvRows.join('\n');
@@ -68,7 +70,7 @@ export const exportToExcel = (data: any[], filename: string, columns?: string[])
   if (link.download !== undefined) {
     const url = URL.createObjectURL(blob);
     link.setAttribute('href', url);
-    link.setAttribute('download', `${filename}.xls`); // Changed to .xls
+    link.setAttribute('download', `${filename}.xls`); // Tetap menggunakan .xls
     link.style.visibility = 'hidden';
     document.body.appendChild(link);
     link.click();
@@ -96,6 +98,7 @@ export const exportToWord = (data: any[], filename: string, columns?: string[]) 
   // Table Body
   tableHtml += '<tbody>';
   for (const row of data) {
+    tableHtml += '<tr>';
     for (const header of headers) {
       const value = row[header] === null || row[header] === undefined ? '' : String(row[header]);
       tableHtml += `<td style="padding: 8px; border: 1px solid #ddd;">${value}</td>`;
