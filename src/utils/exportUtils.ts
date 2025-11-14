@@ -61,13 +61,14 @@ export const exportToExcel = (data: any[], filename: string, columns?: string[])
   const csvString = csvRows.join('\n');
   // Use a BOM (Byte Order Mark) for better compatibility with Excel, especially for non-ASCII characters
   const BOM = "\uFEFF"; 
-  const blob = new Blob([BOM + csvString], { type: 'text/csv;charset=utf-8;' });
+  // Change MIME type to force Excel opening, and extension to .xls
+  const blob = new Blob([BOM + csvString], { type: 'application/vnd.ms-excel;charset=utf-8;' });
   
   const link = document.createElement('a');
   if (link.download !== undefined) {
     const url = URL.createObjectURL(blob);
     link.setAttribute('href', url);
-    link.setAttribute('download', `${filename}.csv`); // Change extension to .csv for better Excel handling
+    link.setAttribute('download', `${filename}.xls`); // Changed to .xls
     link.style.visibility = 'hidden';
     document.body.appendChild(link);
     link.click();
@@ -95,7 +96,6 @@ export const exportToWord = (data: any[], filename: string, columns?: string[]) 
   // Table Body
   tableHtml += '<tbody>';
   for (const row of data) {
-    tableHtml += '<tr>';
     for (const header of headers) {
       const value = row[header] === null || row[header] === undefined ? '' : String(row[header]);
       tableHtml += `<td style="padding: 8px; border: 1px solid #ddd;">${value}</td>`;
