@@ -9,6 +9,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { showError, showSuccess } from '@/utils/toast';
 import StudentFormDialog from '@/components/admin/StudentFormDialog';
 import StudentBorrowedBooksDialog from '@/components/admin/StudentBorrowedBooksDialog'; // Import the new dialog
+import { useAdminAuth } from '@/context/AdminAuthContext'; // Import useAdminAuth
 
 interface StudentItem {
   id_nis: string;
@@ -24,6 +25,7 @@ interface StudentItem {
 }
 
 const AdminStudentManagement = () => {
+  const { admin } = useAdminAuth(); // Get admin context
   const [students, setStudents] = useState<StudentItem[]>([]); // Renamed from allStudents
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
@@ -46,6 +48,7 @@ const AdminStudentManagement = () => {
   const [isRecalculating, setIsRecalculating] = useState(false); // New state for recalculation loading
   const [isApproving, setIsApproving] = useState<string | null>(null); // New state to track approval loading
   const [isRejecting, setIsRejecting] = useState<string | null>(null); // New state to track rejection loading
+  const [isDeleting, setIsDeleting] = useState<string | null>(null); // New state to track deletion loading
 
 
   useEffect(() => {
@@ -99,18 +102,25 @@ const AdminStudentManagement = () => {
   };
 
   const handleDeleteStudent = async (id_nis: string, nama: string) => {
+    if (!admin?.id || !admin?.username) {
+      showError('Admin tidak terautentikasi. Silakan login ulang.');
+      return;
+    }
     if (!window.confirm(`Apakah Anda yakin ingin menghapus siswa "${nama}" (NIS: ${id_nis})? Ini akan menghapus semua data terkait siswa ini.`)) {
       return;
     }
+    
+    setIsDeleting(id_nis);
     try {
-      // Perform deletion directly on the 'siswa' table
-      const { error } = await supabase
-        .from('siswa')
-        .delete()
-        .eq('id_nis', id_nis);
+      // Use RPC function for secure deletion
+      const { data, error } = await supabase.rpc('admin_delete_student', {
+        p_id_nis: id_nis,
+        p_admin_id: admin.id,
+        p_admin_username: admin.username,
+      });
 
-      if (error) {
-        showError(error.message || 'Gagal menghapus siswa.');
+      if (error || !data) {
+        showError(error?.message || 'Gagal menghapus siswa.');
         return;
       }
 
@@ -119,6 +129,8 @@ const AdminStudentManagement = () => {
     } catch (err) {
       console.error('Error deleting student:', err);
       showError('Terjadi kesalahan tak terduga saat menghapus siswa.');
+    } finally {
+      setIsDeleting(null);
     }
   };
 
@@ -128,6 +140,7 @@ const AdminStudentManagement = () => {
       return;
     }
     try {
+      // Note: We use direct update here as it's an UPDATE operation which is permitted by existing RLS policies for authenticated users.
       const { error } = await supabase
         .from('siswa')
         .update({ status_siswa: newStatus })
@@ -432,8 +445,17 @@ const AdminStudentManagement = () => {
                                 <UserCheck className="h-4 w-4 text-accent" />
                               )}
                             </GSAPButton>
-                            <GSAPButton variant="destructive" size="sm" onClick={() => handleDeleteStudent(student.id_nis, student.nama)}>
-                              <Trash2 className="h-4 w-4" />
+                            <GSAPButton 
+                              variant="destructive" 
+                              size="sm" 
+                              onClick={() => handleDeleteStudent(student.id_nis, student.nama)}
+                              disabled={isDeleting === student.id_nis}
+                            >
+                              {isDeleting === student.id_nis ? (
+                                <Loader2 className="h-4 w-4 animate-spin" />
+                              ) : (
+                                <Trash2 className="h-4 w-4" />
+                              )}
                             </GSAPButton>
                           </>
                         )}
