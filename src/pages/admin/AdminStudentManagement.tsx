@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Loader2, PlusCircle, Search, Edit, Trash2, UserCheck, UserX, BookOpen, ChevronLeft, ChevronRight, RefreshCcw } from 'lucide-react'; // Added RefreshCcw icon
+import { Loader2, PlusCircle, Search, Edit, Trash2, UserCheck, UserX, BookOpen, ChevronLeft, ChevronRight, RefreshCcw, CheckCircle, XCircle } from 'lucide-react'; // Added RefreshCcw icon
 import { supabase } from '@/integrations/supabase/client';
 import { showError, showSuccess } from '@/utils/toast';
 import StudentFormDialog from '@/components/admin/StudentFormDialog';
@@ -144,6 +144,58 @@ const AdminStudentManagement = () => {
     }
   };
 
+  const handleApproveStudent = async (student: StudentItem) => {
+    if (!window.confirm(`Apakah Anda yakin ingin MENYETUJUI akun siswa "${student.nama}" (NIS: ${student.id_nis})?`)) {
+      return;
+    }
+    try {
+      const { error } = await supabase
+        .from('siswa')
+        .update({ 
+          status_siswa: 'aktif',
+          status_peminjaman: 'aktif'
+        })
+        .eq('id_nis', student.id_nis);
+
+      if (error) {
+        showError(error.message || 'Gagal menyetujui akun siswa.');
+        return;
+      }
+
+      showSuccess(`Akun siswa "${student.nama}" berhasil disetujui!`);
+      fetchStudents(); // Refresh list
+    } catch (err) {
+      console.error('Error approving student:', err);
+      showError('Terjadi kesalahan tak terduga saat menyetujui akun siswa.');
+    }
+  };
+
+  const handleRejectStudent = async (student: StudentItem) => {
+    if (!window.confirm(`Apakah Anda yakin ingin MENOLAK akun siswa "${student.nama}" (NIS: ${student.id_nis})? Ini akan menolak permintaan pendaftaran.`)) {
+      return;
+    }
+    try {
+      const { error } = await supabase
+        .from('siswa')
+        .update({ 
+          status_siswa: 'rejected',
+          status_peminjaman: 'nonaktif'
+        })
+        .eq('id_nis', student.id_nis);
+
+      if (error) {
+        showError(error.message || 'Gagal menolak akun siswa.');
+        return;
+      }
+
+      showSuccess(`Akun siswa "${student.nama}" berhasil ditolak.`);
+      fetchStudents(); // Refresh list
+    } catch (err) {
+      console.error('Error rejecting student:', err);
+      showError('Terjadi kesalahan tak terduga saat menolak akun siswa.');
+    }
+  };
+
   const handleAddStudent = () => {
     setStudentToEdit(null);
     setIsFormDialogOpen(true);
@@ -202,7 +254,7 @@ const AdminStudentManagement = () => {
 
   // Dummy data for classes and statuses for filters
   const classes = ['10A', '10B', '11A', '11B', '12A', '12B'];
-  const statusSiswaOptions = ['aktif', 'nonaktif'];
+  const statusSiswaOptions = ['aktif', 'nonaktif', 'pending', 'rejected'];
 
   return (
     <div className="space-y-6">
@@ -318,30 +370,57 @@ const AdminStudentManagement = () => {
                       <TableCell>Rp {student.total_denda.toLocaleString('id-ID')}</TableCell>
                       <TableCell>
                         <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                          student.status_siswa === 'aktif' ? 'bg-accent/10 text-accent' : 'bg-red-100 text-red-800'
+                          student.status_siswa === 'aktif' ? 'bg-accent/10 text-accent' : 
+                          student.status_siswa === 'pending' ? 'bg-yellow-100 text-yellow-800' : 
+                          student.status_siswa === 'rejected' ? 'bg-red-100 text-red-800' : 
+                          'bg-red-100 text-red-800'
                         }`}>
                           {student.status_siswa}
                         </span>
                       </TableCell>
                       <TableCell className="text-right">
-                        <GSAPButton variant="ghost" size="sm" className="mr-2" onClick={() => handleEditStudent(student)}>
-                          <Edit className="h-4 w-4" />
-                        </GSAPButton>
-                        <GSAPButton
-                          variant="ghost"
-                          size="sm"
-                          className="mr-2"
-                          onClick={() => handleToggleStudentStatus(student)}
-                        >
-                          {student.status_siswa === 'aktif' ? (
-                            <UserX className="h-4 w-4 text-red-500" />
-                          ) : (
-                            <UserCheck className="h-4 w-4 text-accent" />
-                          )}
-                        </GSAPButton>
-                        <GSAPButton variant="destructive" size="sm" onClick={() => handleDeleteStudent(student.id_nis, student.nama)}>
-                          <Trash2 className="h-4 w-4" />
-                        </GSAPButton>
+                        {student.status_siswa === 'pending' ? (
+                          <div className="flex justify-end space-x-2">
+                            <GSAPButton
+                              variant="outline"
+                              size="sm"
+                              onClick={() => handleApproveStudent(student)}
+                              className="text-accent hover:bg-accent/5"
+                            >
+                              <CheckCircle className="h-4 w-4 mr-1" />
+                              Setujui
+                            </GSAPButton>
+                            <GSAPButton
+                              variant="destructive"
+                              size="sm"
+                              onClick={() => handleRejectStudent(student)}
+                            >
+                              <XCircle className="h-4 w-4 mr-1" />
+                              Tolak
+                            </GSAPButton>
+                          </div>
+                        ) : (
+                          <>
+                            <GSAPButton variant="ghost" size="sm" className="mr-2" onClick={() => handleEditStudent(student)}>
+                              <Edit className="h-4 w-4" />
+                            </GSAPButton>
+                            <GSAPButton
+                              variant="ghost"
+                              size="sm"
+                              className="mr-2"
+                              onClick={() => handleToggleStudentStatus(student)}
+                            >
+                              {student.status_siswa === 'aktif' ? (
+                                <UserX className="h-4 w-4 text-red-500" />
+                              ) : (
+                                <UserCheck className="h-4 w-4 text-accent" />
+                              )}
+                            </GSAPButton>
+                            <GSAPButton variant="destructive" size="sm" onClick={() => handleDeleteStudent(student.id_nis, student.nama)}>
+                              <Trash2 className="h-4 w-4" />
+                            </GSAPButton>
+                          </>
+                        )}
                       </TableCell>
                     </TableRow>
                   ))}

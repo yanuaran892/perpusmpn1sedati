@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import LandingPage from "./pages/LandingPage";
 import Login from "./pages/Login";
+import StudentRegister from "./pages/StudentRegister";
 import Dashboard from "./pages/Dashboard";
 import StudentProfile from "./pages/StudentProfile";
 import StudentVisitEntry from "@/pages/StudentVisitEntry";
@@ -48,6 +49,7 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/landing" element={<LandingPage />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<StudentRegister />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/profile" element={<StudentProfile />} />
               <Route path="/student-visit-entry" element={<StudentVisitEntry />} />

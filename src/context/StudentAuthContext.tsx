@@ -120,6 +120,22 @@ export const StudentAuthProvider = ({ children }: React.PropsWithChildren) => {
 
       if (data && data.length > 0) {
         const loggedInStudent: Student = data[0];
+        
+        // Check if student account is approved
+        if (loggedInStudent.status_siswa === 'pending') {
+          showError('Akun Anda sedang menunggu persetujuan admin. Silakan coba lagi nanti.');
+          setStudent(null);
+          localStorage.removeItem('student');
+          return false;
+        }
+        
+        if (loggedInStudent.status_siswa === 'rejected') {
+          showError('Akun Anda ditolak oleh admin. Silakan hubungi admin untuk informasi lebih lanjut.');
+          setStudent(null);
+          localStorage.removeItem('student');
+          return false;
+        }
+        
         setStudent(loggedInStudent);
         localStorage.setItem('student', JSON.stringify(loggedInStudent));
         showSuccess('Login successful!');

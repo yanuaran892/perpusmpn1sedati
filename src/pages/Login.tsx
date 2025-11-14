@@ -4,7 +4,7 @@ import { useStudentAuth } from '@/context/StudentAuthContext';
 import GSAPButton from '@/components/GSAPButton';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2, User, Lock, ArrowLeft, Eye, EyeOff } from 'lucide-react';
+import { Loader2, User, Lock, ArrowLeft, Eye, EyeOff, UserPlus } from 'lucide-react';
 import { FloatingLabelInput } from '@/components/FloatingLabelInput';
 import { motion } from 'framer-motion';
 
@@ -115,6 +115,17 @@ const Login = () => {
                 </GSAPButton>
               </div>
             </form>
+            
+            <div className="mt-6 pt-6 border-t border-gray-200">
+              <p className="text-center text-gray-600 mb-4">Belum punya akun?</p>
+              <GSAPButton
+                onClick={() => navigate('/register')}
+                className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white py-2.5 px-6 rounded-xl font-semibold shadow-lg transition-all duration-300 transform hover:scale-105"
+              >
+                <UserPlus className="mr-2 h-4 w-4" />
+                Daftar Akun Baru
+              </GSAPButton>
+            </div>
           </CardContent>
         </Card>
       </motion.div>
