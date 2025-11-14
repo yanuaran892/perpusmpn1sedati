@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import GSAPButton from '@/components/GSAPButton';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2, User, Mail, Lock, ArrowLeft, Eye, EyeOff, UserPlus } from 'lucide-react';
+import { Loader2, User, Mail, Lock, ArrowLeft, Eye, EyeOff, UserPlus, GraduationCap } from 'lucide-react';
 import { FloatingLabelInput } from '@/components/FloatingLabelInput';
 import { motion } from 'framer-motion';
 import { supabase } from '@/integrations/supabase/client';
@@ -12,6 +12,7 @@ import { showError, showSuccess } from '@/utils/toast';
 const StudentRegister = () => {
   const [nis, setNis] = useState('');
   const [name, setName] = useState('');
+  const [kelas, setKelas] = useState(''); // New state for class
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -33,15 +34,21 @@ const StudentRegister = () => {
       return;
     }
     
+    if (!kelas.trim()) {
+      showError('Kelas harus diisi.');
+      return;
+    }
+
     setLoading(true);
     try {
       // Use RPC function for secure registration and hashing
-      // NOTE: Parameter order changed to: p_id_nis, p_nama, p_password, p_email
+      // NOTE: Parameter order: p_id_nis, p_nama, p_password, p_email, p_kelas
       const { data: rpcResult, error: rpcError } = await supabase.rpc('register_siswa_secure', {
         p_id_nis: nis,
         p_nama: name,
-        p_password: password, // Moved password before email
+        p_password: password,
         p_email: email || null,
+        p_kelas: kelas, // Pass the class data
       });
       
       if (rpcError) {
@@ -123,6 +130,20 @@ const StudentRegister = () => {
                     onChange={(e) => setName(e.target.value)}
                     required
                     icon={User}
+                    className="bg-white border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                  />
+                </div>
+
+                {/* New Class Input */}
+                <div>
+                  <FloatingLabelInput
+                    id="kelas"
+                    label="Kelas"
+                    type="text"
+                    value={kelas}
+                    onChange={(e) => setKelas(e.target.value)}
+                    required
+                    icon={GraduationCap}
                     className="bg-white border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                   />
                 </div>
