@@ -5,7 +5,7 @@ import { supabase } from '@/integrations/supabase/client';
 import GSAPButton from '@/components/GSAPButton';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2, ChevronLeft, ChevronRight, Book, LayoutGrid, BookOpen, Search, User, LogOut, Bell, Settings, Star, TrendingUp, Clock, AlertCircle, Menu } from 'lucide-react';
+import { Loader2, ChevronLeft, ChevronRight, Book, LayoutGrid, BookOpen, Search, User, LogOut, Bell, Settings, Star, TrendingUp, Clock, AlertCircle, Menu, Power, PowerOff } from 'lucide-react';
 import { showError, showSuccess } from '@/utils/toast';
 import { isPast } from 'date-fns';
 import BookCard from '@/components/BookCard';
@@ -14,6 +14,7 @@ import BookCardSkeleton from '@/components/BookCardSkeleton';
 import AnimatedStatCard from '@/components/AnimatedStatCard';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import {
   Sheet,
   SheetContent,
@@ -52,6 +53,13 @@ interface OverdueBookQueryResult {
   }[] | null;
 }
 
+interface LibraryStatus {
+  is_open: boolean;
+  manual_status: boolean;
+  is_holiday: boolean;
+  holiday_name: string | null;
+}
+
 const Dashboard = () => {
   const { student, isLoading: authLoading, logout, updateStudent } = useStudentAuth();
   const navigate = useNavigate();
@@ -71,6 +79,7 @@ const Dashboard = () => {
   const [notifications, setNotifications] = useState<{type: string, message: string}[]>([]);
   const [showNotifications, setShowNotifications] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [libraryStatus, setLibraryStatus] = useState<LibraryStatus | null>(null);
 
   useEffect(() => {
     if (!authLoading && !student) {
@@ -80,8 +89,26 @@ const Dashboard = () => {
       fetchBooks();
       fetchCounts();
       checkStudentStatusAndAlerts();
+      fetchLibraryStatus();
     }
   }, [student, authLoading, navigate, currentPage, searchTerm, selectedCategoryId]);
+
+  const fetchLibraryStatus = async () => {
+    try {
+      const { data, error } = await supabase.rpc('get_library_status');
+      
+      if (error) {
+        console.error('Error fetching library status:', error);
+        return;
+      }
+      
+      if (data) {
+        setLibraryStatus(data as LibraryStatus);
+      }
+    } catch (err) {
+      console.error('Error fetching library status:', err);
+    }
+  };
 
   const fetchCounts = async () => {
     try {
@@ -298,6 +325,27 @@ const Dashboard = () => {
         <div className="absolute top-40 left-40 w-80 h-80 bg-indigo-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
       </div>
 
+      {/* Library Status Alert */}
+      {libraryStatus && !libraryStatus.is_open && (
+        <Alert className="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 max-w-2xl bg-red-50 border-red-200 shadow-lg">
+          <AlertCircle className="h-5 w-5 text-red-600" />
+          <AlertDescription className="text-red-800 font-medium">
+            {libraryStatus.is_holiday ? (
+              <>
+                <PowerOff className="inline h-4 w-4 mr-1" />
+                Perpustakaan tutup karena hari libur: <strong>{libraryStatus.holiday_name}</strong>. 
+                Peminjaman buku tidak dapat dilakukan.
+              </>
+            ) : (
+              <>
+                <PowerOff className="inline h-4 w-4 mr-1" />
+                Perpustakaan sedang tutup. Peminjaman buku tidak dapat dilakukan saat ini.
+              </>
+            )}
+          </AlertDescription>
+        </Alert>
+      )}
+
       {/* Header */}
       <header className="relative z-50 bg-white/80 backdrop-blur-lg shadow-lg border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -331,6 +379,28 @@ const Dashboard = () => {
 
             {/* User Actions */}
             <div className="flex items-center space-x-2">
+              {/* Library Status Indicator */}
+              {libraryStatus && (
+                <div className={cn(
+                  "hidden md:flex items-center px-3 py-1.5 rounded-full text-xs font-semibold",
+                  libraryStatus.is_open 
+                    ? "bg-green-100 text-green-800" 
+                    : "bg-red-100 text-red-800"
+                )}>
+                  {libraryStatus.is_open ? (
+                    <>
+                      <Power className="h-3 w-3 mr-1" />
+                      Buka
+                    </>
+                  ) : (
+                    <>
+                      <PowerOff className="h-3 w-3 mr-1" />
+                      Tutup
+                    </>
+                  )}
+                </div>
+              )}
+
               {/* Notification Bell */}
               <div className="relative">
                 <button 
@@ -399,7 +469,7 @@ const Dashboard = () => {
                 <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
                   <SheetTrigger asChild>
                     <button className="p-2 rounded-full text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors duration-200">
-                      <Menu className="h-5 w-5" />
+                      <Menu className="h-6 w-6" />
                     </button>
                   </SheetTrigger>
                   <SheetContent side="right" className="w-[280px] sm:w-[320px]">
@@ -595,7 +665,10 @@ const Dashboard = () => {
                         <BookCard
                           book={book}
                           onViewDetails={handleViewBookDetails}
-                          isBorrowDisabled={student.sedang_pinjam >= student.max_peminjaman}
+                          isBorrowDisabled={
+                            student.sedang_pinjam >= student.max_peminjaman || 
+                            (libraryStatus ? !libraryStatus.is_open : false)
+                          }
                         />
                       </motion.div>
                     ))}
@@ -634,7 +707,10 @@ const Dashboard = () => {
         isOpen={isDetailDialogOpen}
         onClose={handleCloseDetailDialog}
         onConfirmBorrow={handleConfirmBorrow}
-        isBorrowDisabled={student.sedang_pinjam >= student.max_peminjaman}
+        isBorrowDisabled={
+          student.sedang_pinjam >= student.max_peminjaman || 
+          (libraryStatus ? !libraryStatus.is_open : false)
+        }
         isBorrowing={isBorrowing}
       />
     </div>

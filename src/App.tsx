@@ -22,9 +22,10 @@ import AdminReportPage from "./pages/admin/AdminReportPage";
 import AdminExportPage from "./pages/admin/AdminExportPage";
 import AdminLogPage from "./pages/admin/AdminLogPage";
 import AdminSettingsPage from "./pages/admin/AdminSettingsPage";
+import AdminLibraryStatusPage from "./pages/admin/AdminLibraryStatusPage";
 import { StudentAuthProvider } from "./context/StudentAuthContext";
 import { AdminAuthProvider } from "./context/AdminAuthContext";
-import { showSuccess, showError } from "./utils/toast"; // Memperbarui impor ke .tsx
+import { showSuccess, showError } from "./utils/toast";
 
 const queryClient = new QueryClient();
 
@@ -32,12 +33,11 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Sonner 
-        position="top-center" // Mengatur posisi notifikasi ke tengah atas
-        richColors // Mengaktifkan warna yang lebih kaya untuk notifikasi
+        position="top-center"
+        richColors
         toastOptions={{
-          // Menggunakan !important untuk memastikan pemusatan bekerja
           className: 'block w-full max-w-sm !ml-auto !mr-auto', 
-          duration: 5000, // Durasi notifikasi 5 detik
+          duration: 5000,
         }}
       />
       <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
@@ -66,6 +66,7 @@ const App = () => (
                 <Route path="export" element={<AdminExportPage />} />
                 <Route path="log" element={<AdminLogPage />} />
                 <Route path="settings" element={<AdminSettingsPage />} />
+                <Route path="library-status" element={<AdminLibraryStatusPage />} />
               </Route>
 
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

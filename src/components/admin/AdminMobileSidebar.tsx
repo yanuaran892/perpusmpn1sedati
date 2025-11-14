@@ -13,24 +13,26 @@ import {
   LogOut,
   LibraryBig,
   FileSpreadsheet,
-  DollarSign, // Added DollarSign icon for Fine Management
+  DollarSign,
+  Power,
 } from 'lucide-react';
-import GSAPButton from '@/components/GSAPButton'; // Menggunakan GSAPButton
+import GSAPButton from '@/components/GSAPButton';
 import { cn } from '@/lib/utils';
 
 interface AdminMobileSidebarProps {
   onLogout: () => void;
-  onLinkClick?: () => void; // Optional prop to close sidebar on link click
+  onLinkClick?: () => void;
 }
 
 const navItems = [
   { path: '/admin/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+  { path: '/admin/library-status', icon: Power, label: 'Status Perpustakaan' },
   { path: '/admin/books', icon: Book, label: 'Buku' },
   { path: '/admin/categories', icon: List, label: 'Kategori' },
   { path: '/admin/students', icon: Users, label: 'Siswa' },
   { path: '/admin/circulation', icon: RotateCcw, label: 'Sirkulasi' },
   { path: '/admin/visitor-management', icon: BookOpen, label: 'Manajemen Siswa' },
-  { path: '/admin/fines', icon: DollarSign, label: 'Manajemen Denda' }, // New: Fine Management
+  { path: '/admin/fines', icon: DollarSign, label: 'Manajemen Denda' },
   { path: '/admin/reports', icon: FileText, label: 'Laporan' },
   { path: '/admin/export', icon: FileSpreadsheet, label: 'Export Laporan' },
   { path: '/admin/log', icon: Activity, label: 'Log' },
@@ -66,7 +68,7 @@ const AdminMobileSidebar: React.FC<AdminMobileSidebarProps> = ({ onLogout, onLin
         <GSAPButton
           onClick={() => {
             onLogout();
-            onLinkClick?.(); // Close sidebar after logout
+            onLinkClick?.();
           }}
           variant="ghost"
           className="w-full justify-start text-red-600 hover:bg-red-50 hover:text-red-700"
