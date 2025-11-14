@@ -36,11 +36,12 @@ const StudentRegister = () => {
     setLoading(true);
     try {
       // Use RPC function for secure registration and hashing
+      // NOTE: Parameter order changed to: p_id_nis, p_nama, p_password, p_email
       const { data: rpcResult, error: rpcError } = await supabase.rpc('register_siswa_secure', {
         p_id_nis: nis,
         p_nama: name,
+        p_password: password, // Moved password before email
         p_email: email || null,
-        p_password: password,
       });
       
       if (rpcError) {
