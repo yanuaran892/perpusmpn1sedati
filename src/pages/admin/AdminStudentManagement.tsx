@@ -154,16 +154,13 @@ const AdminStudentManagement = () => {
     
     setIsApproving(student.id_nis);
     try {
-      const { error } = await supabase
-        .from('siswa')
-        .update({ 
-          status_siswa: 'aktif',
-          status_peminjaman: 'aktif'
-        })
-        .eq('id_nis', student.id_nis);
+      // Menggunakan RPC function untuk bypass RLS
+      const { data, error } = await supabase.rpc('admin_approve_student_account', {
+        p_id_nis: student.id_nis,
+      });
 
-      if (error) {
-        showError(error.message || 'Gagal menyetujui akun siswa.');
+      if (error || !data) {
+        showError(error?.message || 'Gagal menyetujui akun siswa.');
         return;
       }
 
@@ -184,16 +181,13 @@ const AdminStudentManagement = () => {
     
     setIsRejecting(student.id_nis);
     try {
-      const { error } = await supabase
-        .from('siswa')
-        .update({ 
-          status_siswa: 'rejected',
-          status_peminjaman: 'nonaktif'
-        })
-        .eq('id_nis', student.id_nis);
+      // Menggunakan RPC function untuk bypass RLS
+      const { data, error } = await supabase.rpc('admin_reject_student_account', {
+        p_id_nis: student.id_nis,
+      });
 
-      if (error) {
-        showError(error.message || 'Gagal menolak akun siswa.');
+      if (error || !data) {
+        showError(error?.message || 'Gagal menolak akun siswa.');
         return;
       }
 
