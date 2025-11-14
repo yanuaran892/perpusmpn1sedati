@@ -98,13 +98,12 @@ const AdminStudentManagement = () => {
     }
   };
 
-  // No need for filteredStudents useMemo anymore as filtering is done by RPC
-
   const handleDeleteStudent = async (id_nis: string, nama: string) => {
     if (!window.confirm(`Apakah Anda yakin ingin menghapus siswa "${nama}" (NIS: ${id_nis})? Ini akan menghapus semua data terkait siswa ini.`)) {
       return;
     }
     try {
+      // Perform deletion directly on the 'siswa' table
       const { error } = await supabase
         .from('siswa')
         .delete()
@@ -371,7 +370,9 @@ const AdminStudentManagement = () => {
                           </GSAPButton>
                         )}
                       </TableCell>
-                      <TableCell>{student.total_pinjam}</TableCell>
+                      <TableCell>
+                        {student.total_pinjam}
+                      </TableCell>
                       <TableCell>Rp {student.total_denda.toLocaleString('id-ID')}</TableCell>
                       <TableCell>
                         <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
